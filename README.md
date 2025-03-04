@@ -23,8 +23,10 @@ Read in [English](README_EN.md) language
 Исполняемый файл который находится в каталоге bin к примеру winws.exe взят из оригинального репозитория [github.com/bol-van/zapret](https://github.com/bol-van/zapret). Из других мест / авторов использовать небезопасно.
 
 ### Как скомпилировать?
+Рекурсивно склонировать исходный код:  
+`git clone --recursive https://github.com/Mr-Precise/liberty-pre`  
 Использовать Visual Studio или Monodevelop/Dotdevelop  
-Требования: .net framework или Mono, если в Linux/macOS.
+Требования: .net framework (msbuild) или Mono (xbuild), если в Linux/macOS.
 
 ### Использованы компоненты из репозиториев и благодарности:
 * [github.com/bol-van/zapret](https://github.com/bol-van/zapret) - компоненты

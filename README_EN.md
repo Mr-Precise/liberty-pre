@@ -23,8 +23,10 @@ If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH
 The executable file that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.
 
 ### How to compile?
+Recursively clone the source code:  
+`git clone --recursive https://github.com/Mr-Precise/liberty-pre`  
 Use Visual Studio or Monodevelop/Dotdevelop  
-Requirements: .net framework or Mono if on Linux/macOS.
+Requirements: .net framework (msbuild) or Mono (xbuild) if on Linux/macOS.
 
 ### Used components from repositories and thanks:
 * [github.com/bol-van/zapret](https://github.com/bol-van/zapret) - components

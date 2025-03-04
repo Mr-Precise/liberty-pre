@@ -1,8 +1,10 @@
 ### liberty-pre - zapret Launcher (DPI bypass)
 
 Читать на [Русском](README.md) языке
+
 ### What is this?
-Implementation of a launcher for winws.exe in C#, with profile support.  
+Implementation of a launcher for winws.exe (DPI bypass tool) in C#, with profile support.  
+Helps you bypass blocking Youtube, Discord, etc.  
 Currently in development.
 
 ### How does it work?

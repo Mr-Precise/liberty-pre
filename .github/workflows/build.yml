@@ -1,0 +1,73 @@
+name: Build liberty-pre Mono/.net app 
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'zapret version'
+        required: true
+        default: '70.3'
+
+jobs:
+    build_with_mono:
+      runs-on: ubuntu-latest
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      steps:
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Install Mono
+        run: sudo apt update && sudo apt install -y mono-complete
+
+      - name: Build the solution
+        run: xbuild /p:Configuration=Release liberty-pre.sln
+
+      - name: Get current date
+        run: echo "BUILD_DATE=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
+
+      - name: Download and extract WinDivert and zapret
+        run: |
+          wget -O zapret.zip "https://github.com/bol-van/zapret/releases/download/v${{ github.event.inputs.version }}/zapret-v${{ github.event.inputs.version }}.zip"
+          wget -O WinDivert.zip https://github.com/basil00/WinDivert/releases/download/v2.2.2/WinDivert-2.2.2-A.zip
+          unzip -j WinDivert.zip "*/x64/WinDivert.dll" "*/x64/WinDivert64.sys" -d bin/Release/bin/
+          unzip -j zapret.zip "*/binaries/win64/winws.exe" "*/binaries/win64/cygwin1.dll" -d bin/Release/bin/
+          unzip -j zapret.zip "*/files/fake/tls_clienthello_www_google_com.bin" "*/files/fake/quic_initial_www_google_com.bin" "*/files/fake/tls_clienthello_vk_com.bin" "*/files/fake/quic_initial_vk_com.bin" -d bin/Release/
+
+      - name: Rename and clean
+        run: |
+          mv "bin/Release/" "bin/liberty-pre-${{ env.BUILD_DATE }}"
+          rm zapret.zip WinDivert.zip
+
+      - name: Copy lists and configs
+        run: |
+          cp data/*.txt "bin/liberty-pre-${{ env.BUILD_DATE }}"
+          cp data/*.cfg "bin/liberty-pre-${{ env.BUILD_DATE }}"
+          cp LICENSE "bin/liberty-pre-${{ env.BUILD_DATE }}"
+          cp README*.md "bin/liberty-pre-${{ env.BUILD_DATE }}"
+
+      - name: Сompress Release
+        run: |
+          cd bin
+          7z a ../"liberty-pre-${{ env.BUILD_DATE }}.zip" "liberty-pre-${{ env.BUILD_DATE }}"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: liberty-pre-${{ env.BUILD_DATE }}
+          path: liberty-pre-*.zip
+          if-no-files-found: error
+
+      - name: Create GitHub Release and Upload Artifact
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "liberty-pre-${{ env.BUILD_DATE }}.zip"
+          tag_name: v${{ env.BUILD_DATE }}
+          name: "Release liberty-pre-${{ env.BUILD_DATE }}"
+          body: "liberty-pre v${{ env.BUILD_DATE }} automatic release. Used zapret-v${{ github.event.inputs.version }}, WinDivert 2.2.2-A"
+          draft: false
+          prerelease: false

@@ -1,11 +1,12 @@
 ### liberty-pre - zapret Launcher (DPI bypass)
 
-Читать на [РУССКОМ](README.md) языке
+Читать на [Русском](README.md) языке
 ### What is this?
 Implementation of a launcher for winws.exe in C#, with profile support.  
 Currently in development.
 
 ### How does it work?
+Checks for everything necessary, the presence of an existing process, OS.  
 Reads the specified configuration file with startup arguments, then runs winws.exe with administrator rights in a minimized window.  
 By default, reads the configuration (profile) `default.cfg`  
 To change this behavior, you need to run liberty-pre with the argument `-c config_name.cfg`  

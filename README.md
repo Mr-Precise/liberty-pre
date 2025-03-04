@@ -1,12 +1,13 @@
 ### liberty-pre - zapret Launcher (DPI bypass)
 
-Read in [ENGLISH](README_EN.md) language
+Read in [English](README_EN.md) language
 ### Что это?
 Реализация лаунчера для winws.exe на языке C#, с поддержкой профилей.  
 В настоящее время находится в разработке.
 
 ### Как работает?
-Читает указанный конфигурационный файл с аргументами запуска, замем запускает winws.exe с правами администратора в свёрнутом окне.  
+Делает проверки на всё необходимое, наличие существующего процесса, ОС.  
+Читает указанный конфигурационный файл с аргументами запуска, затем запускает winws.exe с правами администратора в свёрнутом окне.  
 По умолчанию читает конфигурацию (профиль) `default.cfg`  
 Чтобы изменить ситуацию, нужно запускать liberty-pre с аргументом `-c config_name.cfg`  
 К примеру создайте ярлык на liberty-pre.exe с аргументом `liberty-pre.exe -c discord.cfg`
@@ -26,6 +27,6 @@ Read in [ENGLISH](README_EN.md) language
 Требования: .net framework или Mono, если в Linux/macOS.
 
 ### Использованы компоненты из репозиториев и благодарности:
-* [github.com/bol-van/zapret](https://github.com/bol-van/zapret) - компопнеты
+* [github.com/bol-van/zapret](https://github.com/bol-van/zapret) - компоненты
 * [github.com/Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube) - идея и списки доменов / ip сетей
 * [github.com/basil00/WinDivert](https://github.com/basil00/WinDivert) - за замечательный драйвер

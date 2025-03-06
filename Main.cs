@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace libertypre
@@ -33,14 +34,14 @@ namespace libertypre
             string configFile = GetConfigFile(args);
             if (!File.Exists(configFile))
             {
-                Console.WriteLine($"[Ошибка]: Конфигурационный файл {configFile} не найден.");
+                LocaleUtils.WriteTr("ErrorConfigNotFound", configFile);
                 return;
             }
 
             string arguments = ParseConfigFile(configFile);
             if (string.IsNullOrEmpty(arguments))
             {
-                Console.WriteLine("[Ошибка]: Конфигурационный файл пуст или содержит только комментарии.");
+                LocaleUtils.WriteTr("ErrorConfigEmpty");
                 return;
             }
 
@@ -49,40 +50,37 @@ namespace libertypre
 
         private static void ShowHelp()
         {
-            Console.WriteLine("liberty-pre.exe -c <конфиг>.cfg");
-            Console.WriteLine("Примеры запуска:");
-            Console.WriteLine("  liberty-pre.exe -c discord.cfg");
-            Console.WriteLine("  liberty-pre.exe -c general.cfg");
-            Console.WriteLine("Примечание: по умолчанию читается файл default.cfg");
-            Console.WriteLine("Аргументы:");
-            Console.WriteLine("  -h, --help    Показать справку");
-            Console.WriteLine("  -v            Показать версию");
+            LocaleUtils.WriteTr("ShowHelp");
         }
 
         private static void ShowVersion()
         {
-            Console.WriteLine("liberty-pre zapret launcher 2025.3.4");
-            Console.WriteLine("Автор: Precise");
-            Console.WriteLine("Проект: https://github.com/Mr-Precise/liberty-pre");
+            string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            string author = "Precise";
+            string projectUrl = "https://github.com/Mr-Precise/liberty-pre";
+
+            LocaleUtils.WriteTr("ShowVersion", version, author, projectUrl);
         }
 
         private static bool CheckEnvironment()
         {
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
-                Console.WriteLine("[Предупреждение]: Для Linux/macOS используйте оригинальный zapret https://github.com/bol-van/zapret");
+                LocaleUtils.WriteTr("WarningLinux");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
 
             if (!Directory.Exists(bindirPath))
             {
-                Console.WriteLine("[Ошибка]: Каталог bin не найдена.");
+                LocaleUtils.WriteTr("ErrorBinNotFound");
+                Console.ReadKey();
                 return false;
             }
             if (!File.Exists(winwsExePath))
             {
-                Console.WriteLine("[Ошибка]: Файл winws.exe не найден в bin.");
+                LocaleUtils.WriteTr("ErrorWinwsNotFound");
+                Console.ReadKey();
                 return false;
             }
             return true;
@@ -98,7 +96,7 @@ namespace libertypre
         {
             if (args.Length < 2 || args[0] != "-c")
             {
-                Console.WriteLine("[Предупреждение]: Конфигурационный файл не указан, загружаем default.cfg");
+                LocaleUtils.WriteTr("WarningConfigFileNotSpecified");
                 return Path.Combine(basePath, "default.cfg");
             }
             return Path.Combine(basePath, args[1]);
@@ -128,20 +126,21 @@ namespace libertypre
 
                 if (IsWinwsRunning(winwsProcessName))
                 {
-                    Console.WriteLine("[Ошибка]: Процесс winws.exe уже запущен, закройте существующий!");
+                    LocaleUtils.WriteTr("ErrorWinwsAldeadyRunning");
                     Console.ReadKey();
                     Environment.Exit(0);
                 }
 
-                Console.WriteLine("[Готово]: winws.exe запущен с конфигурацией: " + Path.GetFileName(configFile));
+                LocaleUtils.WriteTr("DoneWinwsStarted", Path.GetFileName(configFile));
                 Process.Start(startInfo);
-                Console.WriteLine("winws свёрнут, это окно само закроется через 3 секунды...");
+                LocaleUtils.WriteTr("InfoWinwsMinimized");
                 Thread.Sleep(3000);
                 Environment.Exit(0);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("[Ошибка]: Проблемы при запуске winws.exe: " + ex.Message);
+                LocaleUtils.WriteTr("ErrorProblemStartWinws", ex.Message);
+                Console.ReadKey();
             }
         }
     }

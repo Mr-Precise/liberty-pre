@@ -18,7 +18,7 @@ namespace libertypre
             _translations.Add("en_ErrorConfigEmpty", "[Error]: Configuration file is empty or contains only comments.");
             _translations.Add("ru_ErrorConfigEmpty", "[Ошибка]: Конфигурационный файл пуст или содержит только комментарии.");
 
-            _translations.Add("en_WarningLinux", "[Warning]: For Linux/macOS use original zapre https://github.com/bol-van/zapret");
+            _translations.Add("en_WarningLinux", "[Warning]: For Linux/macOS use original zapret https://github.com/bol-van/zapret");
             _translations.Add("ru_WarningLinux", "[Предупреждение]: Для Linux/macOS используйте оригинальный zapret https://github.com/bol-van/zapret");
 
             _translations.Add("en_ErrorBinNotFound", "[Error]: The bin directory not found.");

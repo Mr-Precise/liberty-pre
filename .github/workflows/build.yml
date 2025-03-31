@@ -28,7 +28,7 @@ jobs:
         run: xbuild /p:Configuration=Release liberty-pre.sln
 
       - name: Get current date
-        run: echo "BUILD_DATE=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
+        run: echo "BUILD_DATE=$(date +'%Y.%-m.%-d')" >> $GITHUB_ENV
 
       - name: Download and extract WinDivert and zapret
         run: |

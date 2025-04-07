@@ -12,7 +12,7 @@ Read in [English](README_EN.md) language
 Читает указанный конфигурационный файл с аргументами запуска, затем запускает winws.exe с правами администратора в свёрнутом окне.  
 По умолчанию читает конфигурацию (профиль) `default.cfg`  
 Чтобы изменить ситуацию, нужно запускать liberty-pre с аргументом `-c config_name.cfg`  
-К примеру создайте ярлык на liberty-pre.exe с аргументом `liberty-pre.exe -c discord.cfg`
+К примеру, создайте ярлык на liberty-pre.exe с аргументом `liberty-pre.exe -c discord.cfg` чтобы использовать только для discord.
 
 ### Зачем?
 Удобно и почему нет.
@@ -25,9 +25,11 @@ Read in [English](README_EN.md) language
 Исполняемый файл который находится в каталоге bin к примеру winws.exe взят из оригинального репозитория [github.com/bol-van/zapret](https://github.com/bol-van/zapret). Из других мест / авторов использовать небезопасно.
 
 ### Как скомпилировать?
+Установить git:  
+Ubuntu/Debian: `sudo apt install git` / Windows: [git-scm.com/downloads/win](https://git-scm.com/downloads/win)  
 Рекурсивно склонировать исходный код:  
 `git clone --recursive https://github.com/Mr-Precise/liberty-pre`  
-Использовать Visual Studio или Monodevelop/Dotdevelop  
+Использовать Visual Studio, Visual Studio Code + C# дополнение или Monodevelop/Dotdevelop для сборки  
 Требования: .net framework (msbuild) или Mono (xbuild), если в Linux/macOS.
 
 ### Использованы компоненты из репозиториев и благодарности:

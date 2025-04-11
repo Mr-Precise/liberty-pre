@@ -42,7 +42,7 @@ namespace libertypre
                 if (IsNewerVersion(latestVersion, currentVersion))
                 {
                     var url = release["html_url"]?.ToString() ?? $"https://github.com/{RepoOwner}/{RepoName}/releases";
-                    ShowUpdDialog(latestVersion, url!);
+                    ShowUpdDialog(latestVersion, url);
                 }
             }
             catch (Exception ex)

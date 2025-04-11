@@ -61,8 +61,8 @@ namespace libertypre
             _translations.Add("en_UpdateAvailableDialog", "Update Available");
             _translations.Add("ru_UpdateAvailableDialog", "Доступно обновление");
 
-            _translations.Add("en_UpdateAvailableNewVer", "New version available.\nOpen release page in browser?\n");
-            _translations.Add("ru_UpdateAvailableNewVer", "Доступна новая версия.\nОткрыть страницу релиза в браузере?\n");
+            _translations.Add("en_UpdateAvailableNewVer", "New version available.\n[Cancel] - postponing for 2 days.\n[Yes] - Open release page in browser?\n");
+            _translations.Add("ru_UpdateAvailableNewVer", "Доступна новая версия.\n[Отмена] - отложить на 2 дня.\n[Да] - Открыть страницу релиза в браузере?\n");
         }
 
         public static void WriteTr(string textKey, params object[] args)

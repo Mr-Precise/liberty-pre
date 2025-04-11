@@ -30,7 +30,20 @@ Ubuntu / Debian: `sudo apt install git` / Windows: [git-scm.com/downloads/win](h
 Recursively clone the source code:  
 `git clone --recursive https://github.com/Mr-Precise/liberty-pre`  
 Use Visual Studio, Visual Studio Code + C# extension or Monodevelop/Dotdevelop for build  
-Requirements: .net framework (msbuild) or Mono (xbuild) if on Linux/macOS.
+Requirements: .net framework (msbuild) or Mono (xbuild) if on Linux/macOS.  
+For successful build on Linux, Ubuntu 20.04/22.04 LTS and mono nightly (6.13) versions are required.  
+You can look into [.github/workflows/build.yml](.github/workflows/build.yml#L24)  
+Example:
+```sh
+sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/mono-official-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/mono-official-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu nightly-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-nightly.list
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/mono-official-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu preview-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-preview.list
+sudo apt install mono-complete nuget git
+git clone --recursive https://github.com/Mr-Precise/liberty-pre
+cd liberty-pre
+nuget restore
+xbuild /p:Configuration=Release liberty-pre.sln
+```
 
 ### Used components from repositories and thanks:
 * [github.com/bol-van/zapret](https://github.com/bol-van/zapret) - components

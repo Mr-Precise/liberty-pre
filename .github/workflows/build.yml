@@ -22,12 +22,10 @@ jobs:
           fetch-depth: 1
 
       - name: Install Mono
-        run: sudo apt update && sudo apt install -y mono-complete nuget
+        run: sudo apt update && sudo apt install -y mono-complete
 
       - name: Build the solution
-        run: |
-          nuget restore
-          xbuild /p:Configuration=Release liberty-pre.sln
+        run: xbuild /p:Configuration=Release liberty-pre.sln
 
       - name: Get current date
         run: echo "BUILD_DATE=$(date +'%Y.%-m.%-d')" >> $GITHUB_ENV

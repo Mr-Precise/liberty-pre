@@ -137,6 +137,7 @@ namespace libertypre
                 LocaleUtils.WriteTr("DoneWinwsStarted", Path.GetFileName(configFile));
                 Process.Start(startInfo);
                 LocaleUtils.WriteTr("InfoWinwsMinimized");
+                UpdCheck.DoneEvent.WaitOne();
                 Thread.Sleep(3000);
                 Environment.Exit(0);
             }

@@ -7,11 +7,13 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 namespace libertypre
 {
     public class UpdCheck
     {
+        public static ManualResetEvent DoneEvent = new ManualResetEvent(false);
         private const string RepoOwner = "Mr-Precise";
         private const string RepoName = "liberty-pre";
         private static string DeferralConfig = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "update_deferral.json");
@@ -48,6 +50,10 @@ namespace libertypre
             catch (Exception ex)
             {
                 LocaleUtils.WriteTr("UpdCheckFailed", ex.Message);
+            }
+            finally
+            {
+                DoneEvent.Set();
             }
         }
 

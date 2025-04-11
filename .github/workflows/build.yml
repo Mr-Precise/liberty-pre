@@ -6,7 +6,7 @@ on:
       version:
         description: 'zapret version'
         required: true
-        default: '70.5'
+        default: '70.6'
 
 jobs:
     build_with_mono:
@@ -22,10 +22,12 @@ jobs:
           fetch-depth: 1
 
       - name: Install Mono
-        run: sudo apt update && sudo apt install -y mono-complete
+        run: sudo apt update && sudo apt install -y mono-complete nuget
 
       - name: Build the solution
-        run: xbuild /p:Configuration=Release liberty-pre.sln
+        run: |
+          nuget restore
+          xbuild /p:Configuration=Release liberty-pre.sln
 
       - name: Get current date
         run: echo "BUILD_DATE=$(date +'%Y.%-m.%-d')" >> $GITHUB_ENV

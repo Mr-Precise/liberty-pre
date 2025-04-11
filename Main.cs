@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace libertypre
 {
@@ -30,6 +31,8 @@ namespace libertypre
             }
 
             if (!CheckEnvironment()) return;
+
+            Task.Run(() => UpdCheck.CheckForUpdAsync());
 
             string configFile = GetConfigFile(args);
             if (!File.Exists(configFile))

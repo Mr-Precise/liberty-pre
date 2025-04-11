@@ -47,6 +47,22 @@ namespace libertypre
 
             _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help    Show help\n  -v            Show version");
             _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help    Показать справку\n  -v            Показать версию");
+
+            _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
+            _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");
+
+            _translations.Add("en_UpdCheckRemoteVer", "[UPD]: GitHub remote version: {0}");
+            _translations.Add("ru_UpdCheckRemoteVer", "[UPD]: GitHub удаленная версия: {0}");
+
+            _translations.Add("en_UpdateSkip", "[UPD]: Update skip");
+            _translations.Add("ru_UpdateSkip", "[UPD]: Обновление пропущено");
+
+            // update dialog
+            _translations.Add("en_UpdateAvailableDialog", "Update Available");
+            _translations.Add("ru_UpdateAvailableDialog", "Доступно обновление");
+
+            _translations.Add("en_UpdateAvailableNewVer", "New version available.\nOpen release page in browser?\n");
+            _translations.Add("ru_UpdateAvailableNewVer", "Доступна новая версия.\nОткрыть страницу релиза в браузере?\n");
         }
 
         public static void WriteTr(string textKey, params object[] args)
@@ -72,6 +88,28 @@ namespace libertypre
             {
                 Console.WriteLine(string.Format(textKey, args));
             }
+        }
+
+        public static string GetStrTr(string textKey)
+        {
+            var culture = CultureInfo.CurrentCulture.Name;
+
+            string translationKey;
+            if (culture.StartsWith("ru"))
+            {
+                translationKey = $"ru_{textKey}";
+            }
+            else
+            {
+                translationKey = $"en_{textKey}";
+            }
+
+            if (!_translations.ContainsKey(translationKey))
+            {
+                return textKey;
+            }
+            string translated = _translations[translationKey];
+            return translated;
         }
     }
 }

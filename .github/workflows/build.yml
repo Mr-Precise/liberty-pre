@@ -39,7 +39,9 @@ jobs:
         run: echo "BUILD_DATE=$(date +'%Y.%-m.%-d')" >> $GITHUB_ENV
 
       - name: Copy build folder for linux release
-        run: cp -r "bin/Release/" "bin/Release_linux/"
+        run: |
+          cp -r "bin/Release/" "bin/Release_linux/"
+          mkdir -p "bin/Release_linux/bin"
 
       - name: Download and extract WinDivert and zapret
         run: |
@@ -81,16 +83,16 @@ jobs:
         with:
           name: liberty-pre-${{ env.BUILD_DATE }}
           path: |
-            "liberty-pre-*.zip"
-            "liberty-pre-linux-*.tar.gz"
+            liberty-pre-*.zip
+            liberty-pre-linux-*.tar.gz
           if-no-files-found: error
 
       - name: Create GitHub Release and Upload Artifact
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            "liberty-pre-${{ env.BUILD_DATE }}.zip"
-            "liberty-pre-linux-${{ env.BUILD_DATE }}.tar.gz"
+            liberty-pre-${{ env.BUILD_DATE }}.zip
+            liberty-pre-linux-${{ env.BUILD_DATE }}.tar.gz
           tag_name: v${{ env.BUILD_DATE }}
           name: "Release liberty-pre-${{ env.BUILD_DATE }}"
           body: "liberty-pre v${{ env.BUILD_DATE }} automatic release. Used zapret-v${{ github.event.inputs.version }}, WinDivert 2.2.2-A"

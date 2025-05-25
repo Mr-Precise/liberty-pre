@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,9 +16,50 @@ namespace libertypre
         private static string bindirPath = Path.Combine(basePath, "bin");
         private static string winwsExePath = Path.Combine(bindirPath, "winws.exe");
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool SetConsoleOutputCP(uint wCodePageID);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool SetConsoleCP(uint wCodePageID);
+
+        private const uint CP_UTF8 = 65001;
+        private const uint CP_ANSI = 1251;
+
+        private static void ConfigureConsole()
+        {
+            if (Environment.OSVersion.Platform.ToString().StartsWith("Win"))
+            {
+                if (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 1)
+                {
+                    // CP1251 — ANSI
+                    SetConsoleOutputCP(CP_ANSI);
+                    SetConsoleCP(CP_ANSI);
+                    try
+                    {
+                        Console.OutputEncoding = Encoding.GetEncoding(1251);
+                    }
+                    catch
+                    {
+                        Console.OutputEncoding = Encoding.Default;
+                    }
+                    Console.WriteLine("Windows 7 detected. Using CP1251");
+                }
+                else
+                {
+                    SetConsoleOutputCP(CP_UTF8);
+                    SetConsoleCP(CP_UTF8);
+                    Console.OutputEncoding = new UTF8Encoding(false);
+                }
+            }
+            else
+            {
+                Console.OutputEncoding = Encoding.UTF8;
+            }
+        }
+
         public static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            ConfigureConsole();
 
             if (args.Length > 0 && (args[0] == "-h" || args[0] == "--help"))
             {

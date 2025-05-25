@@ -13,6 +13,7 @@ namespace libertypre
         private static string basePath = AppDomain.CurrentDomain.BaseDirectory;
         private static string bindirPath = Path.Combine(basePath, "bin");
         private static string winwsExePath = Path.Combine(bindirPath, "winws.exe");
+        private static bool nftables = true;
 
         public static void Main(string[] args)
         {
@@ -23,6 +24,10 @@ namespace libertypre
                 ShowHelp();
                 return;
             }
+            if (args.Length > 0 && args[0] == "-i")
+            {
+                nftables = false;
+            }
 
             if (args.Length > 0 && args[0] == "-v")
             {
@@ -30,7 +35,7 @@ namespace libertypre
                 return;
             }
 
-            if (!CheckEnvironment()) return;
+            if (!CheckConfigureEnvironment()) return;
 
             Task.Run(() => UpdCheck.CheckForUpdAsync());
 
@@ -65,13 +70,25 @@ namespace libertypre
             LocaleUtils.WriteTr("ShowVersion", version, author, projectUrl);
         }
 
-        private static bool CheckEnvironment()
+        private static bool CheckConfigureEnvironment()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            if (IsLinux())
             {
                 LocaleUtils.WriteTr("WarningLinux");
-                Console.ReadKey();
-                Environment.Exit(0);
+                if (nftables)
+                {
+                    if (!CommandExists("nfqws")) winwsExePath = Path.Combine(bindirPath, "nfqws");
+                    Console.WriteLine("Used nfqws (nftables)");
+                }
+                else
+                {
+                    if (!CommandExists("tpws")) winwsExePath = Path.Combine(bindirPath, "tpws");
+                    Console.WriteLine("Used tpws (iptables)");
+                }
+            }
+            else
+            {
+                winwsExePath = "winws.exe";
             }
 
             if (!Directory.Exists(bindirPath))
@@ -89,6 +106,16 @@ namespace libertypre
             return true;
         }
 
+        private static bool IsLinux()
+        {
+            return Environment.OSVersion.Platform == PlatformID.Unix;
+        }
+
+        private static bool CommandExists(string command)
+        {
+            return RunCommand("which", command).Length > 0;
+        }
+
         private static bool IsWinwsRunning(string processName)
         {
             Process[] processes = Process.GetProcessesByName(processName);
@@ -100,7 +127,14 @@ namespace libertypre
             if (args.Length < 2 || args[0] != "-c")
             {
                 LocaleUtils.WriteTr("WarningConfigFileNotSpecified");
-                return Path.Combine(basePath, "default.cfg");
+                if (IsLinux())
+                {
+                    return Path.Combine(basePath, "linux.cfg");
+                }
+                else
+                {
+                    return Path.Combine(basePath, "default.cfg");
+                }
             }
             return Path.Combine(basePath, args[1]);
         }
@@ -146,6 +180,21 @@ namespace libertypre
                 LocaleUtils.WriteTr("ErrorProblemStartWinws", ex.Message);
                 Console.ReadKey();
             }
+        }
+
+        private static string RunCommand(string command, string args)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = command,
+                Arguments = args,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            Process process = Process.Start(psi);
+            process.WaitForExit();
+            return process.StandardOutput.ReadToEnd();
         }
     }
 }

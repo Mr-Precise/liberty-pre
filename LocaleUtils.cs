@@ -18,8 +18,8 @@ namespace libertypre
             _translations.Add("en_ErrorConfigEmpty", "[Error]: Configuration file is empty or contains only comments.");
             _translations.Add("ru_ErrorConfigEmpty", "[Ошибка]: Конфигурационный файл пуст или содержит только комментарии.");
 
-            _translations.Add("en_WarningLinux", "[Warning]: For Linux/macOS use original zapret https://github.com/bol-van/zapret");
-            _translations.Add("ru_WarningLinux", "[Предупреждение]: Для Linux/macOS используйте оригинальный zapret https://github.com/bol-van/zapret");
+            _translations.Add("en_WarningLinux", "[Warning]: For Linux/macOS recommended to use original zapret https://github.com/bol-van/zapret");
+            _translations.Add("ru_WarningLinux", "[Предупреждение]: Для Linux/macOS рекомендуется использовать оригинальный zapret https://github.com/bol-van/zapret");
 
             _translations.Add("en_ErrorBinNotFound", "[Error]: The bin directory not found.");
             _translations.Add("ru_ErrorBinNotFound", "[Ошибка]: Каталог bin не найден.");
@@ -45,8 +45,8 @@ namespace libertypre
             _translations.Add("en_ShowVersion", "liberty-pre zapret launcher {0}\nAuthor: {1}\nProject: {2}");
             _translations.Add("ru_ShowVersion", "liberty-pre zapret лаунчер {0}\nАвтор: {1}\nПроект: {2}");
 
-            _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help    Show help\n  -v            Show version");
-            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help    Показать справку\n  -v            Показать версию");
+            _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help    Show help\n  -c            Path to config file\n  -i            Use iptables instead of nftables\n  -v            Show version");
+            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help    Показать справку\n  -c            Путь к файлу конфирурации\n  -i            Использовать iptables вместо nftables\n  -v            Показать версию");
 
             _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
             _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");

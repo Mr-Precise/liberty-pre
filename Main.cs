@@ -24,6 +24,15 @@ namespace libertypre
                 ShowHelp();
                 return;
             }
+            if (args.Length > 0 && (args[0] == "-s" || args[0] == "--stop"))
+            {
+                if (!CringeUtils.IsLinux())
+                {
+                    CringeUtils.StopRemoveSevice();
+                }
+                return;
+            }
+
             if (args.Length > 0 && args[0] == "-i")
             {
                 nftables = false;

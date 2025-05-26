@@ -35,6 +35,27 @@ namespace libertypre
             Process.Start(psi);
         }
 
+        public static void StopRemoveSevice()
+        {
+            try
+            {
+                Process[] processes = Process.GetProcessesByName("winws");
+                foreach (Process proc in processes)
+                {
+                    proc.Kill();
+                    proc.WaitForExit(1000);
+                }
+                string scName = "WinDivert";
+                RunCommandAsAdmin("cmd", $"/c net stop {scName} && sc delete {scName}");
+                LocaleUtils.WriteTr("StopRemoveDrv");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Thread.Sleep(3000);
+        }
+
         public static bool IsLinux()
         {
             return Environment.OSVersion.Platform == PlatformID.Unix;

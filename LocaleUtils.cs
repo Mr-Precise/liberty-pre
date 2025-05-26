@@ -51,14 +51,17 @@ namespace libertypre
             _translations.Add("en_ShowVersion", "liberty-pre zapret launcher {0}\nAuthor: {1}\nProject: {2}");
             _translations.Add("ru_ShowVersion", "liberty-pre zapret лаунчер {0}\nАвтор: {1}\nПроект: {2}");
 
-            _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help    Show help\n  -c            Path to config file\n  -i            Use iptables instead of nftables\n  -v            Show version");
-            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help    Показать справку\n  -c            Путь к файлу конфирурации\n  -i            Использовать iptables вместо nftables\n  -v            Показать версию");
+            _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help    Show help\n  -c            Path to config file\n  -i            Use iptables instead of nftables\n  -s, --stop    Stop winws and delete WinDivert Service\n  -v            Show version");
+            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help    Показать справку\n  -c            Путь к файлу конфирурации\n  -i            Использовать iptables вместо nftables\n  -s, --stop    Остановить winws и удалить WinDivert сервис\n  -v            Показать версию");
 
             _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
             _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");
 
             _translations.Add("en_UpdCheckRemoteVer", "[UPD]: GitHub remote version: {0}");
             _translations.Add("ru_UpdCheckRemoteVer", "[UPD]: GitHub удаленная версия: {0}");
+
+            _translations.Add("en_StopRemoveDrv", "[Done]: winws is stopped + WinDivert unload");
+            _translations.Add("ru_StopRemoveDrv", "[Готово]: winws завершен + выгружен WinDivert");
 
             _translations.Add("en_UpdateSkip", "[UPD]: Update skip");
             _translations.Add("ru_UpdateSkip", "[UPD]: Обновление пропущено");

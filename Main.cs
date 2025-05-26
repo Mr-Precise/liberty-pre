@@ -88,7 +88,7 @@ namespace libertypre
             }
             else
             {
-                winwsExePath = "winws.exe";
+                winwsExePath = Path.Combine(bindirPath, "winws.exe");
             }
 
             if (!Directory.Exists(bindirPath))

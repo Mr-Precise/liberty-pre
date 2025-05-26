@@ -10,7 +10,7 @@ namespace libertypre
 {
     class MainClass
     {
-        private static string basePath = AppDomain.CurrentDomain.BaseDirectory;
+        public static string basePath = AppDomain.CurrentDomain.BaseDirectory;
         private static string bindirPath = Path.Combine(basePath, "bin");
         private static string winwsExePath = Path.Combine(bindirPath, "winws.exe");
         private static bool nftables = true;
@@ -72,23 +72,25 @@ namespace libertypre
 
         private static bool CheckConfigureEnvironment()
         {
-            if (IsLinux())
+            if (CringeUtils.IsLinux())
             {
                 LocaleUtils.WriteTr("WarningLinux");
                 if (nftables)
                 {
-                    if (!CommandExists("nfqws")) winwsExePath = Path.Combine(bindirPath, "nfqws");
-                    Console.WriteLine("Used nfqws (nftables)");
+                    if (!CommandExists("nfqws"))
+                    {
+                        winwsExePath = Path.Combine(bindirPath, "nfqws");
+                    }
+                    LocaleUtils.WriteTr("InfoUsedNfqws");
                 }
                 else
                 {
-                    if (!CommandExists("tpws")) winwsExePath = Path.Combine(bindirPath, "tpws");
-                    Console.WriteLine("Used tpws (iptables)");
+                    if (!CommandExists("tpws"))
+                    {
+                        winwsExePath = Path.Combine(bindirPath, "tpws");
+                    }
+                    LocaleUtils.WriteTr("InfoUsedIptables");
                 }
-            }
-            else
-            {
-                winwsExePath = Path.Combine(bindirPath, "winws.exe");
             }
 
             if (!Directory.Exists(bindirPath))
@@ -106,14 +108,9 @@ namespace libertypre
             return true;
         }
 
-        private static bool IsLinux()
-        {
-            return Environment.OSVersion.Platform == PlatformID.Unix;
-        }
-
         private static bool CommandExists(string command)
         {
-            return RunCommand("which", command).Length > 0;
+            return CringeUtils.RunCommand("which", command).Length > 0;
         }
 
         private static bool IsWinwsRunning(string processName)
@@ -127,7 +124,7 @@ namespace libertypre
             if (args.Length < 2 || args[0] != "-c")
             {
                 LocaleUtils.WriteTr("WarningConfigFileNotSpecified");
-                if (IsLinux())
+                if (CringeUtils.IsLinux())
                 {
                     return Path.Combine(basePath, "linux.cfg");
                 }
@@ -148,7 +145,7 @@ namespace libertypre
 
         private static void StartWinws(string arguments, string configFile)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            ProcessStartInfo winwsStartInfo = new ProcessStartInfo
             {
                 FileName = winwsExePath,
                 Arguments = arguments,
@@ -169,8 +166,11 @@ namespace libertypre
                 }
 
                 LocaleUtils.WriteTr("DoneWinwsStarted", Path.GetFileName(configFile));
-                Process.Start(startInfo);
-                LocaleUtils.WriteTr("InfoWinwsMinimized");
+                Process.Start(winwsStartInfo);
+                if (!CringeUtils.IsLinux())
+                {
+                    LocaleUtils.WriteTr("InfoWinwsMinimized");
+                }
                 UpdCheck.DoneEvent.WaitOne();
                 Thread.Sleep(3000);
                 Environment.Exit(0);
@@ -180,21 +180,6 @@ namespace libertypre
                 LocaleUtils.WriteTr("ErrorProblemStartWinws", ex.Message);
                 Console.ReadKey();
             }
-        }
-
-        private static string RunCommand(string command, string args)
-        {
-            ProcessStartInfo psi = new ProcessStartInfo
-            {
-                FileName = command,
-                Arguments = args,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-            Process process = Process.Start(psi);
-            process.WaitForExit();
-            return process.StandardOutput.ReadToEnd();
         }
     }
 }

@@ -30,11 +30,17 @@ namespace libertypre
             _translations.Add("en_WarningConfigFileNotSpecified", "[Warning]: Configuration file not specified, loading default.cfg");
             _translations.Add("ru_WarningConfigFileNotSpecified", "[Предупреждение]: Конфигурационный файл не указан, загружаем default.cfg");
 
+            _translations.Add("en_InfoUsedNfqws", "[Info]: Linux / Used nfqws (nftables)");
+            _translations.Add("ru_InfoUsedNfqws", "[Информация]: Linux / Используется nfqws (nftables)");
+
+            _translations.Add("en_InfoUsedIptables", "[Info]: Linux / Used tpws (iptables), limited in functionality");
+            _translations.Add("ru_InfoUsedIptables", "[Информация]: Linux / Используется tpws (iptables), ограниченная по функционалу");
+
             _translations.Add("en_ErrorWinwsAldeadyRunning", "[Error]: The process winws.exe is already running, please close the existing one!");
             _translations.Add("ru_ErrorWinwsAldeadyRunning", "[Ошибка]: Процесс winws.exe уже запущен, закройте существующий!");
 
-            _translations.Add("en_DoneWinwsStarted", "[Done]: winws.exe started with configuration: {0}");
-            _translations.Add("ru_DoneWinwsStarted", "[Готово]: winws.exe запущен с конфигурацией: {0}");
+            _translations.Add("en_DoneWinwsStarted", "[Done]: Started with configuration: {0}");
+            _translations.Add("ru_DoneWinwsStarted", "[Готово]: Запущено с конфигурацией: {0}");
 
             _translations.Add("en_InfoWinwsMinimized", "[Info]: winws is minimized, this window will close itself in 3 seconds...");
             _translations.Add("ru_InfoWinwsMinimized", "[Информация]: winws теперь свёрнут, это окно само закроется через 3 секунды...");

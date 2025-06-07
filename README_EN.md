@@ -3,23 +3,36 @@
 Читать на [Русском](README.md) языке
 
 ### What is this?
-Implementation of a launcher for winws.exe (DPI bypass tool) in C#, with profile support.  
+Implementation of a launcher for winws.exe or nfqws (DPI bypass tool) in C#, with profile support.  
 Helps you bypass blocking Youtube, Discord, etc.  
 Currently in development.
 
 ### How does it work?
 Checks for everything necessary, the presence of an existing process, OS.  
 Reads the specified configuration file with startup arguments, then runs winws.exe with administrator rights in a minimized window.  
+If we are on Linux, we also check for sudo, it asks for a password and nfqws starts.  
 By default, reads the configuration (profile) `default.cfg`  
 To change this behavior, you need to run liberty-pre with the argument `-c config_name.cfg`  
 For example, create a shortcut to liberty-pre.exe with the argument `liberty-pre.exe -c discord.cfg` to use only for Discord.
+
+### OS compatibility
+#### Full Windows support:
+- 8.1 - 11 64bit
+- separate build for outdated Windows 7 64bit (build 7601)
+
+#### Experimental Linux / Mono support (in development):
+- *ubuntu 20.04+ amd64
+- Debian 11+ amd64
+- actual Arch/Manjaro
 
 ### What for?
 Convenient and why not.
 
 ### How to use?
 Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases/latest), unpack and run.  
-If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).
+If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).  
+Linux (for advanced users): install mono, run liberty-pre-linux.sh  
+Linux: Additional iptables/nftables configuration may be required.
 
 ### Caution:
 The executable file that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.
@@ -31,7 +44,7 @@ Recursively clone the source code:
 `git clone --recursive https://github.com/Mr-Precise/liberty-pre`  
 Use Visual Studio, Visual Studio Code + C# extension or Monodevelop/Dotdevelop for build  
 Requirements: .net framework (msbuild) or Mono (xbuild) if on Linux/macOS.  
-For successful build on Linux, Ubuntu 20.04/22.04 LTS and mono nightly (6.13) versions are required.  
+For successful build and use on Linux, Ubuntu 20.04/22.04 LTS and mono nightly (6.13) versions are required.  
 You can look into [.github/workflows/build.yml](.github/workflows/build.yml#L24)  
 Example:
 ```sh

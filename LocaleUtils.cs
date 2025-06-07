@@ -21,6 +21,12 @@ namespace libertypre
             _translations.Add("en_WarningLinux", "[Warning]: For Linux/macOS recommended to use original zapret https://github.com/bol-van/zapret");
             _translations.Add("ru_WarningLinux", "[Предупреждение]: Для Linux/macOS рекомендуется использовать оригинальный zapret https://github.com/bol-van/zapret");
 
+            _translations.Add("en_WarningLinuxRootPassword", "[Linux]: (root access) Enter sudo password: ");
+            _translations.Add("ru_WarningLinuxRootPassword", "[Linux]: (root доступ) Введите пароль sudo: ");
+
+            _translations.Add("en_ErrorSudoNotFound", "[Error]: Requires sudo to work properly.");
+            _translations.Add("ru_ErrorSudoNotFound", "[Ошибка]: Для правильной работы требуется sudo.");
+
             _translations.Add("en_ErrorBinNotFound", "[Error]: The bin directory not found.");
             _translations.Add("ru_ErrorBinNotFound", "[Ошибка]: Каталог bin не найден.");
 
@@ -57,8 +63,8 @@ namespace libertypre
             _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
             _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");
 
-            _translations.Add("en_UpdCheckRemoteVer", "[UPD]: GitHub remote version: {0}");
-            _translations.Add("ru_UpdCheckRemoteVer", "[UPD]: GitHub удаленная версия: {0}");
+            _translations.Add("en_UpdCheckRemoteVer", "\n[UPD]: GitHub remote version: {0}");
+            _translations.Add("ru_UpdCheckRemoteVer", "\n[UPD]: GitHub удаленная версия: {0}");
 
             _translations.Add("en_StopRemoveDrv", "[Done]: winws is stopped + WinDivert unload");
             _translations.Add("ru_StopRemoveDrv", "[Готово]: winws завершен + выгружен WinDivert");

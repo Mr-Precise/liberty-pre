@@ -12,7 +12,7 @@ namespace libertypre
     {
         public static string basePath = AppDomain.CurrentDomain.BaseDirectory;
         private static string bindirPath = Path.Combine(basePath, "bin");
-        private static string winwsExePath = Path.Combine(bindirPath, "winws.exe");
+        private static string toolDPIexe = Path.Combine(bindirPath, "winws.exe");
         private static bool nftables = true;
 
         public static void Main(string[] args)
@@ -55,14 +55,14 @@ namespace libertypre
                 return;
             }
 
-            string arguments = ParseConfigFile(configFile);
-            if (string.IsNullOrEmpty(arguments))
+            string toolarguments = ParseConfigFile(configFile);
+            if (string.IsNullOrEmpty(toolarguments))
             {
                 LocaleUtils.WriteTr("ErrorConfigEmpty");
                 return;
             }
 
-            StartWinws(arguments, configFile);
+            StartUnified(toolDPIexe, toolarguments, configFile);
         }
 
         private static void ShowHelp()
@@ -86,19 +86,23 @@ namespace libertypre
                 LocaleUtils.WriteTr("WarningLinux");
                 if (nftables)
                 {
-                    if (!CommandExists("nfqws"))
+                    if (!LinuxCommandExists("nfqws"))
                     {
-                        winwsExePath = Path.Combine(bindirPath, "nfqws");
+                        toolDPIexe = Path.Combine(bindirPath, "nfqws");
                     }
                     LocaleUtils.WriteTr("InfoUsedNfqws");
                 }
                 else
                 {
-                    if (!CommandExists("tpws"))
+                    if (!LinuxCommandExists("tpws"))
                     {
-                        winwsExePath = Path.Combine(bindirPath, "tpws");
+                        toolDPIexe = Path.Combine(bindirPath, "tpws");
                     }
                     LocaleUtils.WriteTr("InfoUsedIptables");
+                }
+                if (!LinuxCommandExists("sudo"))
+                {
+                    LocaleUtils.WriteTr("ErrorSudoNotFound");
                 }
             }
 
@@ -108,21 +112,24 @@ namespace libertypre
                 Console.ReadKey();
                 return false;
             }
-            if (!File.Exists(winwsExePath))
+            if (!CringeUtils.IsLinux())
             {
-                LocaleUtils.WriteTr("ErrorWinwsNotFound");
-                Console.ReadKey();
-                return false;
+                if (!File.Exists(toolDPIexe))
+                {
+                    LocaleUtils.WriteTr("ErrorWinwsNotFound");
+                    Console.ReadKey();
+                    return false;
+                }
             }
             return true;
         }
 
-        private static bool CommandExists(string command)
+        private static bool LinuxCommandExists(string command)
         {
             return CringeUtils.RunCommand("which", command).Length > 0;
         }
 
-        private static bool IsWinwsRunning(string processName)
+        private static bool IsProcessRunning(string processName)
         {
             Process[] processes = Process.GetProcessesByName(processName);
             return processes.Length > 0;
@@ -152,37 +159,61 @@ namespace libertypre
                 .Where(line => !string.IsNullOrEmpty(line) && !line.StartsWith("#")));
         }
 
-        private static void StartWinws(string arguments, string configFile)
+        private static void StartUnified(string toolprogram, string toolarguments, string configFile)
         {
-            ProcessStartInfo winwsStartInfo = new ProcessStartInfo
+            string lastToolProgram = toolprogram;
+            string lastToolArguments = toolarguments;
+            bool shellexToggle = true;
+            string processName = "winws";
+
+            if (CringeUtils.IsLinux())
             {
-                FileName = winwsExePath,
-                Arguments = arguments,
-                UseShellExecute = true,
-                Verb = "runas",
-                WindowStyle = ProcessWindowStyle.Minimized
-            };
+                processName = "nfqws";
+                shellexToggle = false;
+                lastToolProgram = "sudo";
+                lastToolArguments = $"{toolprogram} {toolarguments}";
+            }
+            Console.WriteLine("lastToolProgram: " + lastToolProgram);
+            Console.WriteLine("lastToolArguments: " + lastToolArguments);
+
+            if (IsProcessRunning(processName))
+            {
+                LocaleUtils.WriteTr("ErrorWinwsAldeadyRunning");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+
+            var UniStartInfo = new ProcessStartInfo();
+            UniStartInfo.FileName = lastToolProgram;
+            UniStartInfo.Arguments = lastToolArguments;
+            UniStartInfo.UseShellExecute = shellexToggle;
+            UniStartInfo.WorkingDirectory = basePath;
+
+            if (!CringeUtils.IsLinux())
+            {
+                UniStartInfo.Verb = "runas";
+                UniStartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            }
 
             try
             {
-                string winwsProcessName = "winws";
-
-                if (IsWinwsRunning(winwsProcessName))
-                {
-                    LocaleUtils.WriteTr("ErrorWinwsAldeadyRunning");
-                    Console.ReadKey();
-                    Environment.Exit(0);
-                }
-
                 LocaleUtils.WriteTr("DoneWinwsStarted", Path.GetFileName(configFile));
-                Process.Start(winwsStartInfo);
-                if (!CringeUtils.IsLinux())
+                if (CringeUtils.IsLinux())
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    LocaleUtils.WriteTr("WarningLinuxsudo");
+                    Console.ResetColor();
+
+                    Process uni = Process.Start(UniStartInfo);
+                    uni.WaitForExit();
+                }
+                else
                 {
                     LocaleUtils.WriteTr("InfoWinwsMinimized");
+                    Process.Start(UniStartInfo);
                 }
                 UpdCheck.DoneEvent.WaitOne();
                 Thread.Sleep(3000);
-                Environment.Exit(0);
             }
             catch (Exception ex)
             {

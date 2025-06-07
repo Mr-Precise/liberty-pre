@@ -173,8 +173,6 @@ namespace libertypre
                 lastToolProgram = "sudo";
                 lastToolArguments = $"{toolprogram} {toolarguments}";
             }
-            Console.WriteLine("lastToolProgram: " + lastToolProgram);
-            Console.WriteLine("lastToolArguments: " + lastToolArguments);
 
             if (IsProcessRunning(processName))
             {
@@ -201,7 +199,7 @@ namespace libertypre
                 if (CringeUtils.IsLinux())
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    LocaleUtils.WriteTr("WarningLinuxsudo");
+                    LocaleUtils.WriteTr("WarningLinuxRootPassword");
                     Console.ResetColor();
 
                     Process uni = Process.Start(UniStartInfo);

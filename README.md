@@ -18,7 +18,7 @@ Read in [English](README_EN.md) language
 ### Совместимость с ОС
 #### Полная поддержка Windows:
 - 8.1 - 11 64bit
-- отдельная сборка под устапевшую Windows 7  64bit (build 7601)
+- отдельная сборка под устаревшую Windows 7 64bit (build 7601)
 
 #### Экспериментальная поддержка Linux / Mono (в разработке):
 - *ubuntu 20.04+ amd64

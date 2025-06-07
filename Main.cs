@@ -153,6 +153,11 @@ namespace libertypre
                     return Path.Combine(basePath, "default.cfg");
                 }
             }
+            if (!File.Exists(Path.Combine(basePath, args[1])))
+            {
+                LocaleUtils.WriteTr("ErrorConfigFileNotFound", args[1]);
+                Console.ReadKey();
+            }
             return Path.Combine(basePath, args[1]);
         }
 

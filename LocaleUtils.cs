@@ -36,6 +36,9 @@ namespace libertypre
             _translations.Add("en_WarningConfigFileNotSpecified", "[Warning]: Configuration file not specified, loading default.cfg");
             _translations.Add("ru_WarningConfigFileNotSpecified", "[Предупреждение]: Конфигурационный файл не указан, загружаем default.cfg");
 
+            _translations.Add("en_ErrorConfigFileNotFound", "[Error]: Configuration file {0} not found!");
+            _translations.Add("ru_ErrorConfigFileNotFound", "[Ошибка]: Файл конфигурации {0} не найден!");
+
             _translations.Add("en_InfoUsedNfqws", "[Info]: Linux / Used nfqws (nftables)");
             _translations.Add("ru_InfoUsedNfqws", "[Информация]: Linux / Используется nfqws (nftables)");
 
@@ -62,6 +65,9 @@ namespace libertypre
 
             _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
             _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");
+
+            _translations.Add("en_CreateShortcutsFailed", "[Error]: Error while creating shortcuts (.lnk): {0}");
+            _translations.Add("ru_CreateShortcutsFailed", "[Ошибка]: Ошибка при создании ярлыков (.lnk): {0}");
 
             _translations.Add("en_UpdCheckRemoteVer", "\n[UPD]: GitHub remote version: {0}");
             _translations.Add("ru_UpdCheckRemoteVer", "\n[UPD]: GitHub удаленная версия: {0}");

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace libertypre
 {
     public class CringeUtils
     {
+        public static ManualResetEvent Done = new ManualResetEvent(false);
+
         public static string RunCommand(string command, string args)
         {
             ProcessStartInfo psi = new ProcessStartInfo
@@ -53,6 +57,56 @@ namespace libertypre
                 Console.WriteLine(ex.Message);
             }
             Thread.Sleep(3000);
+        }
+
+        private static void CreateWindowsShortcut(string shortcutName, string targetPath, string arguments)
+        {
+            string shortcutFullPath = Path.Combine(MainClass.basePath, shortcutName);
+
+            if (File.Exists(shortcutFullPath))
+            {
+                return;
+            }
+
+            string powershellScript = $@"
+$WshShell = New-Object -ComObject WScript.Shell;
+$Shortcut = $WshShell.CreateShortcut('{shortcutFullPath}');
+$Shortcut.TargetPath = '{targetPath}';
+$Shortcut.Arguments = '{arguments}';
+$Shortcut.WorkingDirectory = '{Path.GetDirectoryName(targetPath)}';
+$Shortcut.Save();
+";
+
+            var psi = new ProcessStartInfo
+            {
+                FileName = "powershell",
+                Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"{powershellScript}\"",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            };
+
+            Process.Start(psi)?.WaitForExit();
+        }
+
+        public static async Task CreateShortcutsAsync()
+        {
+            try
+            {
+                string selfPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
+                CreateWindowsShortcut("liberty-pre stop.lnk", selfPath, "--stop");
+                CreateWindowsShortcut("liberty-pre fake_tls_mod_auto.lnk", selfPath, "-c default_fake_tls_mod_auto.cfg");
+                CreateWindowsShortcut("liberty-pre discord.lnk", selfPath, "-c discord.cfg");
+            }
+            catch (Exception ex)
+            {
+                LocaleUtils.WriteTr("CreateShortcutsFailed", ex.Message);
+            }
+            finally
+            {
+                Done.Set();
+            }
         }
 
         public static bool IsLinux()

@@ -47,6 +47,10 @@ namespace libertypre
             if (!CheckConfigureEnvironment()) return;
 
             Task.Run(() => UpdCheck.CheckForUpdAsync());
+            if (!CringeUtils.IsLinux())
+            {
+                Task.Run(() => CringeUtils.CreateShortcutsAsync());
+            }
 
             string configFile = GetConfigFile(args);
             if (!File.Exists(configFile))

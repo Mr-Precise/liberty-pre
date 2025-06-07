@@ -18,7 +18,7 @@ For example, create a shortcut to liberty-pre.exe with the argument `liberty-pre
 ### OS compatibility
 #### Full Windows support:
 - 8.1 - 11 64bit
-- separate build for outdated Windows 7 64bit (build 7601)
+- separate build for outdated Windows 7 SP1 64bit (build 7601) and [WMF 5.1 (PowerShell 5.1)](https://download.microsoft.com/download/6/F/5/6F5FF66C-6775-42B0-86C4-47D41F2DA187/Win7AndW2K8R2-KB3191566-x64.zip)
 
 #### Experimental Linux / Mono support (in development):
 - *ubuntu 20.04+ amd64

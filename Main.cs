@@ -67,6 +67,13 @@ namespace libertypre
             }
 
             StartUnified(toolDPIexe, toolarguments, configFile);
+
+            if (!CringeUtils.IsLinux())
+            {
+                CringeUtils.ShortcutCrDone.WaitOne();
+            }
+            UpdCheck.DoneEvent.WaitOne();
+            Thread.Sleep(3000);
         }
 
         private static void ShowHelp()
@@ -219,8 +226,6 @@ namespace libertypre
                     LocaleUtils.WriteTr("InfoWinwsMinimized");
                     Process.Start(UniStartInfo);
                 }
-                UpdCheck.DoneEvent.WaitOne();
-                Thread.Sleep(3000);
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace libertypre
 {
     public class CringeUtils
     {
-        public static ManualResetEvent Done = new ManualResetEvent(false);
+        public static ManualResetEvent ShortcutCrDone = new ManualResetEvent(false);
 
         public static string RunCommand(string command, string args)
         {
@@ -86,7 +87,8 @@ $Shortcut.Save();
                 WindowStyle = ProcessWindowStyle.Hidden
             };
 
-            Process.Start(psi)?.WaitForExit();
+            Process.Start(psi);
+            Thread.Sleep(100);
         }
 
         public static async Task CreateShortcutsAsync()
@@ -105,7 +107,7 @@ $Shortcut.Save();
             }
             finally
             {
-                Done.Set();
+                ShortcutCrDone.Set();
             }
         }
 

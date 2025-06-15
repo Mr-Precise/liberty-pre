@@ -12,7 +12,8 @@ Checks for everything necessary, the presence of an existing process, OS.
 Reads the specified configuration file with startup arguments, then runs winws.exe with administrator rights in a minimized window.  
 If we are on Linux, we also check for sudo, it asks for a password and nfqws starts.  
 By default, reads the configuration (profile) `default.cfg`  
-To change this behavior, you need to run liberty-pre with the argument `-c config_name.cfg`  
+When you first launch the program, it `automatically` creates the necessary shortcuts with configurations in the same directory.  
+To run with an alternative configuration, run liberty-pre with the argument `-c config_name.cfg`  
 For example, create a shortcut to liberty-pre.exe with the argument `liberty-pre.exe -c discord.cfg` to use only for Discord.
 
 ### OS compatibility

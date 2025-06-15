@@ -6,7 +6,7 @@ on:
       version:
         description: 'zapret version'
         required: true
-        default: '71'
+        default: '71.1.1'
 
 jobs:
     build_with_mono:
@@ -49,8 +49,8 @@ jobs:
           wget -O zapret.tar.gz "https://github.com/bol-van/zapret/releases/download/v${{ github.event.inputs.version }}/zapret-v${{ github.event.inputs.version }}.tar.gz"
           wget -O WinDivert.zip https://github.com/basil00/WinDivert/releases/download/v2.2.2/WinDivert-2.2.2-A.zip
           unzip -j WinDivert.zip "*/x64/WinDivert.dll" "*/x64/WinDivert64.sys" -d bin/Release/bin/
-          unzip -j zapret.zip "*/binaries/win64/winws.exe" "*/binaries/win64/cygwin1.dll" -d bin/Release/bin/
-          tar -xvzf zapret.tar.gz -C "bin/Release_linux/bin" --wildcards --strip-components=3 '*/binaries/x86_64/*'
+          unzip -j zapret.zip "*/binaries/windows-x86_64/winws.exe" "*/binaries/windows-x86_64/cygwin1.dll" -d bin/Release/bin/
+          tar -xvzf zapret.tar.gz -C "bin/Release_linux/bin" --wildcards --strip-components=3 '*/binaries/linux-x86_64/*'
           unzip -j zapret.zip "*/files/fake/tls_clienthello_www_google_com.bin" "*/files/fake/quic_initial_www_google_com.bin" "*/files/fake/tls_clienthello_vk_com.bin" "*/files/fake/quic_initial_vk_com.bin" -d "bin/Release/"
           unzip -j zapret.zip "*/files/fake/tls_clienthello_www_google_com.bin" "*/files/fake/quic_initial_www_google_com.bin" "*/files/fake/tls_clienthello_vk_com.bin" "*/files/fake/quic_initial_vk_com.bin" -d "bin/Release_linux/"
 

@@ -43,7 +43,9 @@ jobs:
           cp -r "bin/Release/" "bin/Release_linux/"
           mkdir -p "bin/Release_linux/bin"
           mkdir -p "bin/Release/data"
+          mkdir -p "bin/Release/configs"
           mkdir -p "bin/Release_linux/data"
+          mkdir -p "bin/Release_linux/configs"
 
       - name: Download and extract WinDivert and zapret
         run: |

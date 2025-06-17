@@ -12,6 +12,8 @@ namespace libertypre
     {
         public static string basePath = AppDomain.CurrentDomain.BaseDirectory;
         private static string bindirPath = Path.Combine(basePath, "bin");
+        private static string configsPath = Path.Combine(basePath, "configs");
+        private static string dataPath = Path.Combine(basePath, "data");
         private static string toolDPIexe = Path.Combine(bindirPath, "winws.exe");
         private static bool nftables = true;
 
@@ -123,6 +125,21 @@ namespace libertypre
                 Console.ReadKey();
                 return false;
             }
+
+            if (!Directory.Exists(configsPath))
+            {
+                LocaleUtils.WriteTr("ErrorConfDirNotFound");
+                Directory.CreateDirectory(configsPath);
+                return false;
+            }
+
+            if (!Directory.Exists(dataPath))
+            {
+                LocaleUtils.WriteTr("ErrorDataDirNotFound");
+                Directory.CreateDirectory(dataPath);
+                return false;
+            }
+
             if (!CringeUtils.IsLinux())
             {
                 if (!File.Exists(toolDPIexe))
@@ -153,19 +170,19 @@ namespace libertypre
                 LocaleUtils.WriteTr("WarningConfigFileNotSpecified");
                 if (CringeUtils.IsLinux())
                 {
-                    return Path.Combine(basePath, "linux.cfg");
+                    return Path.Combine(configsPath, "linux.cfg");
                 }
                 else
                 {
-                    return Path.Combine(basePath, "default.cfg");
+                    return Path.Combine(configsPath, "default.cfg");
                 }
             }
-            if (!File.Exists(Path.Combine(basePath, args[1])))
+            if (!File.Exists(Path.Combine(configsPath, args[1])))
             {
                 LocaleUtils.WriteTr("ErrorConfigFileNotFound", args[1]);
                 Console.ReadKey();
             }
-            return Path.Combine(basePath, args[1]);
+            return Path.Combine(configsPath, args[1]);
         }
 
         private static string ParseConfigFile(string configFile)
@@ -201,7 +218,7 @@ namespace libertypre
             UniStartInfo.FileName = lastToolProgram;
             UniStartInfo.Arguments = lastToolArguments;
             UniStartInfo.UseShellExecute = shellexToggle;
-            UniStartInfo.WorkingDirectory = basePath;
+            UniStartInfo.WorkingDirectory = dataPath;
 
             if (!CringeUtils.IsLinux())
             {

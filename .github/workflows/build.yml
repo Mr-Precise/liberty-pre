@@ -38,10 +38,12 @@ jobs:
       - name: Get current date
         run: echo "BUILD_DATE=$(date +'%Y.%-m.%-d')" >> $GITHUB_ENV
 
-      - name: Copy build folder for linux release
+      - name: Create dirs and copy build folder for linux release
         run: |
           cp -r "bin/Release/" "bin/Release_linux/"
           mkdir -p "bin/Release_linux/bin"
+          mkdir -p "bin/Release/data"
+          mkdir -p "bin/Release_linux/data"
 
       - name: Download and extract WinDivert and zapret
         run: |
@@ -51,8 +53,8 @@ jobs:
           unzip -j WinDivert.zip "*/x64/WinDivert.dll" "*/x64/WinDivert64.sys" -d bin/Release/bin/
           unzip -j zapret.zip "*/binaries/windows-x86_64/winws.exe" "*/binaries/windows-x86_64/cygwin1.dll" -d bin/Release/bin/
           tar -xvzf zapret.tar.gz -C "bin/Release_linux/bin" --wildcards --strip-components=3 '*/binaries/linux-x86_64/*'
-          unzip -j zapret.zip "*/files/fake/tls_clienthello_www_google_com.bin" "*/files/fake/quic_initial_www_google_com.bin" "*/files/fake/tls_clienthello_vk_com.bin" "*/files/fake/quic_initial_vk_com.bin" -d "bin/Release/"
-          unzip -j zapret.zip "*/files/fake/tls_clienthello_www_google_com.bin" "*/files/fake/quic_initial_www_google_com.bin" "*/files/fake/tls_clienthello_vk_com.bin" "*/files/fake/quic_initial_vk_com.bin" -d "bin/Release_linux/"
+          unzip -j zapret.zip "*/files/fake/tls_clienthello_www_google_com.bin" "*/files/fake/quic_initial_www_google_com.bin" "*/files/fake/tls_clienthello_vk_com.bin" "*/files/fake/quic_initial_vk_com.bin" -d "bin/Release/data/"
+          unzip -j zapret.zip "*/files/fake/tls_clienthello_www_google_com.bin" "*/files/fake/quic_initial_www_google_com.bin" "*/files/fake/tls_clienthello_vk_com.bin" "*/files/fake/quic_initial_vk_com.bin" -d "bin/Release_linux/data/"
 
       - name: Rename and clean
         run: |
@@ -62,10 +64,10 @@ jobs:
 
       - name: Copy lists and configs
         run: |
-          cp data/*.txt "bin/liberty-pre-${{ env.BUILD_DATE }}"
-          cp data/*.txt "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
-          cp data/*.cfg "bin/liberty-pre-${{ env.BUILD_DATE }}"
-          cp data/*.cfg "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
+          cp data/*.txt "bin/liberty-pre-${{ env.BUILD_DATE }}/data"
+          cp data/*.txt "bin/liberty-pre-linux-${{ env.BUILD_DATE }}/data"
+          cp data/*.cfg "bin/liberty-pre-${{ env.BUILD_DATE }}/configs"
+          cp data/*.cfg "bin/liberty-pre-linux-${{ env.BUILD_DATE }}/configs"
           cp LICENSE "bin/liberty-pre-${{ env.BUILD_DATE }}"
           cp LICENSE "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
           cp README*.md "bin/liberty-pre-${{ env.BUILD_DATE }}"

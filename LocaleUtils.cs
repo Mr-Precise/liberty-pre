@@ -30,6 +30,12 @@ namespace libertypre
             _translations.Add("en_ErrorBinNotFound", "[Error]: The bin directory not found.");
             _translations.Add("ru_ErrorBinNotFound", "[Ошибка]: Каталог bin не найден.");
 
+            _translations.Add("en_ErrorConfDirNotFound", "[Error]: The configs directory not found.");
+            _translations.Add("ru_ErrorConfDirNotFound", "[Ошибка]: Каталог configs не найден.");
+
+            _translations.Add("en_DataDirNotFound", "[Error]: The data directory not found.");
+            _translations.Add("ru_DataDirNotFound", "[Ошибка]: Каталог data не найден.");
+
             _translations.Add("en_ErrorWinwsNotFound", "[Error]: File winws.exe not found in bin.");
             _translations.Add("ru_ErrorWinwsNotFound", "[Ошибка]: Файл winws.exe не найден в bin.");
 

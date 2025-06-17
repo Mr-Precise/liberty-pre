@@ -37,7 +37,8 @@ Linux (for advanced users): install mono, run liberty-pre-linux.sh
 Linux: Additional iptables/nftables configuration may be required.
 
 ### Caution:
-The executable file that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.
+The executable file that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.  
+Driver WinDivert is not a virus, read the [details](https://github.com/bol-van/zapret-win-bundle?tab=readme-ov-file#antivirus-warning) of why this happens.
 
 ### How to compile?
 Install git:  

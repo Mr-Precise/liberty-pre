@@ -45,8 +45,8 @@ namespace libertypre
             _translations.Add("en_InfoUsedIptables", "[Info]: Linux / Used tpws (iptables), limited in functionality");
             _translations.Add("ru_InfoUsedIptables", "[Информация]: Linux / Используется tpws (iptables), ограниченная по функционалу");
 
-            _translations.Add("en_ErrorWinwsAldeadyRunning", "[Error]: The process winws.exe is already running, please close the existing one!");
-            _translations.Add("ru_ErrorWinwsAldeadyRunning", "[Ошибка]: Процесс winws.exe уже запущен, закройте существующий!");
+            _translations.Add("en_ErrorWinwsAldeadyRunning", "[Error]: The process winws.exe is already running!, close the existing one or run the shortcut liberty-pre stop");
+            _translations.Add("ru_ErrorWinwsAldeadyRunning", "[Ошибка]: Процесс winws.exe уже запущен!, закройте существующий или запустите ярлык liberty-pre stop");
 
             _translations.Add("en_DoneWinwsStarted", "[Done]: Started with configuration: {0}");
             _translations.Add("ru_DoneWinwsStarted", "[Готово]: Запущено с конфигурацией: {0}");
@@ -69,8 +69,8 @@ namespace libertypre
             _translations.Add("en_CreateShortcutsFailed", "[Error]: Error while creating shortcuts (.lnk): {0}");
             _translations.Add("ru_CreateShortcutsFailed", "[Ошибка]: Ошибка при создании ярлыков (.lnk): {0}");
 
-            _translations.Add("en_UpdCheckRemoteVer", "\n[UPD]: GitHub remote version: {0}");
-            _translations.Add("ru_UpdCheckRemoteVer", "\n[UPD]: GitHub удаленная версия: {0}");
+            _translations.Add("en_UpdCheckRemoteVer", "\n[UPD]: Checking the version on GitHub... current: {0}");
+            _translations.Add("ru_UpdCheckRemoteVer", "\n[UPD]: Проверяем версию на GitHub... актуальная: {0}");
 
             _translations.Add("en_StopRemoveDrv", "[Done]: winws is stopped + WinDivert unload");
             _translations.Add("ru_StopRemoveDrv", "[Готово]: winws завершен + выгружен WinDivert");

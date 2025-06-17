@@ -32,6 +32,7 @@ Convenient and why not.
 ### How to use?
 Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases/latest), unpack and run.  
 If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).  
+A shortcut named `liberty-pre stop` stops the process and terminates the WinDivert driver.  
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  
 Linux: Additional iptables/nftables configuration may be required.
 

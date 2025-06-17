@@ -32,6 +32,7 @@ Read in [English](README_EN.md) language
 ### Как использовать?
 Скачать последний [релиз](https://github.com/Mr-Precise/liberty-pre/releases/latest), распаковать, запустить.  
 Если провайдер перехватывает или подменяет DNS запросы - используйте шифрованный DNS (DoT/DoH).  
+Ярлык с именем `liberty-pre stop` останавливает процесс и завершает работу драйвера WinDivert.  
 Linux (для продвинутых): установить mono, запускать liberty-pre-linux.sh  
 Linux: Возможно потребуется дополнительная настройка iptables/nftables.
 

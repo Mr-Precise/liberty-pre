@@ -99,9 +99,11 @@ $Shortcut.Save();
 
                 CreateWindowsShortcut("liberty-pre stop.lnk", selfPath, "--stop");
                 CreateWindowsShortcut("liberty-pre vk-fake.lnk", selfPath, "-c default_vk_fake.cfg");
-                CreateWindowsShortcut("liberty-pre extra-cloudflare.lnk", selfPath, "-c extra-cloudflare.cfg");
+                CreateWindowsShortcut("liberty-pre extra cloudflare warp.lnk", selfPath, "-c extra-cloudflare.cfg");
                 CreateWindowsShortcut("liberty-pre fake_tls_mod_auto.lnk", selfPath, "-c default_fake_tls_mod_auto.cfg");
+                CreateWindowsShortcut("liberty-pre games fake_tls_mod_auto.lnk", selfPath, "-c default_games_fake_tls_mod_auto.cfg");
                 CreateWindowsShortcut("liberty-pre discord.lnk", selfPath, "-c discord.cfg");
+                CreateWindowsShortcut("liberty-pre games.lnk", selfPath, "-c default_games.cfg");
                 CreateWindowsShortcut("liberty-pre МГТС2.lnk", selfPath, "-c МГТС2.cfg");
                 CreateWindowsShortcut("liberty-pre ALT5.lnk", selfPath, "-c ALT5.cfg");
             }

@@ -75,6 +75,8 @@ jobs:
           cp README*.md "bin/liberty-pre-${{ env.BUILD_DATE }}"
           cp README*.md "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
           cp components/*.sh "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
+          cp components/about.html "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
+          cp components/about.html "bin/liberty-pre-${{ env.BUILD_DATE }}"
 
       - name: Сompress Release
         run: |

@@ -49,8 +49,8 @@ namespace libertypre
                     proc.Kill();
                     proc.WaitForExit(1000);
                 }
-                string scName = "WinDivert";
-                RunCommandAsAdmin("cmd", $"/c net stop {scName} && sc delete {scName}");
+
+                RunCommandAsAdmin("cmd", $"/c net stop WinDivert & sc delete WinDivert & net stop WinDivert14 & sc delete WinDivert14 & net stop Monkey & sc delete Monkey");
                 LocaleUtils.WriteTr("StopRemoveDrv");
             }
             catch (Exception ex)

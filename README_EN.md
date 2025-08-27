@@ -8,13 +8,18 @@ Helps you bypass blocking Youtube, Discord, etc.
 Currently in development.
 
 ### How does it work?
-Checks for everything necessary, the presence of an existing process, OS.  
+Checks for everything necessary, the presence of an existing process, the interface language and OS.  
 Reads the specified configuration file with startup arguments, then runs winws.exe with administrator rights in a minimized window.  
 If we are on Linux, we also check for sudo, it asks for a password and nfqws starts.  
 By default, reads the configuration (profile) `default.cfg`  
 When you first launch the program, it `automatically` creates the necessary shortcuts with configurations in the same directory.  
-To run with an alternative configuration, run liberty-pre with the argument `-c config_name.cfg`  
+To run with an custom configuration, run liberty-pre with the argument `-c config_name.cfg`  
 For example, create a shortcut to liberty-pre.exe with the argument `liberty-pre.exe -c discord.cfg` to use only for Discord.
+
+### Localization
+The program automatically detects OS language:  
+- If the system language is **Russian**, messages are shown in **Russian**.  
+- For any other system language messages are shown in **English** only.
 
 ### OS compatibility
 #### Full Windows support:
@@ -27,18 +32,19 @@ For example, create a shortcut to liberty-pre.exe with the argument `liberty-pre
 - actual Arch/Manjaro
 
 ### What for?
-Convenient and why not.
+Convenient and why not.  
+Just an alternative implementation.
 
 ### How to use?
-Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases/latest), unpack and run.  
+Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases/latest), unpack and run, shortcuts to other profiles will be created automatically.  
 If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).  
-A shortcut named `liberty-pre stop` stops the process and terminates the WinDivert driver.  
+A shortcut named `liberty-pre STOP` stops the process and terminates the WinDivert driver.  
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  
 Linux: Additional iptables/nftables configuration may be required.
 
 ### Caution:
-The executable file that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.  
-Driver WinDivert is not a virus, read the [details](https://github.com/bol-van/zapret-win-bundle?tab=readme-ov-file#antivirus-warning) of why this happens.
+The executable files that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.  
+WinDivert driver is not a virus but a tool, read the [details](https://github.com/bol-van/zapret-win-bundle?tab=readme-ov-file#antivirus-warning) of why this happens.
 
 ### How to compile?
 Install git:  
@@ -63,5 +69,5 @@ xbuild /p:Configuration=Release liberty-pre.sln
 
 ### Used components from repositories and thanks:
 * [github.com/bol-van/zapret](https://github.com/bol-van/zapret) - components
-* [github.com/Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube) - idea and lists of domains / ip networks
+* [github.com/Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube) - idea and lists of domains / IP networks
 * [github.com/basil00/WinDivert](https://github.com/basil00/WinDivert) - for the great driver

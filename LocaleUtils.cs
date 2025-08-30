@@ -48,6 +48,9 @@ namespace libertypre
             _translations.Add("en_InfoUsedNfqws", "[Info]: Linux / Used nfqws (nftables)");
             _translations.Add("ru_InfoUsedNfqws", "[Информация]: Linux / Используется nfqws (nftables)");
 
+            _translations.Add("en_InfoHiddenMode", "[Info]: Hidden mode (daemon) enabled. Run STOP shortcut for stop.");
+            _translations.Add("ru_InfoHiddenMode", "[Информация]: Включен скрытый режим работы (daemon). Запустите ярлык STOP чтобы остановить.");
+
             _translations.Add("en_InfoUsedIptables", "[Info]: Linux / Used tpws (iptables), limited in functionality");
             _translations.Add("ru_InfoUsedIptables", "[Информация]: Linux / Используется tpws (iptables), ограниченная по функционалу");
 

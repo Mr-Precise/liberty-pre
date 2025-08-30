@@ -68,6 +68,15 @@ namespace libertypre
                 return;
             }
 
+            if (File.Exists(Path.Combine(basePath, "hidden_mode")))
+            {
+                if (!toolarguments.Contains("--daemon"))
+                {
+                    toolarguments = "--daemon " + toolarguments;
+                }
+                LocaleUtils.WriteTr("InfoHiddenMode");
+            }
+
             StartUnified(toolDPIexe, toolarguments, configFile);
 
             if (!CringeUtils.IsLinux())

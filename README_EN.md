@@ -38,6 +38,7 @@ Just an alternative implementation.
 ### How to use?
 Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases/latest), unpack and run, shortcuts to other profiles will be created automatically.  
 If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).  
+There is an invisible/hidden mode of operation, create an empty file without extension named `hidden_mode` in the program folder.  
 A shortcut named `liberty-pre STOP` stops the process and terminates the WinDivert driver.  
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  
 Linux: Additional iptables/nftables configuration may be required.

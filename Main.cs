@@ -209,9 +209,8 @@ namespace libertypre
 
             if (IsProcessRunning(processName))
             {
-                LocaleUtils.WriteTr("ErrorWinwsAldeadyRunning");
-                Console.ReadKey();
-                Environment.Exit(0);
+                LocaleUtils.WriteTr("WarningAldeadyRunning");
+                CringeUtils.StopRemoveSevice();
             }
 
             var UniStartInfo = new ProcessStartInfo();

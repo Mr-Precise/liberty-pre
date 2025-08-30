@@ -51,8 +51,8 @@ namespace libertypre
             _translations.Add("en_InfoUsedIptables", "[Info]: Linux / Used tpws (iptables), limited in functionality");
             _translations.Add("ru_InfoUsedIptables", "[Информация]: Linux / Используется tpws (iptables), ограниченная по функционалу");
 
-            _translations.Add("en_ErrorWinwsAldeadyRunning", "[Error]: The process winws.exe is already running!, close the existing one or run the shortcut liberty-pre stop");
-            _translations.Add("ru_ErrorWinwsAldeadyRunning", "[Ошибка]: Процесс winws.exe уже запущен!, закройте существующий или запустите ярлык liberty-pre stop");
+            _translations.Add("en_WarningAldeadyRunning", "[Warning]: The process has already been running, restarting! To full stop, run the shortcut liberty-pre STOP");
+            _translations.Add("ru_WarningAldeadyRunning", "[Предупреждение]: Процесс уже был запущен, выполняется перезапуск! Чтобы полностью остановить запустите ярлык liberty-pre STOP");
 
             _translations.Add("en_DoneWinwsStarted", "[Done]: Started with configuration: {0}");
             _translations.Add("ru_DoneWinwsStarted", "[Готово]: Запущено с конфигурацией: {0}");

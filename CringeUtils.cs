@@ -104,12 +104,15 @@ $Shortcut.Save();
                 CreateWindowsShortcut("liberty-pre games fake tls auto.lnk", selfPath, "-c default_games_fake_tls_mod_auto.cfg");
                 CreateWindowsShortcut("liberty-pre discord.lnk", selfPath, "-c discord.cfg");
                 CreateWindowsShortcut("liberty-pre games.lnk", selfPath, "-c default_games.cfg");
+                CreateWindowsShortcut("liberty-pre МГТС.lnk", selfPath, "-c МГТС.cfg");
+                CreateWindowsShortcut("liberty-pre games МГТС.lnk", selfPath, "-c МГТС_games.cfg");
                 CreateWindowsShortcut("liberty-pre МГТС2.lnk", selfPath, "-c МГТС2.cfg");
                 CreateWindowsShortcut("liberty-pre ALT2.lnk", selfPath, "-c ALT2.cfg");
                 CreateWindowsShortcut("liberty-pre games ALT2.lnk", selfPath, "-c ALT2_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT5.lnk", selfPath, "-c ALT5.cfg");
                 CreateWindowsShortcut("liberty-pre ALT6.lnk", selfPath, "-c ALT6.cfg");
                 CreateWindowsShortcut("liberty-pre games ALT6.lnk", selfPath, "-c ALT6_games.cfg");
+                CreateWindowsShortcut("liberty-pre cringe.lnk", selfPath, "-c cringe.cfg");
             }
             catch (Exception ex)
             {

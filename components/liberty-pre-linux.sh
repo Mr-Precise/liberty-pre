@@ -42,6 +42,7 @@ sudo iptables -I OUTPUT -p tcp --dport 80 -j NFQUEUE --queue-num 0
 sudo iptables -I OUTPUT -p tcp --dport 443 -j NFQUEUE --queue-num 0
 sudo iptables -I OUTPUT -p udp --dport 443 -j NFQUEUE --queue-num 0
 sudo iptables -I OUTPUT -p udp --dport 50000:50100 -j NFQUEUE --queue-num 0
+sudo iptables -I OUTPUT -p udp --dport 19294-19344 -j NFQUEUE --queue-num 0
 echo "[Info]: Ok!"
 
 # --- Uncomment for nftables
@@ -61,6 +62,7 @@ echo "[Info]: Ok!"
 # sudo nft add rule inet liberty_pre output tcp dport 443 nfqueue num 0
 # sudo nft add rule inet liberty_pre output udp dport 443 nfqueue num 0
 # sudo nft add rule inet liberty_pre output udp dport 50000-50100 nfqueue num 0
+# sudo nft add rule inet liberty_pre output udp dport 19294-19344 nfqueue num 0
 
 # Delete table:
 # Удалить таблицу:

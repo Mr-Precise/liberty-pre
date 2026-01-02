@@ -40,6 +40,11 @@ fi
 echo "[Info]: Adding iptables rules..."
 sudo iptables -I OUTPUT -p tcp --dport 80 -j NFQUEUE --queue-num 0
 sudo iptables -I OUTPUT -p tcp --dport 443 -j NFQUEUE --queue-num 0
+sudo iptables -I OUTPUT -p tcp --dport 2053 -j NFQUEUE --queue-num 0
+sudo iptables -I OUTPUT -p tcp --dport 2083 -j NFQUEUE --queue-num 0
+sudo iptables -I OUTPUT -p tcp --dport 2087 -j NFQUEUE --queue-num 0
+sudo iptables -I OUTPUT -p tcp --dport 2096 -j NFQUEUE --queue-num 0
+sudo iptables -I OUTPUT -p tcp --dport 8443 -j NFQUEUE --queue-num 0
 sudo iptables -I OUTPUT -p udp --dport 443 -j NFQUEUE --queue-num 0
 sudo iptables -I OUTPUT -p udp --dport 50000:50100 -j NFQUEUE --queue-num 0
 sudo iptables -I OUTPUT -p udp --dport 19294-19344 -j NFQUEUE --queue-num 0
@@ -60,6 +65,11 @@ echo "[Info]: Ok!"
 # Добавить правила
 # sudo nft add rule inet liberty_pre output tcp dport 80 nfqueue num 0
 # sudo nft add rule inet liberty_pre output tcp dport 443 nfqueue num 0
+# sudo nft add rule inet liberty_pre output tcp dport 2053 nfqueue num 0
+# sudo nft add rule inet liberty_pre output tcp dport 2083 nfqueue num 0
+# sudo nft add rule inet liberty_pre output tcp dport 2087 nfqueue num 0
+# sudo nft add rule inet liberty_pre output tcp dport 2096 nfqueue num 0
+# sudo nft add rule inet liberty_pre output tcp dport 8443 nfqueue num 0
 # sudo nft add rule inet liberty_pre output udp dport 443 nfqueue num 0
 # sudo nft add rule inet liberty_pre output udp dport 50000-50100 nfqueue num 0
 # sudo nft add rule inet liberty_pre output udp dport 19294-19344 nfqueue num 0

@@ -68,7 +68,7 @@ namespace libertypre
                 return;
             }
 
-            if (File.Exists(Path.Combine(basePath, "hidden_mode")))
+            if (!CringeUtils.IsLinux() && File.Exists(Path.Combine(basePath, "hidden_mode")))
             {
                 if (!toolarguments.Contains("--daemon"))
                 {

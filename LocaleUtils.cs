@@ -6,8 +6,12 @@ namespace libertypre
 {
     public class LocaleUtils
     {
+        // Словарь для хранения переводов
+        // Dictionary for storing translations
         private static Dictionary<string, string> _translations;
 
+        // Статический конструктор для инициализации словаря переводов
+        // Static constructor for initializing translation dictionary
         static LocaleUtils()
         {
             _translations = new Dictionary<string, string>();
@@ -70,7 +74,7 @@ namespace libertypre
             _translations.Add("ru_ShowVersion", "liberty-pre zapret лаунчер {0}\nАвтор: {1}\nПроект: {2}");
 
             _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help    Show help\n  -c            Path to config file\n  -i            Use iptables instead of nftables\n  -s, --stop    Stop winws and delete WinDivert Service\n  -v            Show version");
-            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help    Показать справку\n  -c            Путь к файлу конфирурации\n  -i            Использовать iptables вместо nftables\n  -s, --stop    Остановить winws и удалить WinDivert сервис\n  -v            Показать версию");
+            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help    Показать справку\n  -c            Путь к файлу конфигурации\n  -i            Использовать iptables вместо nftables\n  -s, --stop    Остановить winws и удалить WinDivert сервис\n  -v            Показать версию");
 
             _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
             _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");
@@ -87,7 +91,6 @@ namespace libertypre
             _translations.Add("en_UpdateSkip", "[UPD]: Update skip");
             _translations.Add("ru_UpdateSkip", "[UPD]: Обновление пропущено");
 
-            // update dialog
             _translations.Add("en_UpdateAvailableDialog", "Update Available");
             _translations.Add("ru_UpdateAvailableDialog", "Доступно обновление");
 
@@ -95,11 +98,17 @@ namespace libertypre
             _translations.Add("ru_UpdateAvailableNewVer", "Доступна новая версия.\n[Отмена] - отложить на 2 дня.\n[Да] - Открыть страницу релиза в браузере?\n");
         }
 
+        // Метод для вывода переведенного текста с форматированием
+        // Method for outputting translated text with formattin
         public static void WriteTr(string textKey, params object[] args)
         {
+            // Определение текущей культуры
+            // Determine current culture
             var culture = CultureInfo.CurrentCulture.Name;
 
             string translationKey;
+            // Выбор языка на основе культуры (ru или en)
+            // Select language based on culture (ru or en)
             if (culture.StartsWith("ru"))
             {
                 translationKey = $"ru_{textKey}";
@@ -109,17 +118,24 @@ namespace libertypre
                 translationKey = $"en_{textKey}";
             }
 
+            // Поиск перевода в словаре
+            // Search for translation in dictionary
             if (_translations.ContainsKey(translationKey))
             {
                 string translatedText = _translations[translationKey];
+                // Форматирование строки с аргументами
+                // Format string with arguments
                 Console.WriteLine(string.Format(translatedText, args));
             }
             else
             {
+                // Fallback: вывод оригинального ключа / output of the original key
                 Console.WriteLine(string.Format(textKey, args));
             }
         }
 
+        // Метод для получения переведенной строки (без вывода в консоль)
+        // Method for getting translated string (without console output)
         public static string GetStrTr(string textKey)
         {
             var culture = CultureInfo.CurrentCulture.Name;
@@ -134,6 +150,8 @@ namespace libertypre
                 translationKey = $"en_{textKey}";
             }
 
+            // Если перевод не найден, возвращаем ключ
+            // If translation not found, return the key
             if (!_translations.ContainsKey(translationKey))
             {
                 return textKey;

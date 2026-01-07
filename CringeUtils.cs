@@ -9,8 +9,13 @@ namespace libertypre
 {
     public class CringeUtils
     {
+        // Событие завершения создания ярлыков
+        // Shortcut creation completion event
         public static ManualResetEvent ShortcutCrDone = new ManualResetEvent(false);
+        private static string selfPath = Assembly.GetExecutingAssembly().Location;
 
+        // Выполнение команды с захватом вывода
+        // Execute command with output capture
         public static string RunCommand(string command, string args)
         {
             ProcessStartInfo psi = new ProcessStartInfo
@@ -26,19 +31,23 @@ namespace libertypre
             return process.StandardOutput.ReadToEnd();
         }
 
+        // Выполнение команды от имени администратора
+        // Execute command as administrator
         private static void RunCommandAsAdmin(string command, string args)
         {
             ProcessStartInfo psi = new ProcessStartInfo
             {
                 FileName = command,
                 Arguments = args,
-                UseShellExecute = true,
-                Verb = "runas",
+                UseShellExecute = true,     // Требуется для runas / Required for runas
+                Verb = "runas",             // Запуск с повышенными привилегиями / Run with elevated privileges
                 CreateNoWindow = true
             };
             Process.Start(psi);
         }
 
+        // Остановка и удаление служб / драйверов
+        // Stop and remove services / drivers
         public static void StopRemoveSevice()
         {
             try
@@ -46,10 +55,14 @@ namespace libertypre
                 Process[] processes = Process.GetProcessesByName("winws");
                 foreach (Process proc in processes)
                 {
+                    // Принудительно завершаем процесс winws
+                    // Force terminate winws process
                     proc.Kill();
                     proc.WaitForExit(1000);
                 }
 
+                // Останавливаем и удаляем службы через cmd (да, так не красиво делать...)
+                // Stop and delete services via cmd (yeah, it's not good to do that...)
                 RunCommandAsAdmin("cmd", $"/c net stop WinDivert & sc delete WinDivert & net stop WinDivert14 & sc delete WinDivert14 & net stop Monkey & sc delete Monkey");
                 LocaleUtils.WriteTr("StopRemoveDrv");
             }
@@ -57,9 +70,11 @@ namespace libertypre
             {
                 Console.WriteLine(ex.Message);
             }
-            Thread.Sleep(3000);
+            Thread.Sleep(3000); // Пауза на всякий случай / Pause just in case
         }
 
+        // Создание ярлыка Windows через PowerShell
+        // Create Windows shortcut via PowerShell
         private static void CreateWindowsShortcut(string shortcutName, string targetPath, string arguments)
         {
             string shortcutFullPath = Path.Combine(MainClass.basePath, shortcutName);
@@ -69,6 +84,8 @@ namespace libertypre
                 return;
             }
 
+            // PowerShell скрипт для создания ярлыка
+            // PowerShell script to create shortcut
             string powershellScript = $@"
 $WshShell = New-Object -ComObject WScript.Shell;
 $Shortcut = $WshShell.CreateShortcut('{shortcutFullPath}');
@@ -77,7 +94,8 @@ $Shortcut.Arguments = '{arguments}';
 $Shortcut.WorkingDirectory = '{Path.GetDirectoryName(targetPath)}';
 $Shortcut.Save();
 ";
-
+            // Запускаем скрытый процесс PowerShell для каждого скрипта
+            // Start hidden a PowerShell process for each script
             var psi = new ProcessStartInfo
             {
                 FileName = "powershell",
@@ -91,12 +109,14 @@ $Shortcut.Save();
             Thread.Sleep(100);
         }
 
+        // Создание всех ярлыков асинхронно
+        // Create all shortcuts asynchronously
         public static async Task CreateShortcutsAsync()
         {
             try
             {
-                string selfPath = Assembly.GetExecutingAssembly().Location;
-
+                // Создание ярлыков для различных конфигураций, может занять время
+                // Creating shortcuts for various configurations, may take time
                 CreateWindowsShortcut("liberty-pre STOP.lnk", selfPath, "--stop");
                 CreateWindowsShortcut("liberty-pre fake vk.lnk", selfPath, "-c default_vk_fake.cfg");
                 CreateWindowsShortcut("liberty-pre extra cloudflare warp.lnk", selfPath, "-c extra-cloudflare.cfg");
@@ -126,10 +146,14 @@ $Shortcut.Save();
             }
             finally
             {
+                // Сигнализируем о завершении события
+                // Signal completion of the event
                 ShortcutCrDone.Set();
             }
         }
 
+        // Проверка, работает ли система под Linux
+        // Check if system is running Linux
         public static bool IsLinux()
         {
             return Environment.OSVersion.Platform == PlatformID.Unix;

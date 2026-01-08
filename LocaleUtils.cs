@@ -96,6 +96,30 @@ namespace libertypre
 
             _translations.Add("en_UpdateAvailableNewVer", "New version available.\n[Cancel] - postponing for 2 days.\n[Yes] - Open release page in browser?\n");
             _translations.Add("ru_UpdateAvailableNewVer", "Доступна новая версия.\n[Отмена] - отложить на 2 дня.\n[Да] - Открыть страницу релиза в браузере?\n");
+
+            _translations.Add("en_InfoUseIpsetFile", "[Info]: Use ipset file: {0}");
+            _translations.Add("ru_InfoUseIpsetFile", "[Информация]: Используется ipset файл: {0}");
+
+            _translations.Add("en_IpsetStatusEnabled", "Enabled");
+            _translations.Add("ru_IpsetStatusEnabled", "Включено");
+
+            _translations.Add("en_IpsetStatusStub", "Stub");
+            _translations.Add("ru_IpsetStatusStub", "Заглушка");
+
+            _translations.Add("en_InfoGoDisableIpset", "[Info]: Disabling ipset (use a stub)");
+            _translations.Add("ru_InfoGoDisableIpset", "[Информация]: Выключаем ipset (используем заглушку)");
+
+            _translations.Add("en_InfoGoUseIpset", "[Info]: Using the full ipset list file...");
+            _translations.Add("ru_InfoGoUseIpset", "[Информация]: Используем полноценный файл листа ipset...");
+
+            _translations.Add("en_InfoIpsetDownloading", "[Info]: Downloading ipset list of networks...");
+            _translations.Add("ru_InfoIpsetDownloading", "[Информация]: Скачиваем ipset лист сетей...");
+
+            _translations.Add("en_InfoIpsetUpdateOk", "[Info]: ipset list has been successfully updated!");
+            _translations.Add("ru_InfoIpsetUpdateOk", "[Информация]: Список ipset успешно обновлен!");
+
+            _translations.Add("en_ErrorIpsetUpdate", "[Error]: Error updating ipset list: {0}");
+            _translations.Add("ru_ErrorIpsetUpdate", "[Ошибка]: Ошибка обновления ipset листа: {0}");
         }
 
         // Метод для вывода переведенного текста с форматированием

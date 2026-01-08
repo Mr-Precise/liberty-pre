@@ -15,7 +15,7 @@ namespace libertypre
         public static string basePath = AppDomain.CurrentDomain.BaseDirectory;
         private static string bindirPath = Path.Combine(basePath, "bin");
         private static string configsPath = Path.Combine(basePath, "configs");
-        private static string dataPath = Path.Combine(basePath, "data");
+        public static string dataPath = Path.Combine(basePath, "data");
         private static string toolDPIexe = Path.Combine(bindirPath, "winws.exe");
         private static bool nftables = true;
 
@@ -55,6 +55,19 @@ namespace libertypre
             if (args.Length > 0 && args[0] == "-v")
             {
                 ShowVersion();
+                return;
+            }
+
+            // Переключение режима ipset файла
+            // Ipset file mode switch
+            if (args.Length > 0 && args[0] == "--ipset")
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                IpsetSwitchUtils.IpsetSwitchNext();
+                Console.ForegroundColor = ConsoleColor.Green;
+                GetIpsetStatus();
+                Console.ResetColor();
+                Thread.Sleep(3000);
                 return;
             }
 
@@ -99,6 +112,9 @@ namespace libertypre
                 LocaleUtils.WriteTr("InfoHiddenMode");
             }
 
+            // Выводим статус использования ipset листа
+            // Displaying the status of using the ipset list
+            GetIpsetStatus();
 
             // Запуск основной утилиты (winws / nfqws)
             // Start main utility (winws / nfqws)
@@ -221,6 +237,14 @@ namespace libertypre
         {
             Process[] processes = Process.GetProcessesByName(processName);
             return processes.Length > 0;
+        }
+
+        // Метод для вывода статуса с локализацей использования ipset листа
+        // Method for displaying status with localization using ipset list
+        private static void GetIpsetStatus()
+        {
+            string statusKey = IpsetSwitchUtils.IpsetSwitchStatus() ? "IpsetStatusEnabled" : "IpsetStatusStub";
+            LocaleUtils.WriteTr("InfoUseIpsetFile", LocaleUtils.GetStrTr(statusKey));
         }
 
         // Определение файла конфигурации на основе аргументов

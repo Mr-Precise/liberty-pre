@@ -43,6 +43,7 @@
     <Compile Include="LocaleUtils.cs" />
     <Compile Include="UpdCheck.cs" />
     <Compile Include="CringeUtils.cs" />
+    <Compile Include="IpsetSwitchUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -70,6 +70,8 @@ jobs:
           cp data/*.txt "bin/liberty-pre-linux-${{ env.BUILD_DATE }}/data"
           cp data/*.cfg "bin/liberty-pre-${{ env.BUILD_DATE }}/configs"
           cp data/*.cfg "bin/liberty-pre-linux-${{ env.BUILD_DATE }}/configs"
+          cp data/*.bin "bin/liberty-pre-${{ env.BUILD_DATE }}/data"
+          cp data/*.bin "bin/liberty-pre-linux-${{ env.BUILD_DATE }}/data"
           cp LICENSE "bin/liberty-pre-${{ env.BUILD_DATE }}"
           cp LICENSE "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
           cp README*.md "bin/liberty-pre-${{ env.BUILD_DATE }}"

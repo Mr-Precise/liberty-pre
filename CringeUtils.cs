@@ -128,6 +128,8 @@ $Shortcut.Save();
                 CreateWindowsShortcut("liberty-pre games ALT2.lnk", selfPath, "-c ALT2_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT3.lnk", selfPath, "-c ALT3.cfg");
                 CreateWindowsShortcut("liberty-pre games ALT3.lnk", selfPath, "-c ALT3_games.cfg");
+                CreateWindowsShortcut("liberty-pre ALT4.lnk", selfPath, "-c ALT4.cfg");
+                CreateWindowsShortcut("liberty-pre games ALT4.lnk", selfPath, "-c ALT4_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT5.lnk", selfPath, "-c ALT5.cfg");
                 CreateWindowsShortcut("liberty-pre games ALT5.lnk", selfPath, "-c ALT5_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT6.lnk", selfPath, "-c ALT6.cfg");

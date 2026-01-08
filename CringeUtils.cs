@@ -118,6 +118,7 @@ $Shortcut.Save();
                 // Создание ярлыков для различных конфигураций, может занять время
                 // Creating shortcuts for various configurations, may take time
                 CreateWindowsShortcut("liberty-pre STOP.lnk", selfPath, "--stop");
+                CreateWindowsShortcut("liberty-pre SWITCH ipset.lnk", selfPath, "--ipset");
                 CreateWindowsShortcut("liberty-pre fake vk.lnk", selfPath, "-c default_vk_fake.cfg");
                 CreateWindowsShortcut("liberty-pre extra cloudflare warp.lnk", selfPath, "-c extra-cloudflare.cfg");
                 CreateWindowsShortcut("liberty-pre fake tls auto.lnk", selfPath, "-c default_fake_tls_mod_auto.cfg");

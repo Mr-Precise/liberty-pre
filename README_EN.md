@@ -40,6 +40,8 @@ Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases
 If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).  
 There is an invisible/hidden mode of operation, create an empty file without extension named `hidden_mode` in the program folder.  
 A shortcut named `liberty-pre STOP` stops the process and terminates the WinDivert driver.  
+The shortcut named `liberty-pre SWITCH ipset` is used to switch the ipset file. Command-line argument `--ipset`  
+This ipset switch has two states: full (with a valid network list) and stub (IPs from the TEST-NET-3 range).  
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  
 Linux: Additional iptables/nftables configuration may be required.
 

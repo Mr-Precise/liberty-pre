@@ -122,26 +122,15 @@ $Shortcut.Save();
                 CreateWindowsShortcut("liberty-pre SWITCH - Extended Ports.lnk", selfPath, "--extended-ports");
                 CreateWindowsShortcut("liberty-pre fake vk.lnk", selfPath, "-c default_vk_fake.cfg");
                 CreateWindowsShortcut("liberty-pre extra cloudflare warp.lnk", selfPath, "-c extra-cloudflare.cfg");
-                CreateWindowsShortcut("liberty-pre fake tls auto.lnk", selfPath, "-c default_fake_tls_mod_auto.cfg");
-                CreateWindowsShortcut("liberty-pre games fake tls auto.lnk", selfPath, "-c default_games_fake_tls_mod_auto.cfg");
                 CreateWindowsShortcut("liberty-pre discord.lnk", selfPath, "-c discord.cfg");
-                CreateWindowsShortcut("liberty-pre games.lnk", selfPath, "-c default_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT2.lnk", selfPath, "-c ALT2.cfg");
-                CreateWindowsShortcut("liberty-pre games ALT2.lnk", selfPath, "-c ALT2_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT3.lnk", selfPath, "-c ALT3.cfg");
-                CreateWindowsShortcut("liberty-pre games ALT3.lnk", selfPath, "-c ALT3_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT4.lnk", selfPath, "-c ALT4.cfg");
-                CreateWindowsShortcut("liberty-pre games ALT4.lnk", selfPath, "-c ALT4_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT5.lnk", selfPath, "-c ALT5.cfg");
-                CreateWindowsShortcut("liberty-pre games ALT5.lnk", selfPath, "-c ALT5_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT6.lnk", selfPath, "-c ALT6.cfg");
-                CreateWindowsShortcut("liberty-pre games ALT6.lnk", selfPath, "-c ALT6_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT9.lnk", selfPath, "-c ALT9.cfg");
-                CreateWindowsShortcut("liberty-pre games ALT9.lnk", selfPath, "-c ALT9_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT10.lnk", selfPath, "-c ALT10.cfg");
-                CreateWindowsShortcut("liberty-pre games ALT10.lnk", selfPath, "-c ALT10_games.cfg");
                 CreateWindowsShortcut("liberty-pre ALT11.lnk", selfPath, "-c ALT11.cfg");
-                CreateWindowsShortcut("liberty-pre games ALT11.lnk", selfPath, "-c ALT11_games.cfg");
                 CreateWindowsShortcut("liberty-pre cringe.lnk", selfPath, "-c cringe.cfg");
             }
             catch (Exception ex)

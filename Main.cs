@@ -65,7 +65,7 @@ namespace libertypre
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 IpsetSwitchUtils.IpsetSwitchNext();
                 Console.ForegroundColor = ConsoleColor.Green;
-                GetIpsetStatus();
+                ShowIpsetStatus();
                 Console.ResetColor();
                 Thread.Sleep(3000);
                 return;
@@ -114,7 +114,7 @@ namespace libertypre
 
             // Выводим статус использования ipset листа
             // Displaying the status of using the ipset list
-            GetIpsetStatus();
+            ShowIpsetStatus();
 
             // Запуск основной утилиты (winws / nfqws)
             // Start main utility (winws / nfqws)
@@ -239,9 +239,9 @@ namespace libertypre
             return processes.Length > 0;
         }
 
-        // Метод для вывода статуса с локализацей использования ipset листа
-        // Method for displaying status with localization using ipset list
-        private static void GetIpsetStatus()
+        // Метод для вывода статуса (с локализацей) использования ipset листа
+        // Method for displaying status (with localization) using ipset list
+        private static void ShowIpsetStatus()
         {
             string statusKey = IpsetSwitchUtils.IpsetSwitchStatus() ? "IpsetStatusEnabled" : "IpsetStatusStub";
             LocaleUtils.WriteTr("InfoUseIpsetFile", LocaleUtils.GetStrTr(statusKey));

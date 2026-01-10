@@ -44,6 +44,7 @@
     <Compile Include="UpdCheck.cs" />
     <Compile Include="CringeUtils.cs" />
     <Compile Include="IpsetSwitchUtils.cs" />
+    <Compile Include="ExtendedPortsFilterUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

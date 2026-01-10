@@ -19,6 +19,11 @@ namespace libertypre
         private static string toolDPIexe = Path.Combine(bindirPath, "winws.exe");
         private static bool nftables = true;
 
+        // Константы для замены Extended Ports (GameFilter)
+        // Extended Ports (GameFilter) replacement constants
+        private const string ExtendedPortsEnabled = "1024-65535";
+        private const string ExtendedPortsDisabled = "12";
+
         public static void Main(string[] args)
         {
             // Устанавливаем кодировку консоли для поддержки UTF-8
@@ -48,6 +53,19 @@ namespace libertypre
             if (args.Length > 0 && args[0] == "-i")
             {
                 nftables = false;
+            }
+
+            // Обработка аргумента --extended-ports (переключатель)
+            // Handle --extended-ports argument (toggle switch)
+            if (args.Length > 0 && args[0] == "--extended-ports")
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                ExtendedPortsFilterUtils.ToggleExtendedPortsMode();
+                Console.ForegroundColor = ConsoleColor.Green;
+                ShowExtendedPortsModeStatus();
+                Console.ResetColor();
+                Thread.Sleep(3000);
+                return;
             }
 
             // Показываем версию
@@ -100,6 +118,10 @@ namespace libertypre
                 LocaleUtils.WriteTr("ErrorConfigEmpty");
                 return;
             }
+
+            // Выводим статус расширенного режима портов
+            // Displaying the status of Extended Ports mode
+            ShowExtendedPortsModeStatus();
 
             // Добавление флага --daemon для скрытого режима (Windows)
             // Add --daemon flag for hidden mode (Windows)
@@ -247,6 +269,14 @@ namespace libertypre
             LocaleUtils.WriteTr("InfoUseIpsetFile", LocaleUtils.GetStrTr(statusKey));
         }
 
+        // Метод для вывода статуса (с локализацей) использования расширенного режима портов
+        // Method for displaying status (with localization) using extended ports mode
+        private static void ShowExtendedPortsModeStatus()
+        {
+            string extendedPortsStr = ExtendedPortsFilterUtils.GetExtendedPortsModeStatus() ? "ExtendedPortsModeEnabled" : "ExtendedPortsModeDisabled";
+            LocaleUtils.WriteTr("InfoExtendedPortsModeFilter", LocaleUtils.GetStrTr(extendedPortsStr));
+        }
+
         // Определение файла конфигурации на основе аргументов
         // Determine configuration file based on arguments
         private static string GetConfigFile(string[] args)
@@ -279,9 +309,16 @@ namespace libertypre
         // Parse configuration file to arguments into one string
         private static string ParseConfigFile(string configFile)
         {
+            // Определяем, включен ли расширенный режим портов
+            // Determine if extended ports mode is enabled
+            bool epMode = ExtendedPortsFilterUtils.GetExtendedPortsModeStatus();
+            string replacement = epMode ? ExtendedPortsEnabled : ExtendedPortsDisabled;
+
             return string.Join(" ", File.ReadAllLines(configFile)
                 .Select(line => line.Trim())
-                .Where(line => !string.IsNullOrEmpty(line) && !line.StartsWith("#")));
+                .Where(line => !string.IsNullOrEmpty(line) && !line.StartsWith("#"))
+                .Select(line => line.Replace("@ExtendedPorts@", replacement))
+                .Select(line => line.Replace("^!", "!")));
         }
 
         // Унифицированный запуск утилиты

@@ -73,8 +73,8 @@ namespace libertypre
             _translations.Add("en_ShowVersion", "liberty-pre zapret launcher {0}\nAuthor: {1}\nProject: {2}");
             _translations.Add("ru_ShowVersion", "liberty-pre zapret лаунчер {0}\nАвтор: {1}\nПроект: {2}");
 
-            _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help    Show help\n  -c            Path to config file\n  -i            Use iptables instead of nftables\n  -s, --stop    Stop winws and delete WinDivert Service\n  --ipset       Switch ipset file mode (full or stub)\n  -v            Show version");
-            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help    Показать справку\n  -c            Путь к файлу конфигурации\n  -i            Использовать iptables вместо nftables\n  -s, --stop    Остановить winws и удалить WinDivert сервис\n  --ipset       Переключатель режима работы ipset (полный или заглушка)\n  -v            Показать версию");
+            _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help       Show help\n  -c               Path to config file\n  -i               Use iptables instead of nftables\n  -s, --stop       Stop winws and delete WinDivert Service\n  --ipset          Switch ipset file mode (full or stub)\n  --extended-ports Switch extended ports mode (port filtering 1024-65535)\n  -v               Show version");
+            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help       Показать справку\n  -c               Путь к файлу конфигурации\n  -i               Использовать iptables вместо nftables\n  -s, --stop       Остановить winws и удалить WinDivert сервис\n  --ipset          Переключатель режима работы ipset (полный или заглушка)\n  --extended-ports Переключатель расширенного режима портов (фильтрация портов 1024-65535)\n  -v               Показать версию");
 
             _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
             _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");
@@ -120,6 +120,21 @@ namespace libertypre
 
             _translations.Add("en_ErrorIpsetUpdate", "[Error]: Error updating ipset list: {0}");
             _translations.Add("ru_ErrorIpsetUpdate", "[Ошибка]: Ошибка обновления ipset листа: {0}");
+
+            _translations.Add("en_InfoExtendedPortsModeFilter", "[Info]: Extended ports mode (games mode): {0}");
+            _translations.Add("ru_InfoExtendedPortsModeFilter", "[Информация]: Расширенный режим портов (games mode): {0}");
+
+            _translations.Add("en_ExtendedPortsModeEnabled", "Enabled (ports 1024-65535)");
+            _translations.Add("ru_ExtendedPortsModeEnabled", "Включен (порты 1024-65535)");
+
+            _translations.Add("en_ExtendedPortsModeDisabled", "Disabled");
+            _translations.Add("ru_ExtendedPortsModeDisabled", "Выключен");
+
+            _translations.Add("en_InfoEnablingExtendedPortsMode", "[Info]: Enabling... (the extended_ports_mode file is created)");
+            _translations.Add("ru_InfoEnablingExtendedPortsMode", "[Информация]: Включение... (создание файла extended_ports_mode)");
+
+            _translations.Add("en_InfoDisablingExtendedPortsMode", "[Info]: Disabling... (deleting the extended_ports_mode file)");
+            _translations.Add("ru_InfoDisablingExtendedPortsMode", "[Информация]: Выключние... (удаление файла extended_ports_mode)");
         }
 
         // Метод для вывода переведенного текста с форматированием

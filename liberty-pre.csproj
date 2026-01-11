@@ -8,7 +8,7 @@
     <RootNamespace>libertypre</RootNamespace>
     <AssemblyName>liberty-pre</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <ApplicationIcon>components\liberty-pre-128x128.ico</ApplicationIcon>
+    <Win32Resource>components\resources.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
     <LangVersion>default</LangVersion>
+    <Win32Resource>components\resources.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|anycpu' ">
     <Optimize>true</Optimize>
@@ -28,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
     <LangVersion>default</LangVersion>
+    <Win32Resource>components\resources.res</Win32Resource>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

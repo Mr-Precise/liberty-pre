@@ -2,6 +2,7 @@ bin
 obj
 Debug
 Release
+components/resources.res
 *.user
 *.suo
 *.userprefs

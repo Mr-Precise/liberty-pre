@@ -28,7 +28,11 @@ jobs:
           echo "deb [arch=amd64 signed-by=/usr/share/keyrings/mono-official-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu preview-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-preview.list
 
       - name: Install Mono
-        run: sudo apt update && sudo apt install -y mono-complete nuget
+        run: sudo apt update && sudo apt install -y mono-complete nuget mingw-w64
+
+      - name: Build win32 resource with icon
+        run: |
+          x86_64-w64-mingw32-windres -i components/resources.rc -o components/resources.res
 
       - name: Build the solution
         run: |

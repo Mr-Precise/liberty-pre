@@ -76,11 +76,45 @@ namespace libertypre
             _translations.Add("en_ErrorProblemStartWinws", "[Error]: Problems starting winws.exe: {0}");
             _translations.Add("ru_ErrorProblemStartWinws", "[Ошибка]: Проблемы при запуске winws.exe: {0}");
 
-            _translations.Add("en_ShowVersion", "liberty-pre zapret launcher {0}\nAuthor: {1}\nProject: {2}");
-            _translations.Add("ru_ShowVersion", "liberty-pre zapret лаунчер {0}\nАвтор: {1}\nПроект: {2}");
+            _translations.Add("en_ShowVersion",
+                "liberty-pre zapret launcher {0}\n" +
+                "Author:  {1}\n" +
+                "Project: {2}");
+            _translations.Add("ru_ShowVersion",
+                "liberty-pre zapret лаунчер {0}\n" +
+                "Автор:  {1}\n" +
+                "Проект: {2}");
 
-            _translations.Add("en_ShowHelp", "liberty-pre.exe -c <config>.cfg\nLaunch examples:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nNote: by default file used is default.cfg\nArguments:\n  -h, --help       Show help\n  -c               Path to config file\n  -i               Use iptables instead of nftables\n  -s, --stop       Stop winws and delete WinDivert Service\n  --ipset          Switch ipset file mode (full or stub)\n  --extended-ports Switch extended ports mode (port filtering 1024-65535)\n  -v               Show version");
-            _translations.Add("ru_ShowHelp", "liberty-pre.exe -c <конфиг>.cfg\nПримеры запуска:\n  liberty-pre.exe -c discord.cfg\n  liberty-pre.exe -c general.cfg\nПримечание: по умолчанию читается файл default.cfg\nАргументы:\n  -h, --help       Показать справку\n  -c               Путь к файлу конфигурации\n  -i               Использовать iptables вместо nftables\n  -s, --stop       Остановить winws и удалить WinDivert сервис\n  --ipset          Переключатель режима работы ipset (полный или заглушка)\n  --extended-ports Переключатель расширенного режима портов (фильтрация портов 1024-65535)\n  -v               Показать версию");
+            _translations.Add("en_ShowHelp", 
+                "liberty-pre.exe -c <config>.cfg\n" +
+                "Launch examples:\n" +
+                "  liberty-pre.exe -c discord.cfg\n" +
+                "  liberty-pre.exe -c general.cfg\n" +
+                "Note: by default file used is default.cfg\n" +
+                "Arguments:\n" +
+                "  -h, --help       Show help\n" +
+                "  -c               Path to config file\n" +
+                "  -i               Use iptables instead of nftables\n" +
+                "  -s, --stop       Stop winws and delete WinDivert Service\n" +
+                "  --ipset          Switch ipset file mode (full or stub)\n" +
+                "  --extended-ports Switch extended ports mode (port filtering 1024-65535)\n" +
+                "  --hidden         Switch hidden / invisible  mode of operation (daemon)\n" +
+                "  -v               Show version");
+            _translations.Add("ru_ShowHelp",
+                "liberty-pre.exe -c <конфиг>.cfg\n" +
+                "Примеры запуска:\n" +
+                "  liberty-pre.exe -c discord.cfg\n" +
+                "  liberty-pre.exe -c general.cfg\n" +
+                "Примечание: по умолчанию читается файл default.cfg\n" +
+                "Аргументы:\n" +
+                "  -h, --help       Показать справку\n" +
+                "  -c               Путь к файлу конфигурации\n" +
+                "  -i               Использовать iptables вместо nftables\n" +
+                "  -s, --stop       Остановить winws и удалить WinDivert сервис\n" +
+                "  --ipset          Переключатель режима работы ipset (полный или заглушка)\n" +
+                "  --extended-ports Переключатель расширенного режима портов (фильтрация портов 1024-65535)\n" +
+                "  --hidden         Переключатель скрытого / невидимого режима работы (daemon)\n" +
+                "  -v               Показать версию");
 
             _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
             _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");
@@ -100,8 +134,14 @@ namespace libertypre
             _translations.Add("en_UpdateAvailableDialog", "Update Available");
             _translations.Add("ru_UpdateAvailableDialog", "Доступно обновление");
 
-            _translations.Add("en_UpdateAvailableNewVer", "New version available.\n[Cancel] - postponing for 2 days.\n[Yes] - Open release page in browser?\n");
-            _translations.Add("ru_UpdateAvailableNewVer", "Доступна новая версия.\n[Отмена] - отложить на 2 дня.\n[Да] - Открыть страницу релиза в браузере?\n");
+            _translations.Add("en_UpdateAvailableNewVer",
+                "New version available.\n" +
+                "[Cancel] - postponing for about 2 days.\n" +
+                "[Yes] - Open release page in browser?\n");
+            _translations.Add("ru_UpdateAvailableNewVer",
+                "Доступна новая версия.\n" +
+                "[Отмена] - отложить на примерно 2 дня.\n" +
+                "[Да] - Открыть страницу релиза в браузере?\n");
 
             _translations.Add("en_InfoUseIpsetFile", "[Info]: Use ipset file: {0}");
             _translations.Add("ru_InfoUseIpsetFile", "[Информация]: Используется ipset файл: {0}");

@@ -136,11 +136,11 @@ namespace libertypre
 
             _translations.Add("en_UpdateAvailableNewVer",
                 "New version available.\n" +
-                "[Cancel] - postponing for about 2 days.\n" +
+                "[Cancel] - postponing for about 4 days.\n" +
                 "[Yes] - Open release page in browser?\n");
             _translations.Add("ru_UpdateAvailableNewVer",
                 "Доступна новая версия.\n" +
-                "[Отмена] - отложить на примерно 2 дня.\n" +
+                "[Отмена] - отложить на примерно 4 дня.\n" +
                 "[Да] - Открыть страницу релиза в браузере?\n");
 
             _translations.Add("en_InfoUseIpsetFile", "[Info]: Use ipset file: {0}");

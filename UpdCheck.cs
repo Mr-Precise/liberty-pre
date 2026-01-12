@@ -23,7 +23,7 @@ namespace libertypre
 
         // Период отсрочки
         // Deferral period
-        private static readonly TimeSpan DeferralDuration = TimeSpan.FromDays(2);
+        private static readonly TimeSpan DeferralDuration = TimeSpan.FromDays(4);
 
         // Метод проверки обновлений
         // Update check method

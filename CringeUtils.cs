@@ -128,6 +128,7 @@ $Shortcut.Save();";
                 // Creating shortcuts for various configurations, may take time
                 CreateWindowsShortcut("liberty-pre STOP.lnk", selfPath, "--stop", ",1");
                 CreateWindowsShortcut("liberty-pre SWITCH - ipset mode.lnk", selfPath, "--ipset", ",2");
+                CreateWindowsShortcut("liberty-pre SWITCH - hidden mode.lnk", selfPath, "--hidden", ",2");
                 CreateWindowsShortcut("liberty-pre SWITCH - Extended Ports.lnk", selfPath, "--extended-ports", ",2");
                 // custom
                 CreateWindowsShortcut("liberty-pre fake vk.lnk", selfPath, "-c default_vk_fake.cfg");

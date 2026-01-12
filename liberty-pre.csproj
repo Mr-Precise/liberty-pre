@@ -47,6 +47,7 @@
     <Compile Include="CringeUtils.cs" />
     <Compile Include="IpsetSwitchUtils.cs" />
     <Compile Include="ExtendedPortsFilterUtils.cs" />
+    <Compile Include="HiddenModeSwchUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

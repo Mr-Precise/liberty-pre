@@ -89,6 +89,22 @@ namespace libertypre
                 return;
             }
 
+            // Обработка аргумента --hidden (переключатель)
+            // Handle --hidden argument (toggle switch)
+            if (args.Length > 0 && args[0] == "--hidden")
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                HiddenModeSwchUtils.ToggleHiddenMode();
+                Console.ForegroundColor = ConsoleColor.Green;
+                if (HiddenModeSwchUtils.GetHiddenModeStatus())
+                {
+                    LocaleUtils.WriteTr("InfoHiddenMode");
+                }
+                Console.ResetColor();
+                Thread.Sleep(3000);
+                return;
+            }
+
             // Проверка окружения перед запуском
             // Environment check before startup
             if (!CheckConfigureEnvironment()) return;
@@ -125,7 +141,7 @@ namespace libertypre
 
             // Добавление флага --daemon для скрытого режима (Windows)
             // Add --daemon flag for hidden mode (Windows)
-            if (!CringeUtils.IsLinux() && File.Exists(Path.Combine(basePath, "hidden_mode")))
+            if (!CringeUtils.IsLinux() && HiddenModeSwchUtils.GetHiddenModeStatus())
             {
                 if (!toolarguments.Contains("--daemon"))
                 {

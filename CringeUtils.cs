@@ -137,7 +137,6 @@ $Shortcut.Save();";
                 CreateWindowsShortcut("liberty-pre discord.lnk", selfPath, "-c discord.cfg");
                 // from Flowseal/zapret-discord-youtube
                 CreateWindowsShortcut("liberty-pre ALT.lnk", selfPath, "-c ALT.cfg");
-                CreateWindowsShortcut("liberty-pre ALT1.lnk", selfPath, "-c ALT1.cfg");
                 CreateWindowsShortcut("liberty-pre ALT2.lnk", selfPath, "-c ALT2.cfg");
                 CreateWindowsShortcut("liberty-pre ALT3.lnk", selfPath, "-c ALT3.cfg");
                 CreateWindowsShortcut("liberty-pre ALT4.lnk", selfPath, "-c ALT4.cfg");

@@ -19,11 +19,7 @@ namespace libertypre
 
         private const string RepoOwner = "Mr-Precise";
         private const string RepoName = "liberty-pre";
-        private static string DeferralConfig = Path.Combine(MainClass.basePath, "update_deferral.json");
-
-        // Период отсрочки
-        // Deferral period
-        private static readonly TimeSpan DeferralDuration = TimeSpan.FromDays(4);
+        private static string UpdateFlagFile = Path.Combine(MainClass.basePath, "update_deferral");
 
         // Метод проверки обновлений
         // Update check method
@@ -31,6 +27,10 @@ namespace libertypre
         {
             try
             {
+                // Получаем текущую версию приложения
+                // Get current application version
+                var currentVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "unknown";
+
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.UserAgent.ParseAdd($"{RepoName}-upd-checker");
 
@@ -54,11 +54,18 @@ namespace libertypre
                 var latestTag = release["tag_name"]?.ToString();
                 var latestVersion = latestTag?.TrimStart('v');
 
-                LocaleUtils.WriteTr("UpdCheckRemoteVer", latestVersion);
+                // Пишем версии используя локализацию и цвета
+                // Write versions using localization and colors
+                Console.Write("[UPD]: ");
+                Console.Write(LocaleUtils.GetStrTr("UpdCheckLocal"));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(currentVersion);
+                Console.ResetColor();
+                Console.Write(LocaleUtils.GetStrTr("UpdCheckRemote"));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(latestVersion ?? "unknown");
+                Console.ResetColor();
 
-                // Получаем текущую версию приложения
-                // Get current application version
-                var currentVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
                 // Сравниваем версии
                 // Compare versions
@@ -66,6 +73,12 @@ namespace libertypre
                 {
                     var url = release["html_url"]?.ToString() ?? $"https://github.com/{RepoOwner}/{RepoName}/releases";
                     ShowUpdDialog(latestVersion, url!);
+                }
+                else
+                {
+                    // Актуально
+                    // Latest
+                    LocaleUtils.WriteTr("UpdCheckLatest");
                 }
             }
             catch (Exception ex)
@@ -105,51 +118,27 @@ namespace libertypre
         // Show update dialog with deferral handling
         private static void ShowUpdDialog(string version, string updUrl)
         {
-            if (File.Exists(DeferralConfig))
+            // Проверяем наличие файла для пропуска уведомлений
+            // Check for file to skip notifications
+            if (File.Exists(UpdateFlagFile))
             {
-                try
-                {
-                    string deferralText = File.ReadAllText(DeferralConfig);
-                    if (string.IsNullOrWhiteSpace(deferralText))
-                    {
-                        File.Delete(DeferralConfig);
-                    }
-                    else
-                    {
-                        var deferralJson = JObject.Parse(deferralText);
-                        var nextTime = deferralJson["nextReminder"]?.ToObject<DateTime>() ?? DateTime.MinValue;
-
-                        // Пропускаем показ, если период отсрочки не истек
-                        // Skip if deferral period hasn't expired
-                        if (DateTime.Now < nextTime)
-                        {
-                            LocaleUtils.WriteTr("UpdateSkip");
-                            return;
-                        }
-                        else
-                            File.Delete(DeferralConfig);
-                    }
-                }
-                catch
-                {
-                    // Удаляем битый конфиг
-                    // Remove corrupted config
-                    File.Delete(DeferralConfig);
-                }
+                LocaleUtils.WriteTr("UpdateSkip");
+                return;
             }
 
-            // Показываем диалог с тремя вариантами
-            // Show dialog with three options
+            // Показываем диалоговое окошко обновления
+            // Show the update dialog
             var result = MessageBox.Show(
-                LocaleUtils.GetStrTr("UpdateAvailableNewVer") + version,
+                version + " - " +
+                LocaleUtils.GetStrTr("UpdateAvailableDialogNew"),
                 LocaleUtils.GetStrTr("UpdateAvailableDialog"),
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Information);
 
             if (result == DialogResult.Yes)
             {
-                // Открываем страницу релиза
-                // Open release page
+                // Открываем страницу обновления
+                // Open update page
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = updUrl,
@@ -158,13 +147,17 @@ namespace libertypre
             }
             else if (result == DialogResult.Cancel)
             {
-                // Создаем / обновляем конфиг отсрочки
-                // Create / update deferral config
-                var newDeferral = new JObject
+                // Создаем пустой файл-флаг для отключения уведомлений
+                // Create empty flag file to disable notifications
+                try
                 {
-                    ["nextReminder"] = DateTime.Now.Add(DeferralDuration)
-                };
-                File.WriteAllText(DeferralConfig, newDeferral.ToString());
+                    File.WriteAllText(UpdateFlagFile, "");
+                    LocaleUtils.WriteTr("UpdateDeferred");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }

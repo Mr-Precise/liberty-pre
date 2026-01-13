@@ -116,32 +116,45 @@ namespace libertypre
                 "  --hidden         Переключатель скрытого / невидимого режима работы (daemon)\n" +
                 "  -v               Показать версию");
 
+            _translations.Add("en_CreateShortcutsFailed", "[Error]: Error while creating shortcuts (.lnk): {0}");
+            _translations.Add("ru_CreateShortcutsFailed", "[Ошибка]: Ошибка при создании ярлыков (.lnk): {0}");
+            
             _translations.Add("en_UpdCheckFailed", "[Error]: Error when checking updates: {0}");
             _translations.Add("ru_UpdCheckFailed", "[Ошибка]: Ошибка при проверке обновлений: {0}");
 
-            _translations.Add("en_CreateShortcutsFailed", "[Error]: Error while creating shortcuts (.lnk): {0}");
-            _translations.Add("ru_CreateShortcutsFailed", "[Ошибка]: Ошибка при создании ярлыков (.lnk): {0}");
+            _translations.Add("en_UpdCheckLocal", "Local version: ");
+            _translations.Add("ru_UpdCheckLocal", "Локальная версия: ");
 
-            _translations.Add("en_UpdCheckRemoteVer", "\n[UPD]: Checking the version on GitHub... current: {0}");
-            _translations.Add("ru_UpdCheckRemoteVer", "\n[UPD]: Проверяем версию на GitHub... актуальная: {0}");
+            _translations.Add("en_UpdCheckRemote", ", Remote version (GitHub): ");
+            _translations.Add("ru_UpdCheckRemote", ", Удаленная версия (GinHub): ");
+
+            _translations.Add("en_UpdCheckLatest", "[UPD]: You have the latest version.");
+            _translations.Add("ru_UpdCheckLatest", "[UPD]: У вас актуальная версия.");
 
             _translations.Add("en_StopRemoveDrv", "[Done]: winws is stopped + WinDivert unload");
             _translations.Add("ru_StopRemoveDrv", "[Готово]: winws завершен + выгружен WinDivert");
 
-            _translations.Add("en_UpdateSkip", "[UPD]: Update skip");
-            _translations.Add("ru_UpdateSkip", "[UPD]: Обновление пропущено");
+            _translations.Add("en_UpdateSkip", "[UPD]: Update notifications disabled by user.");
+            _translations.Add("ru_UpdateSkip", "[UPD]: Уведомления об обновлениях отключены пользователем.");
 
             _translations.Add("en_UpdateAvailableDialog", "Update Available");
             _translations.Add("ru_UpdateAvailableDialog", "Доступно обновление");
 
-            _translations.Add("en_UpdateAvailableNewVer",
-                "New version available.\n" +
-                "[Cancel] - postponing for about 4 days.\n" +
-                "[Yes] - Open release page in browser?\n");
-            _translations.Add("ru_UpdateAvailableNewVer",
-                "Доступна новая версия.\n" +
-                "[Отмена] - отложить на примерно 4 дня.\n" +
-                "[Да] - Открыть страницу релиза в браузере?\n");
+            _translations.Add("en_UpdateAvailableDialogNew", 
+                "new version available\n\n" +
+                "[Yes] - Open update page in browser\n" +
+                "[No] - Not now, ask later\n" +
+                "[Cancel] - DO NOT ask again at all\n\n" +
+                "Your choice:");
+            _translations.Add("ru_UpdateAvailableDialogNew",
+                "доступна новая версия\n\n" +
+                "[Да] - Открыть страницу обновления в браузере\n" +
+                "[Нет] - Не сейчас, спросить потом\n" +
+                "[Отмена] - Больше НЕ спрашивать вообще\n\n" +
+                "Ваш выбор:");
+
+            _translations.Add("en_UpdateDeferred", "[UPD]: Update notifications disabled. Delete update_deferral file to re-enable.");
+            _translations.Add("ru_UpdateDeferred", "[UPD]: Уведомления об обновлениях отключены. Удалите файл update_deferral для включения.");
 
             _translations.Add("en_InfoUseIpsetFile", "[Info]: Use ipset file: {0}");
             _translations.Add("ru_InfoUseIpsetFile", "[Информация]: Используется ipset файл: {0}");

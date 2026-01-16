@@ -7,71 +7,13 @@ using System.Threading.Tasks;
 
 namespace libertypre
 {
-    public class CringeUtils
+    public class ShortcutUtils
     {
         // Событие завершения создания ярлыков
         // Shortcut creation completion event
         public static ManualResetEvent ShortcutCrDone = new ManualResetEvent(false);
         private static string selfPath = Assembly.GetExecutingAssembly().Location;
 
-        // Выполнение команды с захватом вывода
-        // Execute command with output capture
-        public static string RunCommand(string command, string args)
-        {
-            ProcessStartInfo psi = new ProcessStartInfo
-            {
-                FileName = command,
-                Arguments = args,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-            Process process = Process.Start(psi);
-            process.WaitForExit();
-            return process.StandardOutput.ReadToEnd();
-        }
-
-        // Выполнение команды от имени администратора
-        // Execute command as administrator
-        private static void RunCommandAsAdmin(string command, string args)
-        {
-            ProcessStartInfo psi = new ProcessStartInfo
-            {
-                FileName = command,
-                Arguments = args,
-                UseShellExecute = true,     // Требуется для runas / Required for runas
-                Verb = "runas",             // Запуск с повышенными привилегиями / Run with elevated privileges
-                CreateNoWindow = true
-            };
-            Process.Start(psi);
-        }
-
-        // Остановка и удаление служб / драйверов
-        // Stop and remove services / drivers
-        public static void StopRemoveSevice()
-        {
-            try
-            {
-                Process[] processes = Process.GetProcessesByName("winws");
-                foreach (Process proc in processes)
-                {
-                    // Принудительно завершаем процесс winws
-                    // Force terminate winws process
-                    proc.Kill();
-                    proc.WaitForExit(1000);
-                }
-
-                // Останавливаем и удаляем службы через cmd (да, так не красиво делать...)
-                // Stop and delete services via cmd (yeah, it's not good to do that...)
-                RunCommandAsAdmin("cmd", $"/c net stop WinDivert & sc delete WinDivert & net stop WinDivert14 & sc delete WinDivert14 & net stop Monkey & sc delete Monkey");
-                LocaleUtils.WriteTr("StopRemoveDrv");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            Thread.Sleep(3000); // Пауза на всякий случай / Pause just in case
-        }
 
         // Создание ярлыка Windows через PowerShell
         // Create Windows shortcut via PowerShell
@@ -108,7 +50,7 @@ $Shortcut.Save();";
             var psi = new ProcessStartInfo
             {
                 FileName = "powershell",
-                Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"{powershellScript}\"",
+                Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"\"{powershellScript}\"",
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden
@@ -165,13 +107,6 @@ $Shortcut.Save();";
                 // Signal completion of the event
                 ShortcutCrDone.Set();
             }
-        }
-
-        // Проверка, работает ли система под Linux
-        // Check if system is running Linux
-        public static bool IsLinux()
-        {
-            return Environment.OSVersion.Platform == PlatformID.Unix;
         }
     }
 }

@@ -41,9 +41,19 @@ namespace libertypre
             {
                 // Остановка служб и драйверов (только на Windows)
                 // Stop services and drivers (Windows only)
-                if (!CringeUtils.IsLinux())
+                if (!GeneralUtils.IsLinux())
                 {
-                    CringeUtils.StopRemoveSevice();
+                    GeneralUtils.StopRemoveWidowsSevice();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    LinuxNetUtils.StopAll();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    LocaleUtils.WriteTr("InfoAllStopAndCleanRules");
+                    Console.ResetColor();
+                    Thread.Sleep(2000);
+                    return;
                 }
                 return;
             }
@@ -112,9 +122,9 @@ namespace libertypre
             // Запуск фоновых задач
             // Start background tasks
             Task.Run(() => UpdCheck.CheckForUpdAsync());
-            if (!CringeUtils.IsLinux())
+            if (!GeneralUtils.IsLinux())
             {
-                Task.Run(() => CringeUtils.CreateShortcutsAsync());
+                Task.Run(() => ShortcutUtils.CreateShortcutsAsync());
             }
 
             // Определение файла конфигурации
@@ -141,7 +151,7 @@ namespace libertypre
 
             // Добавление флага --daemon для скрытого режима (Windows)
             // Add --daemon flag for hidden mode (Windows)
-            if (!CringeUtils.IsLinux() && HiddenModeSwchUtils.GetHiddenModeStatus())
+            if (!GeneralUtils.IsLinux() && HiddenModeSwchUtils.GetHiddenModeStatus())
             {
                 if (!toolarguments.Contains("--daemon"))
                 {
@@ -160,9 +170,9 @@ namespace libertypre
 
             // Ожидание завершения фоновых задач
             // Wait for background tasks completion
-            if (!CringeUtils.IsLinux())
+            if (!GeneralUtils.IsLinux())
             {
-                CringeUtils.ShortcutCrDone.WaitOne();
+                ShortcutUtils.ShortcutCrDone.WaitOne();
             }
             UpdCheck.DoneEvent.WaitOne();
             Thread.Sleep(3000); // Финализация / Finalization
@@ -192,14 +202,28 @@ namespace libertypre
         {
             // Обработка Linux-специфичных настроек
             // Handle Linux-specific settings
-            if (CringeUtils.IsLinux())
+            if (GeneralUtils.IsLinux())
             {
                 LocaleUtils.WriteTr("WarningLinux");
+
+                if (!GeneralUtils.LinuxCommandExists("sudo"))
+                {
+                    LocaleUtils.WriteTr("ErrorSudoNotFound");
+                }
+
+                // Проверка зависимостей Linux
+                // Check Linux dependencies
+                if (!LinuxNetUtils.CheckLinuxDependencies())
+                {
+                    Console.ReadKey();
+                    return false;
+                }
+
                 if (nftables)
                 {
                     // Использование nfqws (nftables)
                     // Use nfqws (nftables)
-                    if (!LinuxCommandExists("nfqws"))
+                    if (!GeneralUtils.LinuxCommandExists("nfqws"))
                     {
                         toolDPIexe = Path.Combine(bindirPath, "nfqws");
                     }
@@ -209,15 +233,18 @@ namespace libertypre
                 {
                     // Использование tpws (iptables)
                     // Use tpws (iptables)
-                    if (!LinuxCommandExists("tpws"))
+                    if (!GeneralUtils.LinuxCommandExists("tpws"))
                     {
                         toolDPIexe = Path.Combine(bindirPath, "tpws");
                     }
                     LocaleUtils.WriteTr("InfoUsedIptables");
                 }
-                if (!LinuxCommandExists("sudo"))
+
+                // Подготовка к запуску
+                // Preparing for launch
+                if (!LinuxNetUtils.PrepareForLaunch())
                 {
-                    LocaleUtils.WriteTr("ErrorSudoNotFound");
+                    return false;
                 }
             }
 
@@ -250,7 +277,7 @@ namespace libertypre
 
             // Проверка существования winws.exe (Windows)
             // Check winws.exe existence (Windows)
-            if (!CringeUtils.IsLinux())
+            if (!GeneralUtils.IsLinux())
             {
                 if (!File.Exists(toolDPIexe))
                 {
@@ -260,21 +287,6 @@ namespace libertypre
                 }
             }
             return true;
-        }
-
-        // Проверка наличия команды в Linux
-        // Check if command exists in Linux
-        private static bool LinuxCommandExists(string command)
-        {
-            return CringeUtils.RunCommand("which", command).Length > 0;
-        }
-
-        // Проверка запущен ли процесс
-        // Check if process is running
-        private static bool IsProcessRunning(string processName)
-        {
-            Process[] processes = Process.GetProcessesByName(processName);
-            return processes.Length > 0;
         }
 
         // Метод для вывода статуса (с локализацей) использования ipset листа
@@ -300,7 +312,7 @@ namespace libertypre
             if (args.Length < 2 || args[0] != "-c")
             {
                 LocaleUtils.WriteTr("WarningConfigFileNotSpecified");
-                if (CringeUtils.IsLinux())
+                if (GeneralUtils.IsLinux())
                 {
                     // Отдельная конфигурация для Linux
                     // Separate configuration for Linux
@@ -348,7 +360,7 @@ namespace libertypre
 
             // Настройка для Linux
             // Setup for Linux
-            if (CringeUtils.IsLinux())
+            if (GeneralUtils.IsLinux())
             {
                 processName = "nfqws";
                 shellexToggle = false;
@@ -358,10 +370,17 @@ namespace libertypre
 
             // Проверка, не запущена ли утилита уже
             // Check if utility is already running
-            if (IsProcessRunning(processName))
+            if (GeneralUtils.IsProcessRunningBool(processName))
             {
                 LocaleUtils.WriteTr("WarningAldeadyRunning");
-                CringeUtils.StopRemoveSevice();
+                if (GeneralUtils.IsLinux())
+                {
+                    LinuxNetUtils.StopAll();
+                }
+                else
+                {
+                    GeneralUtils.StopRemoveWidowsSevice();
+                }
             }
 
             // Настройка параметров запуска процесса
@@ -374,7 +393,7 @@ namespace libertypre
 
             // Настройки для Windows (права администратора)
             // Settings for Windows (administrator rights)
-            if (!CringeUtils.IsLinux())
+            if (!GeneralUtils.IsLinux())
             {
                 UniStartInfo.Verb = "runas";
                 UniStartInfo.WindowStyle = ProcessWindowStyle.Minimized;
@@ -383,26 +402,76 @@ namespace libertypre
             try
             {
                 LocaleUtils.WriteTr("DoneWinwsStarted", Path.GetFileName(configFile));
-                if (CringeUtils.IsLinux())
+                if (GeneralUtils.IsLinux())
                 {
+                    Thread.Sleep(2000);
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     LocaleUtils.WriteTr("WarningLinuxRootPassword");
                     Console.ResetColor();
 
-                    // Синхронный запуск с ожиданием (Linux)
-                    // Synchronous startup with waiting (Linux)
+                    // Синхронный запуск с ожиданием sudo (Linux)
+                    // Synchronous startup with waiting sudo (Linux)
                     Process uni = Process.Start(UniStartInfo);
-                    uni.WaitForExit();
+                    uni.WaitForExit(); // TODO
+
+                    // На всякий случай даем время процессу запуститься
+                    // Just in case, we give the process time to start normally
+                    Thread.Sleep(3000);
+
+                    // Проверяем, запустился ли nfqws
+                    // Check if nfqws has started
+                    if (!LinuxNetUtils.VerifyNfqwsRunning())
+                    {
+                        LocaleUtils.WriteTr("ErrorFirstVerifyNfqwsRun");
+                        LinuxNetUtils.StopAll();
+                        return;
+                    }
+
+                    // Настраиваем nftables правила
+                    // Set up nftables rules
+                    if (LinuxNetUtils.ConfigureNftablesRules())
+                    {
+                        LocaleUtils.WriteTr("InfoSuccessRunWithRules");
+
+                        // Ожидаем / перехватываем Ctrl+C
+                        // Wait for / catching Ctrl+C
+                        ManualResetEvent exitEvent = new ManualResetEvent(false);
+                        Console.CancelKeyPress += (sender, e) =>
+                        {
+                            e.Cancel = true;
+                            exitEvent.Set();
+                        };
+
+                        exitEvent.WaitOne();
+
+                        // Очищаем правила перед выходом
+                        // Clear the rules before exiting
+                        LinuxNetUtils.StopAll();
+                        LocaleUtils.WriteTr("InfoCleanupComletedExit");
+                    }
+                    else
+                    {
+                        LocaleUtils.WriteTr("ErrorConfigureNftExit");
+                        LinuxNetUtils.StopAll();
+                    }
                 }
                 else
                 {
+                    // Запускаем winws (Windows)
+                    // Run winws (Windows)
                     LocaleUtils.WriteTr("InfoWinwsMinimized");
                     Process.Start(UniStartInfo);
                 }
             }
             catch (Exception ex)
             {
-                LocaleUtils.WriteTr("ErrorProblemStartWinws", ex.Message);
+                // Странная проблема при запуске winws или nfqws
+                // Strange problems when starting winws или nfqws
+                LocaleUtils.WriteTr("ErrorProblemStartToolDPI", ex.Message);
+                if (GeneralUtils.IsLinux())
+                {
+                    LinuxNetUtils.StopAll();
+                }
                 Console.ReadKey();
             }
         }

@@ -156,9 +156,8 @@ namespace libertypre
 
                     // Если полный ipset активен, сразу применяем обновленный лист
                     // If full ipset enabled, immediately apply the updated list
-                    if (IpsetSwitchStatus())
+                    if (IpsetSwitchStatus() && !File.Exists(currentFile))
                     {
-                        //TODO
                         File.Copy(fullFile, currentFile, true);
                     }
                 }
@@ -168,6 +167,12 @@ namespace libertypre
             }
             catch (Exception ex)
             {
+                // Если не удалось обновить полный и нет текущего, пробуем восстановить из backup
+                // If it was not possible to update the full one and there is no current one, try restoring from backup
+                if (!File.Exists(fullFile) && !File.Exists(currentFile) && File.Exists(backupFile))
+                {
+                    File.Copy(backupFile, currentFile, true);
+                }
                 LocaleUtils.WriteTr("ErrorIpsetUpdate", ex.Message);
             }
         }

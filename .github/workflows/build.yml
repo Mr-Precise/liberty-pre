@@ -83,6 +83,7 @@ jobs:
           cp components/*.sh "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
           cp components/about.html "bin/liberty-pre-linux-${{ env.BUILD_DATE }}"
           cp components/about.html "bin/liberty-pre-${{ env.BUILD_DATE }}"
+          cp components/liberty-pre-256x256.png "bin/liberty-pre-linux-${{ env.BUILD_DATE }}/liberty-pre.png"
 
       - name: Сompress Release
         run: |

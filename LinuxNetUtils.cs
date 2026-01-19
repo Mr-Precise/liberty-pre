@@ -26,7 +26,7 @@ namespace libertypre
             string[] requiredCommands = { "nft", "pgrep", "pkill" };
             foreach (var cmd in requiredCommands)
             {
-                if (!GeneralUtils.LinuxCommandExists(cmd))
+                if (!GeneralUtils.UnixCommandExists(cmd))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     LocaleUtils.WriteTr("ErrorMissingCommand", cmd);

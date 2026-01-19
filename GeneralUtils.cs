@@ -76,8 +76,46 @@ namespace libertypre
             {
                 try
                 {
-                    string output = RunCommandReadToEnd("pgrep", $"-f {processName}");
-                    return !string.IsNullOrEmpty(output.Trim());
+                    // Используем pgrep -x для точного поиска процесса по имени
+                    // Use pgrep -x for exact process name search
+                    string pgrepOutput = RunCommandReadToEnd("pgrep", $"-x {processName}");
+                    return !string.IsNullOrEmpty(pgrepOutput.Trim());
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else if (IsMacOS())
+            {
+                try
+                {
+                    var startInfo = new ProcessStartInfo
+                    {
+                        FileName = "ps",
+                        Arguments = "-ax", // a - все пользователи, x - процессы без терминала / a - all users, x - processes without terminal
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+
+                    var process = Process.Start(startInfo);
+                    if (process == null)
+                    {
+                        return false;
+                    }
+
+                    // Читаем весь вывод команды ps
+                    string output = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
+
+                    // Ищем имя процесса в общем списке
+                    // но процессы часто ищут без учета регистра.
+                    // StringComparison.OrdinalIgnoreCase полезен, так как macOS регистрозависима в путях, 
+                    // Look for the process name in the overall list
+                    // StringComparison.OrdinalIgnoreCase is useful since macOS is case-sensitive in paths,
+                    // but processes are often searched case-insensitively.
+                    return output.IndexOf(processName, StringComparison.OrdinalIgnoreCase) >= 0;
                 }
                 catch
                 {
@@ -132,10 +170,10 @@ namespace libertypre
                 return false;
             }
         }
-        
+
         // Проверка наличия команды в Linux
         // Check for command availability in Linux
-        public static bool LinuxCommandExists(string command)
+        public static bool UnixCommandExists(string command)
         {
             return RunCommandReadToEnd("which", command).Length > 0;
         }

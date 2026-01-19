@@ -16,14 +16,23 @@ namespace libertypre
         {
             _translations = new Dictionary<string, string>();
 
-            _translations.Add("en_ErrorConfigNotFound", "[Error]: Configuration file {0} not found.");
-            _translations.Add("ru_ErrorConfigNotFound", "[Ошибка]: Конфигурационный файл {0} не найден.");
+            _translations.Add("en_ErrorConfigFileNotFound", "[Error]: Configuration file {0} not found!");
+            _translations.Add("ru_ErrorConfigFileNotFound", "[Ошибка]: Файл конфигурации {0} не найден!");
+
+            _translations.Add("en_InfoAvailableConfigFiles", "[Info]: List of available configuration files:");
+            _translations.Add("ru_InfoAvailableConfigFiles", "[Информация]: Список доступных конфигурационных файлов:");
 
             _translations.Add("en_ErrorConfigEmpty", "[Error]: Configuration file is empty or contains only comments.");
             _translations.Add("ru_ErrorConfigEmpty", "[Ошибка]: Конфигурационный файл пуст или содержит только комментарии.");
 
             _translations.Add("en_WarningLinux", "[Warning]: Linux version is used. Recommended for advanced users.");
             _translations.Add("ru_WarningLinux", "[Предупреждение]: Используется версия для Linux. Рекомендуется для продвинутых пользователей.");
+
+            _translations.Add("en_WarningMacOS", "[Warning]: macOS version not supported. Recommended for advanced users.");
+            _translations.Add("ru_WarningMacOS", "[Предупреждение]: Версия для macOS не поддерживается. Рекомендуется для продвинутых пользователей.");
+
+            _translations.Add("en_WarningCmdUnknownArgument", "[Warning]: Unknown argument: {0}");
+            _translations.Add("ru_WarningCmdUnknownArgument", "[Предупреждение]: Неизвестный аргумент: {0}");
 
             _translations.Add("en_WarningLinuxRootPassword", "[Linux]: (root access) Enter sudo password: ");
             _translations.Add("ru_WarningLinuxRootPassword", "[Linux]: (root доступ) Введите пароль sudo: ");
@@ -46,9 +55,6 @@ namespace libertypre
             _translations.Add("en_WarningConfigFileNotSpecified", "[Warning]: Configuration file not specified, loading default.");
             _translations.Add("ru_WarningConfigFileNotSpecified", "[Предупреждение]: Конфигурационный файл не указан, загружаем по умолчанию.");
 
-            _translations.Add("en_ErrorConfigFileNotFound", "[Error]: Configuration file {0} not found!");
-            _translations.Add("ru_ErrorConfigFileNotFound", "[Ошибка]: Файл конфигурации {0} не найден!");
-
             _translations.Add("en_InfoUsedNfqws", "[Info]: Linux / Used nfqws (nftables).");
             _translations.Add("ru_InfoUsedNfqws", "[Информация]: Linux / Используется nfqws (nftables).");
 
@@ -61,8 +67,11 @@ namespace libertypre
             _translations.Add("en_InfoDisablingHiddenMode", "[Info]: Disabling hidden mode... (deleting the hidden_mode file).");
             _translations.Add("ru_InfoDisablingHiddenMode", "[Информация]: Выключние скрытого режима... (удаление файла hidden_mode).");
 
-            _translations.Add("en_InfoUsedIptables", "[Info]: Linux / Used tpws (iptables), limited in functionality.");
-            _translations.Add("ru_InfoUsedIptables", "[Информация]: Linux / Используется tpws (iptables), ограниченная по функционалу.");
+            _translations.Add("en_InfoUsedTpwsLinux", "[Info]: Linux / Used tpws, limited in functionality.");
+            _translations.Add("ru_InfoUsedTpwsLinux", "[Информация]: Linux / Используется tpws, ограниченная по функционалу.");
+
+            _translations.Add("en_InfoUsedTpwsMacOS", "[Info]: macOS / Used tpws, limited in functionality.");
+            _translations.Add("ru_InfoUsedTpwsMacOS", "[Информация]: macOS / Используется tpws, ограниченная по функционалу.");
 
             _translations.Add("en_WarningAldeadyRunning", "[Warning]: The process has already been running, is being restarting!");
             _translations.Add("ru_WarningAldeadyRunning", "[Предупреждение]: Процесс уже был запущен, выполняется перезапуск!");
@@ -93,9 +102,9 @@ namespace libertypre
                 "Note: by default file used is default.cfg\n" +
                 "Arguments:\n" +
                 "  -h, --help       Show help\n" +
-                "  -c               Path to config file\n" +
-                "  -i               Use iptables instead of nftables\n" +
-                "  -s, --stop       Stop winws and delete WinDivert Service\n" +
+                "  -c               Configuration file name (in the configs directory)\n" +
+                "  -i               Use tpws instead of nfqws (nftables)\n" +
+                "  -s, --stop       Stop winws / nfqws and delete WinDivert Service + clean rules\n" +
                 "  --ipset          Switch ipset file mode (full or stub)\n" +
                 "  --extended-ports Switch extended ports mode (port filtering 1024-65535)\n" +
                 "  --hidden         Switch hidden / invisible  mode of operation (daemon)\n" +
@@ -108,9 +117,9 @@ namespace libertypre
                 "Примечание: по умолчанию читается файл default.cfg\n" +
                 "Аргументы:\n" +
                 "  -h, --help       Показать справку\n" +
-                "  -c               Путь к файлу конфигурации\n" +
-                "  -i               Использовать iptables вместо nftables\n" +
-                "  -s, --stop       Остановить winws и удалить WinDivert сервис\n" +
+                "  -c               Имя файла конфигурации (в каталоге configs)\n" +
+                "  -i               Использовать tpws вместо nfqws (nftables)\n" +
+                "  -s, --stop       Остановить winws / nfqws и удалить WinDivert сервис + очистка правил\n" +
                 "  --ipset          Переключатель режима работы ipset (полный или заглушка)\n" +
                 "  --extended-ports Переключатель расширенного режима портов (фильтрация портов 1024-65535)\n" +
                 "  --hidden         Переключатель скрытого / невидимого режима работы (daemon)\n" +

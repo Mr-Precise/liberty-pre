@@ -30,89 +30,110 @@ namespace libertypre
             // Set console encoding for UTF-8 support
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
+            string configFileArg = null;
+
             // Как ни странно, обработка аргументов командной строки
             // Command line arguments processing
-            if (args.Length > 0 && (args[0] == "-h" || args[0] == "--help"))
+            for (int i = 0; i < args.Length; i++)
             {
-                ShowHelp();
-                return;
-            }
-            if (args.Length > 0 && (args[0] == "-s" || args[0] == "--stop"))
-            {
-                // Остановка служб и драйверов (только на Windows)
-                // Stop services and drivers (Windows only)
-                if (!GeneralUtils.IsLinux())
+                string arg = args[i];
+
+                if (arg == "-h" || arg == "--help")
                 {
-                    GeneralUtils.StopRemoveWidowsSevice();
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    LinuxNetUtils.StopAll();
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    LocaleUtils.WriteTr("InfoAllStopAndCleanRules");
-                    Console.ResetColor();
-                    Thread.Sleep(2000);
+                    ShowHelp();
                     return;
                 }
-                return;
-            }
-
-            // Флаг отключения nftables (использование iptables, позже будет удалено)
-            // Disable nftables flag (use iptables, will be deleted later)
-            if (args.Length > 0 && args[0] == "-i")
-            {
-                nftables = false;
-            }
-
-            // Обработка аргумента --extended-ports (переключатель)
-            // Handle --extended-ports argument (toggle switch)
-            if (args.Length > 0 && args[0] == "--extended-ports")
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                ExtendedPortsFilterUtils.ToggleExtendedPortsMode();
-                Console.ForegroundColor = ConsoleColor.Green;
-                ShowExtendedPortsModeStatus();
-                Console.ResetColor();
-                Thread.Sleep(3000);
-                return;
-            }
-
-            // Показываем версию
-            // Show version
-            if (args.Length > 0 && args[0] == "-v")
-            {
-                ShowVersion();
-                return;
-            }
-
-            // Переключение режима ipset файла
-            // Ipset file mode switch
-            if (args.Length > 0 && args[0] == "--ipset")
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                IpsetSwitchUtils.IpsetSwitchNext();
-                Console.ForegroundColor = ConsoleColor.Green;
-                ShowIpsetStatus();
-                Console.ResetColor();
-                Thread.Sleep(3000);
-                return;
-            }
-
-            // Обработка аргумента --hidden (переключатель)
-            // Handle --hidden argument (toggle switch)
-            if (args.Length > 0 && args[0] == "--hidden")
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                HiddenModeSwchUtils.ToggleHiddenMode();
-                Console.ForegroundColor = ConsoleColor.Green;
-                if (HiddenModeSwchUtils.GetHiddenModeStatus())
+                else if (arg == "-s" || arg == "--stop")
                 {
-                    LocaleUtils.WriteTr("InfoHiddenMode");
+                    if (!GeneralUtils.IsLinux())
+                    {
+                        // Остановка служб и драйверов (Windows)
+                        // Stop services and drivers (Windows)
+                        GeneralUtils.StopRemoveWidowsSevice();
+                    }
+                    else
+                    {
+                        // Остановка процессов и очистка правил (Linux)
+                        // Stop processes and clean rules (Linux)
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        LinuxNetUtils.StopAll();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        LocaleUtils.WriteTr("InfoAllStopAndCleanRules");
+                        Console.ResetColor();
+                        Thread.Sleep(2000);
+                        return;
+                    }
+                    return;
                 }
-                Console.ResetColor();
-                Thread.Sleep(3000);
-                return;
+                else if (arg == "-v")
+                {
+                    // Показываем версию
+                    // Show version
+                    ShowVersion();
+                    return;
+                }
+                else if (arg == "--extended-ports")
+                {
+                    // Обработка аргумента --extended-ports (переключатель)
+                    // Handle --extended-ports argument (toggle switch)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    ExtendedPortsFilterUtils.ToggleExtendedPortsMode();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    ShowExtendedPortsModeStatus();
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
+                    return;
+                }
+                else if (arg == "--ipset")
+                {
+                    // Переключение режима ipset файла
+                    // Ipset file mode switch
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    IpsetSwitchUtils.IpsetSwitchNext();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    ShowIpsetStatus();
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
+                    return;
+                }
+                else if (arg == "--hidden")
+                {
+                    // Обработка аргумента --hidden (переключатель)
+                    // Handle --hidden argument (toggle switch)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    HiddenModeSwchUtils.ToggleHiddenMode();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    if (HiddenModeSwchUtils.GetHiddenModeStatus())
+                    {
+                        LocaleUtils.WriteTr("InfoHiddenMode");
+                    }
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
+                    return;
+                }
+                else if (arg == "-i")
+                {
+                    // Отключение nftables
+                    // Disable nftables
+                    nftables = false;
+                }
+                else if (arg == "-c" && i + 1 < args.Length)
+                {
+                    // Следующий аргумент это имя файла конфигурации
+                    // Next argument is the name of the configuration file
+                    configFileArg = args[i + 1];
+                    // Пропускаем следующий аргумент, т.к. он уже обработан
+                    // Skip the next argument because it has already been processed
+                    i++;
+                }
+                else if (arg.StartsWith("-"))
+                {
+                    // Неизвестный аргумент
+                    // Unknown argument
+                    LocaleUtils.WriteTr("WarningCmdUnknownArgument", arg);
+                    ShowHelp();
+                    return;
+                }
             }
 
             // Проверка окружения перед запуском
@@ -129,10 +150,9 @@ namespace libertypre
 
             // Определение файла конфигурации
             // Determine configuration file
-            string configFile = GetConfigFile(args);
+            string configFile = GetConfigFile(configFileArg);
             if (!File.Exists(configFile))
             {
-                LocaleUtils.WriteTr("ErrorConfigNotFound", configFile);
                 return;
             }
 
@@ -206,7 +226,7 @@ namespace libertypre
             {
                 LocaleUtils.WriteTr("WarningLinux");
 
-                if (!GeneralUtils.LinuxCommandExists("sudo"))
+                if (!GeneralUtils.UnixCommandExists("sudo"))
                 {
                     LocaleUtils.WriteTr("ErrorSudoNotFound");
                 }
@@ -223,7 +243,7 @@ namespace libertypre
                 {
                     // Использование nfqws (nftables)
                     // Use nfqws (nftables)
-                    if (!GeneralUtils.LinuxCommandExists("nfqws"))
+                    if (!GeneralUtils.UnixCommandExists("nfqws"))
                     {
                         toolDPIexe = Path.Combine(bindirPath, "nfqws");
                     }
@@ -231,13 +251,13 @@ namespace libertypre
                 }
                 else
                 {
-                    // Использование tpws (iptables)
-                    // Use tpws (iptables)
-                    if (!GeneralUtils.LinuxCommandExists("tpws"))
+                    // Использование tpws
+                    // Use tpws
+                    if (!GeneralUtils.UnixCommandExists("tpws"))
                     {
                         toolDPIexe = Path.Combine(bindirPath, "tpws");
                     }
-                    LocaleUtils.WriteTr("InfoUsedIptables");
+                    LocaleUtils.WriteTr("InfoUsedTpwsLinux");
                 }
 
                 // Подготовка к запуску
@@ -247,6 +267,18 @@ namespace libertypre
                     return false;
                 }
             }
+            // Обработка macOS-специфичных настроек
+            // Handle macOS-specific settings
+            if (GeneralUtils.IsMacOS())
+            {
+                LocaleUtils.WriteTr("WarningMacOS");
+
+                // Использование tpws
+                // Use tpws
+                toolDPIexe = Path.Combine(bindirPath, "tpws");
+                LocaleUtils.WriteTr("InfoUsedTpwsMacOS");
+            }
+
 
             // Проверка существования каталога bin
             // Check bin directory existence
@@ -307,9 +339,9 @@ namespace libertypre
 
         // Определение файла конфигурации на основе аргументов
         // Determine configuration file based on arguments
-        private static string GetConfigFile(string[] args)
+        private static string GetConfigFile(string cfgName = null)
         {
-            if (args.Length < 2 || args[0] != "-c")
+            if (string.IsNullOrEmpty(cfgName))
             {
                 LocaleUtils.WriteTr("WarningConfigFileNotSpecified");
                 if (GeneralUtils.IsLinux())
@@ -318,6 +350,12 @@ namespace libertypre
                     // Separate configuration for Linux
                     return Path.Combine(configsPath, "linux.cfg");
                 }
+                else if (GeneralUtils.IsMacOS())
+                {
+                    // Отдельная конфигурация для macOS
+                    // Separate configuration for macOS
+                    return Path.Combine(configsPath, "macos.cfg");
+                }
                 else
                 {
                     // default.cfg если ничего не выбрано
@@ -325,12 +363,37 @@ namespace libertypre
                     return Path.Combine(configsPath, "default.cfg");
                 }
             }
-            if (!File.Exists(Path.Combine(configsPath, args[1])))
+            string fullPath = Path.Combine(configsPath, cfgName);
+            if (File.Exists(fullPath))
             {
-                LocaleUtils.WriteTr("ErrorConfigFileNotFound", args[1]);
+                return fullPath;
+            }
+
+            // Пробуем добавить расширение .cfg если его нет
+            // Try adding .cfg extension if it's not there
+            if (string.IsNullOrEmpty(Path.GetExtension(cfgName)))
+            {
+                fullPath = Path.Combine(configsPath, cfgName + ".cfg");
+                if (File.Exists(fullPath))
+                {
+                    return fullPath;
+                }
+            }
+
+            if (!File.Exists(fullPath))
+            {
+                LocaleUtils.WriteTr("ErrorConfigFileNotFound", cfgName);
+
+                // Выводим список доступных конфигурационных файлов
+                // Display a list of available configuration files
+                LocaleUtils.GetStrTr("InfoAvailableConfigFiles");
+                foreach (string file in Directory.GetFiles(configsPath, "*.cfg"))
+                {
+                    Console.WriteLine($"  {Path.GetFileName(file)}");
+                }
                 Console.ReadKey();
             }
-            return Path.Combine(configsPath, args[1]);
+            return fullPath;
         }
 
         // Парсинг конфигурационного файла в строку аргументов
@@ -338,7 +401,7 @@ namespace libertypre
         private static string ParseConfigFile(string configFile)
         {
             // Определяем, включен ли расширенный режим портов
-            // Determine if extended ports mode is enabled
+            // Determine if the extended ports mode is enabled
             bool epMode = ExtendedPortsFilterUtils.GetExtendedPortsModeStatus();
             string replacement = epMode ? ExtendedPortsEnabled : ExtendedPortsDisabled;
 
@@ -420,7 +483,7 @@ namespace libertypre
 
                     // Проверяем, запустился ли nfqws
                     // Check if nfqws has started
-                    if (!LinuxNetUtils.VerifyNfqwsRunning())
+                    if (nftables && !LinuxNetUtils.VerifyNfqwsRunning())
                     {
                         LocaleUtils.WriteTr("ErrorFirstVerifyNfqwsRun");
                         LinuxNetUtils.StopAll();
@@ -429,7 +492,7 @@ namespace libertypre
 
                     // Настраиваем nftables правила
                     // Set up nftables rules
-                    if (LinuxNetUtils.ConfigureNftablesRules())
+                    if (nftables && LinuxNetUtils.ConfigureNftablesRules())
                     {
                         LocaleUtils.WriteTr("InfoSuccessRunWithRules");
 

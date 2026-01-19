@@ -386,7 +386,7 @@ namespace libertypre
 
                 // Выводим список доступных конфигурационных файлов
                 // Display a list of available configuration files
-                LocaleUtils.GetStrTr("InfoAvailableConfigFiles");
+                LocaleUtils.WriteTr("InfoAvailableConfigFiles");
                 foreach (string file in Directory.GetFiles(configsPath, "*.cfg"))
                 {
                     Console.WriteLine($"  {Path.GetFileName(file)}");

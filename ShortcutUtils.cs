@@ -76,6 +76,7 @@ $Shortcut.Save();";
                 CreateWindowsShortcut("liberty-pre fake vk.lnk", selfPath, "-c default_vk_fake.cfg");
                 CreateWindowsShortcut("liberty-pre extra cloudflare warp.lnk", selfPath, "-c extra-cloudflare.cfg");
                 CreateWindowsShortcut("liberty-pre cringe.lnk", selfPath, "-c cringe.cfg");
+                CreateWindowsShortcut("liberty-pre plus extra.lnk", selfPath, "-c plus_extra.cfg");
                 CreateWindowsShortcut("liberty-pre discord.lnk", selfPath, "-c discord.cfg");
                 // from Flowseal/zapret-discord-youtube
                 CreateWindowsShortcut("liberty-pre ALT.lnk", selfPath, "-c ALT.cfg");

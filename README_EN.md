@@ -44,6 +44,7 @@ This ipset switch has two states: full (with a valid network list) and stub (IPs
 The shortcut named `liberty-pre SWITCH - Extended Ports` is used to switch the extended port filtering mode (1024-65535).  
 The shortcut named `liberty-pre SWITCH - hidden modes` used to switch to the invisible/hidden mode of operation.  
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  
+Linux: run `liberty-pre-linux.sh` command line option `--install` to install a .desktop file for application menu integration.  
 Linux: Additional iptables/nftables configuration may be required.
 
 ### Caution:

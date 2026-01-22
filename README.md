@@ -44,6 +44,7 @@ Read in [English](README_EN.md) language
 Ярлык с именем `liberty-pre SWITCH - Extended Ports` предназначен для переключения режима фильтрации портов (1024-65535).  
 Ярлык с именем `liberty-pre SWITCH - hidden modes` предназначен для переключения невидимого / скрытого режима работы.  
 Linux (для продвинутых): установить mono, запускать liberty-pre-linux.sh  
+Linux: запустите скрипт `liberty-pre-linux.sh` с аргументом `--install`, чтобы установить файл .desktop для интеграции в меню приложений.  
 Linux: Возможно потребуется дополнительная настройка iptables/nftables.
 
 ### Осторожно:

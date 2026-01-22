@@ -48,8 +48,14 @@ Linux: run `liberty-pre-linux.sh` command line option `--install` to install a .
 Linux: Additional iptables/nftables configuration may be required.
 
 ### Caution:
-The executable files that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.  
-WinDivert driver is not a virus but a tool, read the [details](https://github.com/bol-van/zapret-win-bundle?tab=readme-ov-file#antivirus-warning) of why this happens.
+💯 The executable files that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.  
+
+⚠️ Why might antivirus software react to winws (WinDivert)?  
+The Windows component winws.exe requires the WinDivert driver to function. This driver is necessary to intercept and modify network traffic for bypassing blocks, as Windows lacks built-in equivalents to Linux's iptables/nftables.
+
+WinDivert is a legitimate and signed tool. However, its capability to hook into the network stack is a technique also used by some malware. Therefore, antivirus software and Windows Defender often classify such drivers as hacking tools or Potentially Unwanted Programs (PUPs).
+
+This is normal. The driver itself is not a virus. To ensure the zapret component works without interference, simply add the program's folder to your antivirus exclusion list. [Details](https://github.com/bol-van/zapret-win-bundle?tab=readme-ov-file#antivirus-warning).
 
 ### How to compile?
 Install git:  

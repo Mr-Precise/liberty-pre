@@ -1,5 +1,6 @@
 bin
 obj
+.vscode/
 Debug
 Release
 components/resources.res

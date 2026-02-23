@@ -279,6 +279,12 @@ namespace libertypre
                 LocaleUtils.WriteTr("InfoUsedTpwsMacOS");
             }
 
+            // Проверка и включение TCP timestamps, если он отключен (Windows)
+            // Check and enable TCP timestamps if it is disabled (Windows)
+            if (!GeneralUtils.IsLinux() && !GeneralUtils.IsMacOS())
+            {
+                GeneralUtils.CheckAndEnableTcpTimestamps();
+            }
 
             // Проверка существования каталога bin
             // Check bin directory existence

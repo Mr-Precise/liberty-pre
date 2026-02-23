@@ -308,6 +308,18 @@ namespace libertypre
 
             _translations.Add("en_InfoCleanupComletedExit", "[Info]: Cleanup completed. Exiting.");
             _translations.Add("ru_InfoCleanupComletedExit", "[Информация]: Очистка завершена. Выход.");
+
+            _translations.Add("en_WarnTcpTimestampsIsDisabled", "[Warning]: TCP timestamps disabled (value: {0}). Enabling...");
+            _translations.Add("ru_WarnTcpTimestampsIsDisabled", "[Предупреждение]: TCP timestamps отключен (значение: {0}). Включаем...");
+
+            _translations.Add("en_WarnRegTcpTimestampsKeyNotFound", "[Warning]: TCP timestamps registry key not found. Assuming disabled - enabling...");
+            _translations.Add("ru_WarnRegTcpTimestampsKeyNotFound", "[Предупреждение]: Ключ реестра TCP timestamps не найден. Предполагаем что отключен - включаем...");
+
+            _translations.Add("en_ErrorRegCheckTcpTimestamps", "[Error]: Error when checking TCP timestamps value in registry: {0}");
+            _translations.Add("ru_ErrorRegCheckTcpTimestamps", "[Ошибка]: Ошибка при проверке значения TCP timestamps в реестре: {0}");
+
+            _translations.Add("en_InfoEnabledTcpTimestamps", "[Info]: TCP timestamps enabling completed.");
+            _translations.Add("ru_InfoEnabledTcpTimestamps", "[Информация]: Включение TCP timestamps выполнено.");
         }
 
         // Метод для вывода переведенного текста с форматированием

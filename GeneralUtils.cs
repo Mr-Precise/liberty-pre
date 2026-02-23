@@ -4,11 +4,17 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace libertypre
 {
     public class GeneralUtils
     {
+        // Путь к реестру для параметров TCP и имя ключа для опций TCP 1323 (timestamps)
+        // Registry path for TCP parameters and key name for TCP 1323 options (timestamps)
+        private const string registryPath = @"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters";
+        private const string keyName = "Tcp1323Opts";
+
         // Выполнение команды с захватом вывода
         // Execute command with output capture
         public static string RunCommandReadToEnd(string command, string args)
@@ -66,6 +72,69 @@ namespace libertypre
                 Console.WriteLine(ex.Message);
             }
             Thread.Sleep(3000); // Пауза на всякий случай / Pause just in case
+        }
+
+        // Метод для проверки и включение TCP timestamps, если он отключен
+        // Нужен для обхода проблем с ERR_SSL_PROTOCOL_ERROR или SSL_ERROR_NO_CYPHER_OVERLAP
+        // Method to check and enable TCP timestamps if it is disabled
+        // Needed to bypass issues with ERR_SSL_PROTOCOL_ERROR or SSL_ERROR_NO_CYPHER_OVERLAP
+        public static void CheckAndEnableTcpTimestamps()
+        {
+            try
+            {
+                var key = Registry.LocalMachine.OpenSubKey(registryPath, writable: false);
+                if (key == null)
+                {
+                    // Если ключ реестра не найден, предупреждаем и включаем timestamps по умолчанию
+                    // If the registry key is not found, warn and enable timestamps by default
+                    LocaleUtils.WriteTr("WarnRegTcpTimestampsKeyNotFound");
+                    EnableTimestamps();
+                    return;
+                }
+
+                // Получаем значение из реестра
+                // Get the value from the registry
+                object valueObj = key.GetValue(keyName);
+
+                int value;
+
+                // Если значение отсутствует (null), считаем его 0 (disabled)
+                // If the value is missing (null), we consider it 0 (disabled)
+                if (valueObj == null)
+                {
+                    value = 0;
+                }
+                else
+                {
+                    // Преобразуем значение в int (на всякий случай)
+                    // Convert the value to int (just in case)
+                    value = Convert.ToInt32(valueObj);
+                }
+
+                // Проверяем бит 1 (timestamps): если (value & 2) != 2, то отключено
+                // Check bit 1 (timestamps): if (value & 2) != 2, then it's disabled
+                bool timestampsEnabled = (value & 2) == 2;
+
+                if (!timestampsEnabled)
+                {
+                    // Предупреждаем, показываем значение и включаем
+                    // Warn, show the value and enable
+                    LocaleUtils.WriteTr("WarnTcpTimestampsIsDisabled", value);
+                    EnableTimestamps();
+                }
+            }
+            catch (Exception ex)
+            {
+                LocaleUtils.WriteTr("ErrorRegCheckTcpTimestamps", ex.Message);
+            }
+        }
+
+        // Включение TCP timestamps через netsh с правами администратора
+        // Enable TCP timestamps via netsh with administrator privileges
+        private static void EnableTimestamps()
+        {
+            RunWindowsCommandAsAdmin("cmd", $"/c netsh interface tcp set global timestamps=enabled");
+            LocaleUtils.WriteTr("InfoEnabledTcpTimestamps");
         }
 
         // Проверка запущен ли процесс

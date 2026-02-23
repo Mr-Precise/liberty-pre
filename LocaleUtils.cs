@@ -320,6 +320,9 @@ namespace libertypre
 
             _translations.Add("en_InfoEnabledTcpTimestamps", "[Info]: TCP timestamps enabling completed.");
             _translations.Add("ru_InfoEnabledTcpTimestamps", "[Информация]: Включение TCP timestamps выполнено.");
+
+            _translations.Add("en_InfoTcpTimestampsEnableSkipped", "[Info]: TCP timestamps enabling skipped (for advanced users).");
+            _translations.Add("ru_InfoTcpTimestampsEnableSkipped", "[Информация]: Включение TCP timestamps пропущено (для продвинутых пользователей).");
         }
 
         // Метод для вывода переведенного текста с форматированием

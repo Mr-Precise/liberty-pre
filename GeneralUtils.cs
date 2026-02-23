@@ -133,8 +133,19 @@ namespace libertypre
         // Enable TCP timestamps via netsh with administrator privileges
         private static void EnableTimestamps()
         {
-            RunWindowsCommandAsAdmin("cmd", $"/c netsh interface tcp set global timestamps=enabled");
-            LocaleUtils.WriteTr("InfoEnabledTcpTimestamps");
+            if (!File.Exists(Path.Combine(MainClass.basePath, "ignore_tcp_timestamps")))
+            {
+                RunWindowsCommandAsAdmin("cmd", $"/c netsh interface tcp set global timestamps=enabled");
+                LocaleUtils.WriteTr("InfoEnabledTcpTimestamps");
+            }
+            else
+            {
+                // Если файл ignore_tcp_timestamps существует, то не включаем
+                // (для продвинутых юзеров, которые знают о проблеме и не хотят включать timestamps по какой-то причине)
+                // If the ignore_tcp_timestamps file exists, then do not enable
+                // (for advanced users who are aware of the issue and do not want to enable timestamps for some reason)
+                LocaleUtils.WriteTr("InfoTcpTimestampsEnableSkipped");
+            }
         }
 
         // Проверка запущен ли процесс

@@ -106,7 +106,9 @@ namespace libertypre
                 "  -i               Use tpws instead of nfqws (nftables)\n" +
                 "  -s, --stop       Stop winws / nfqws and delete WinDivert Service + clean rules\n" +
                 "  --ipset          Switch ipset file mode (full or stub)\n" +
-                "  --extended-ports Switch extended ports mode (port filtering 1024-65535)\n" +
+                "  --extended-ports Combo-switch extended ports mode (port filtering 1024-65535)\n" +
+                "  --extended-ports-tcp  Separate mode for TCP\n" +
+                "  --extended-ports-udp  Separate mode for UDP\n" +
                 "  --hidden         Switch hidden / invisible  mode of operation (daemon)\n" +
                 "  -v               Show version");
             _translations.Add("ru_ShowHelp",
@@ -121,7 +123,9 @@ namespace libertypre
                 "  -i               Использовать tpws вместо nfqws (nftables)\n" +
                 "  -s, --stop       Остановить winws / nfqws и удалить WinDivert сервис + очистка правил\n" +
                 "  --ipset          Переключатель режима работы ipset (полный или заглушка)\n" +
-                "  --extended-ports Переключатель расширенного режима портов (фильтрация портов 1024-65535)\n" +
+                "  --extended-ports Комбо-переключатель расширенного режима портов (фильтрация портов 1024-65535)\n" +
+                "  --extended-ports-tcp  Отдельный режим для TCP\n" +
+                "  --extended-ports-udp  Отдельный режим для UDP\n" +
                 "  --hidden         Переключатель скрытого / невидимого режима работы (daemon)\n" +
                 "  -v               Показать версию");
 
@@ -189,21 +193,38 @@ namespace libertypre
             _translations.Add("en_ErrorIpsetUpdate", "[Error]: Error updating ipset list: {0}");
             _translations.Add("ru_ErrorIpsetUpdate", "[Ошибка]: Ошибка обновления ipset листа: {0}");
 
-            _translations.Add("en_InfoExtendedPortsModeFilter", "[Info]: Extended ports mode (games mode): {0}");
-            _translations.Add("ru_InfoExtendedPortsModeFilter", "[Информация]: Расширенный режим портов (games mode): {0}");
+            _translations.Add("en_InfoEnablingExtendedPortsTcp", "[Info]: Enabling... extended ports mode TCP (file extended_ports_tcp created).");
+            _translations.Add("ru_InfoEnablingExtendedPortsTcp", "[Информация]: Включение... расширенного режима портов TCP (создание файла extended_ports_tcp).");
 
-            _translations.Add("en_ExtendedPortsModeEnabled", "Enabled (ports 1024-65535)");
-            _translations.Add("ru_ExtendedPortsModeEnabled", "Включен (порты 1024-65535)");
+            _translations.Add("en_InfoDisablingExtendedPortsTcp", "[Info]: Disabling... extended ports mode TCP (file extended_ports_tcp deleted).");
+            _translations.Add("ru_InfoDisablingExtendedPortsTcp", "[Информация]: Выключение... расширенного режима портов TCP (удаление файла extended_ports_tcp).");
 
-            _translations.Add("en_ExtendedPortsModeDisabled", "Disabled");
-            _translations.Add("ru_ExtendedPortsModeDisabled", "Выключен");
+            _translations.Add("en_InfoEnablingExtendedPortsUdp", "[Info]: Enabling... extended ports mode UDP (file extended_ports_udp created).");
+            _translations.Add("ru_InfoEnablingExtendedPortsUdp", "[Информация]: Включение... расширенного режима портов UDP (создание файла extended_ports_udp).");
 
-            _translations.Add("en_InfoEnablingExtendedPortsMode", "[Info]: Enabling... (the extended_ports_mode file is created).");
-            _translations.Add("ru_InfoEnablingExtendedPortsMode", "[Информация]: Включение... (создание файла extended_ports_mode).");
+            _translations.Add("en_InfoDisablingExtendedPortsUdp", "[Info]: Disabling... extended ports mode UDP (file extended_ports_udp deleted).");
+            _translations.Add("ru_InfoDisablingExtendedPortsUdp", "[Информация]: Выключение... расширенного режима портов UDP (удаление файла extended_ports_udp).");
 
-            _translations.Add("en_InfoDisablingExtendedPortsMode", "[Info]: Disabling... (deleting the extended_ports_mode file).");
-            _translations.Add("ru_InfoDisablingExtendedPortsMode", "[Информация]: Выключние... (удаление файла extended_ports_mode).");
+            _translations.Add("en_InfoEnablingExtendedPortsBoth", "[Info]: Enabling... extended ports mode (both TCP and UDP).");
+            _translations.Add("ru_InfoEnablingExtendedPortsBoth", "[Информация]: Включение... расширенного режима портов (оба TCP и UDP).");
 
+            _translations.Add("en_InfoDisablingExtendedPortsBoth", "[Info]: Disabling... extended ports mode (both TCP and UDP).");
+            _translations.Add("ru_InfoDisablingExtendedPortsBoth", "[Информация]: Выключение... расширенного режима портов (оба TCP и UDP).");
+
+            _translations.Add("en_ExtendedPortsTcpEnabled", "TCP enabled (ports 1024-65535)");
+            _translations.Add("ru_ExtendedPortsTcpEnabled", "TCP включён (порты 1024-65535)");
+
+            _translations.Add("en_ExtendedPortsTcpDisabled", "TCP disabled");
+            _translations.Add("ru_ExtendedPortsTcpDisabled", "TCP выключен");
+
+            _translations.Add("en_ExtendedPortsUdpEnabled", "UDP enabled (ports 1024-65535)");
+            _translations.Add("ru_ExtendedPortsUdpEnabled", "UDP включён (порты 1024-65535)");
+
+            _translations.Add("en_ExtendedPortsUdpDisabled", "UDP disabled");
+            _translations.Add("ru_ExtendedPortsUdpDisabled", "UDP выключен");
+
+            _translations.Add("en_InfoExtendedPortsModeFilter", "[Info]: Extended ports mode (games mode) - {0}, {1}");
+            _translations.Add("ru_InfoExtendedPortsModeFilter", "[Информация]: Расширенный режим портов (games mode) - {0}, {1}");
 
             _translations.Add("en_ErrorMissingCommand", "[Error]: Missing required command: {0}");
             _translations.Add("ru_ErrorMissingCommand", "[Ошибка]: Отсутствует необходимая команда: {0}");
@@ -229,8 +250,8 @@ namespace libertypre
             _translations.Add("en_ErrorStopNfqws", "[Error]: Error stopping nfqws: {0}");
             _translations.Add("ru_ErrorStopNfqws", "[Ошибка]: Ошибка остановки nfqws: {0}");
 
-            _translations.Add("en_InfoNftExtendedPortsEnabled", "[Info]: nftables - extended ports mode enabled (1024-65535)");
-            _translations.Add("ru_InfoNftExtendedPortsEnabled", "[Информация]: nftables - включен режим расширенных портов (1024-65535)");
+            _translations.Add("en_InfoNftExtendedPortsEnabled", "[Info]: nftables - extended ports mode ({0}) enabled (1024-65535)");
+            _translations.Add("ru_InfoNftExtendedPortsEnabled", "[Информация]: nftables - включен режим расширенных портов ({0}) (1024-65535)");
 
             _translations.Add("en_InfoNfqwsAlreadyRunning",
                 "[Warning]: nfqws process is already running\n" +

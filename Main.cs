@@ -72,12 +72,36 @@ namespace libertypre
                     ShowVersion();
                     return;
                 }
+                else if (arg == "--extended-ports-tcp")
+                {
+                    // Переключение режима расширенных портов для TCP
+                    // Toggle extended ports mode for TCP
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    ExtendedPortsFilterUtils.ToggleTcpMode();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    ShowExtendedPortsModeStatus();
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
+                    return;
+                }
+                else if (arg == "--extended-ports-udp")
+                {
+                    // Переключение расширенного режима портов для UDP
+                    // Toggle extended ports mode for UDP
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    ExtendedPortsFilterUtils.ToggleUdpMode();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    ShowExtendedPortsModeStatus();
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
+                    return;
+                }
                 else if (arg == "--extended-ports")
                 {
-                    // Обработка аргумента --extended-ports (переключатель)
-                    // Handle --extended-ports argument (toggle switch)
+                    // Переключение расширенного режима портов (комбинированный переключатель)
+                    // Toggle extended ports mode (combined toggle switch)
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    ExtendedPortsFilterUtils.ToggleExtendedPortsMode();
+                    ExtendedPortsFilterUtils.ToggleCombinedMode();
                     Console.ForegroundColor = ConsoleColor.Green;
                     ShowExtendedPortsModeStatus();
                     Console.ResetColor();
@@ -339,8 +363,13 @@ namespace libertypre
         // Method for displaying status (with localization) using extended ports mode
         private static void ShowExtendedPortsModeStatus()
         {
-            string extendedPortsStr = ExtendedPortsFilterUtils.GetExtendedPortsModeStatus() ? "ExtendedPortsModeEnabled" : "ExtendedPortsModeDisabled";
-            LocaleUtils.WriteTr("InfoExtendedPortsModeFilter", LocaleUtils.GetStrTr(extendedPortsStr));
+            bool tcp = ExtendedPortsFilterUtils.GetTcpModeStatus();
+            bool udp = ExtendedPortsFilterUtils.GetUdpModeStatus();
+
+            string tcpStatus = tcp ? LocaleUtils.GetStrTr("ExtendedPortsTcpEnabled") : LocaleUtils.GetStrTr("ExtendedPortsTcpDisabled");
+            string udpStatus = udp ? LocaleUtils.GetStrTr("ExtendedPortsUdpEnabled") : LocaleUtils.GetStrTr("ExtendedPortsUdpDisabled");
+
+            LocaleUtils.WriteTr("InfoExtendedPortsModeFilter", tcpStatus, udpStatus);
         }
 
         // Определение файла конфигурации на основе аргументов
@@ -408,13 +437,17 @@ namespace libertypre
         {
             // Определяем, включен ли расширенный режим портов
             // Determine if the extended ports mode is enabled
-            bool epMode = ExtendedPortsFilterUtils.GetExtendedPortsModeStatus();
-            string replacement = epMode ? ExtendedPortsEnabled : ExtendedPortsDisabled;
+            bool tcpMode = ExtendedPortsFilterUtils.GetTcpModeStatus();
+            bool udpMode = ExtendedPortsFilterUtils.GetUdpModeStatus();
+
+            string tcpReplacement = tcpMode ? ExtendedPortsEnabled : ExtendedPortsDisabled;
+            string udpReplacement = udpMode ? ExtendedPortsEnabled : ExtendedPortsDisabled;
 
             return string.Join(" ", File.ReadAllLines(configFile)
                 .Select(line => line.Trim())
                 .Where(line => !string.IsNullOrEmpty(line) && !line.StartsWith("#"))
-                .Select(line => line.Replace("@ExtendedPorts@", replacement))
+                .Select(line => line.Replace("@ExtendedPortsTCP@", tcpReplacement))
+                .Select(line => line.Replace("@ExtendedPortsUDP@", udpReplacement))
                 .Select(line => line.Replace("^!", "!")));
         }
 

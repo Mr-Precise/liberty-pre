@@ -17,7 +17,7 @@ namespace libertypre
 
         private static string TcpPorts = "80,443,2053,2083,2087,2096,8443";
         private static string UdpPorts = "443,19294-19344,50000-50100,5054-5059,27000-27003";
-        private static string ExtendedUdpPorts = ",1024-65535";
+        private static string ExtendedPorts = ",1024-65535";
 
         // Проверка зависимостей для Linux
         // Check dependencies for Linux
@@ -151,15 +151,20 @@ namespace libertypre
 
                 // Проверяем extended ports режим
                 // Check extended ports mode
-                bool extendedPortsEnabled = File.Exists(Path.Combine(MainClass.basePath, "extended_ports_mode")
-                );
+                bool extendedUdpEnabled = ExtendedPortsFilterUtils.GetUdpModeStatus();
+                bool extendedTcpEnabled = ExtendedPortsFilterUtils.GetTcpModeStatus();
 
                 // Добавляем расширенныйе порты фильтрации к базовым
                 // Add extended filtering ports to the basic ones
-                if (extendedPortsEnabled)
+                if (extendedUdpEnabled)
                 {
-                    UdpPorts += ExtendedUdpPorts;
-                    LocaleUtils.WriteTr("InfoNftExtendedPortsEnabled");
+                    UdpPorts += ExtendedPorts;
+                    LocaleUtils.WriteTr("InfoNftExtendedPortsEnabled", "UDP");
+                }
+                if (extendedTcpEnabled)
+                {
+                    TcpPorts += ExtendedPorts;
+                    LocaleUtils.WriteTr("InfoNftExtendedPortsEnabled", "TCP");
                 }
 
                 // Создаем nftables таблицу

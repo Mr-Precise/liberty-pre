@@ -41,11 +41,10 @@ If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH
 A shortcut named `liberty-pre - STOP` stops the process and terminates the WinDivert driver.  
 The shortcut named `liberty-pre - SWITCH ipset mode` is used to switch the ipset file. Command-line argument `--ipset`  
 This ipset switch has two states: full (with a valid network list) and stub (IPs from the TEST-NET-3 range).  
-The shortcut named `liberty-pre SWITCH - Extended Ports` is used to switch the extended port filtering mode (1024-65535).  
+The shortcut named `liberty-pre SWITCH - Extended Ports` (separately `TCP` and `UDP`) is used to switch the extended port filtering mode (1024-65535).  
 The shortcut named `liberty-pre SWITCH - hidden modes` used to switch to the invisible/hidden mode of operation.  
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  
-Linux: run `liberty-pre-linux.sh` command line option `--install` to install a .desktop file for application menu integration.  
-Linux: Additional iptables/nftables configuration may be required.
+Linux: run `liberty-pre-linux.sh` with the `--install` command line option to install a .desktop file for integration into the application menu..
 
 ### Caution:
 💯 The executable files that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.  

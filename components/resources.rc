@@ -1,8 +1,8 @@
 #include <winres.h>
 
-100 ICON "liberty-pre-128x128.ico"
-101 ICON "liberty-pre-red-128x128.ico" 
-102 ICON "liberty-pre-green-128x128.ico"
+100 ICON "liberty-pre.ico"
+101 ICON "liberty-pre-red.ico" 
+102 ICON "liberty-pre-green.ico"
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION     2026, 1, 12, 0

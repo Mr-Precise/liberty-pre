@@ -6,7 +6,7 @@ on:
       version:
         description: 'zapret version'
         required: true
-        default: '72.9'
+        default: '72.10'
 
 jobs:
     build_with_mono:

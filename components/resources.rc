@@ -5,8 +5,8 @@
 102 ICON "liberty-pre-green.ico"
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION     2026, 1, 12, 0
-PRODUCTVERSION  2026, 1, 12, 0
+FILEVERSION     2026, 3, 1, 0
+PRODUCTVERSION  2026, 3, 1, 0
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
@@ -14,12 +14,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "https://github.com/Mr-Precise/liberty-pre"
             VALUE "FileDescription", "liberty-pre zapret launcher (DPI bypass)"
-            VALUE "FileVersion", "2026.1.12.0"
+            VALUE "FileVersion", "2026.3.1.0"
             VALUE "InternalName", "liberty-pre"
             VALUE "LegalCopyright", "Licensed under MIT"
             VALUE "OriginalFilename", "liberty-pre.exe"
             VALUE "ProductName", "liberty-pre"
-            VALUE "ProductVersion", "2026.1.12.0"
+            VALUE "ProductVersion", "2026.3.1.0"
         END
     END
     BLOCK "VarFileInfo"

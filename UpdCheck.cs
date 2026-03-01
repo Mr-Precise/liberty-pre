@@ -126,6 +126,21 @@ namespace libertypre
                 return;
             }
 
+            // На Linux если без GUI или по SSH - показываем только в консоли
+            // On Linux if no GUI or via SSH - show only in console
+            if (GeneralUtils.IsLinux() && !GeneralUtils.HasDisplayServer())
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                LocaleUtils.WriteTr("UpdCheckNoDisplay", version, updUrl);
+                Console.ResetColor();
+                return;
+            }
+
+            ShowMessageBoxDialog(version, updUrl);
+        }
+
+        private static void ShowMessageBoxDialog(string version, string updUrl)
+        {
             // Показываем диалоговое окошко обновления
             // Show the update dialog
             var result = MessageBox.Show(

@@ -169,6 +169,9 @@ namespace libertypre
             _translations.Add("en_UpdateDeferred", "[UPD]: Update notifications disabled. Delete update_deferral file to re-enable.");
             _translations.Add("ru_UpdateDeferred", "[UPD]: Уведомления об обновлениях отключены. Удалите файл update_deferral для включения.");
 
+            _translations.Add("en_UpdCheckNoDisplay", "[UPD]: New version {0} available. Visit {1} to download. (No display server)");
+            _translations.Add("ru_UpdCheckNoDisplay", "[UPD]: Доступна новая версия {0}. Посетите {1} для загрузки. (Нет дисплейного сервера)");
+
             _translations.Add("en_InfoUseIpsetFile", "[Info]: Use ipset file: {0}");
             _translations.Add("ru_InfoUseIpsetFile", "[Информация]: Используется ipset файл: {0}");
 

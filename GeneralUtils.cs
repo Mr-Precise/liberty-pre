@@ -148,6 +148,25 @@ namespace libertypre
             }
         }
 
+        // Проверка наличия дисплейного сервера (X11 или Wayland) в Linux
+        // Check for display server (X11 or Wayland) presence in Linux
+        public static bool HasDisplayServer()
+        {
+            if (!IsLinux())
+            {
+                return true;
+            }
+
+            var sessionType = Environment.GetEnvironmentVariable("XDG_SESSION_TYPE");
+            if (sessionType == "x11" || sessionType == "wayland")
+            {
+                return true;
+            }
+
+            return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("DISPLAY")) ||
+                   !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WAYLAND_DISPLAY"));
+        }
+
         // Проверка запущен ли процесс
         // Check if process is running
         public static bool IsProcessRunningBool(string processName)

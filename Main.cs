@@ -281,8 +281,8 @@ namespace libertypre
             {
                 LocaleUtils.WriteTr("WarningMacOS");
 
-                // Использование tpws
-                // Use tpws
+                // Попытка использовать tpws в macOS
+                // Attempt to use tpws on macOS
                 toolDPIexe = Path.Combine(bindirPath, "tpws");
                 LocaleUtils.WriteTr("InfoUsedTpwsMacOS");
             }
@@ -452,6 +452,11 @@ namespace libertypre
                 shellexToggle = false;
                 lastToolProgram = "sudo"; // Требуются права root / Requires root 
                 lastToolArguments = $"{toolprogram} {toolarguments}";
+            }
+            if (GeneralUtils.IsMacOS())
+            {
+                shellexToggle = false;
+                processName = "tpws";
             }
 
             // Проверка, не запущена ли утилита уже

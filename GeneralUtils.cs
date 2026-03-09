@@ -167,6 +167,33 @@ namespace libertypre
                    !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WAYLAND_DISPLAY"));
         }
 
+        // Получение архитектуры системы для Windows и Linux
+        // Get system architecture for Windows and Linux
+        public static bool IsArmArchitecture(bool isWindows)
+        {
+            if (isWindows)
+            {
+                // В .net framework ниже 4.8 на arm64 используется эмуляция, так что лучше полагаться на переменные окружения
+                // In .net framework below 4.8 on arm64, emulation is used, so it's better to rely on environment variables
+                string arch = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE_W6432")
+                              ?? Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE");
+                return arch != null && arch.IndexOf("ARM", StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+            else
+            {
+                // Пробуем выполнить uname -m чтобы проверить архитектуру в Linux
+                // Try to execute uname -m to check architecture in Linux
+                string unameOutput = RunCommandReadToEnd("uname", "-m").Trim();
+                if (!string.IsNullOrEmpty(unameOutput))
+                {
+                    return unameOutput.IndexOf("aarch64", StringComparison.OrdinalIgnoreCase) >= 0
+                            || unameOutput.IndexOf("arm64", StringComparison.OrdinalIgnoreCase) >= 0
+                            || (unameOutput.StartsWith("armv") && unameOutput.Contains("64"));
+                }
+                return false;
+            }
+        }
+
         // Проверка запущен ли процесс
         // Check if process is running
         public static bool IsProcessRunningBool(string processName)
@@ -301,6 +328,13 @@ namespace libertypre
             // Проверяем наличие каталога, характерного для macOS
             // Check for a directory characteristic of macOS
             return Directory.Exists("/System/Library");
+        }
+
+        // Комбо-проверка, Linux или macOS
+        // Combo check, Linux or macOS
+        public static bool IsLinuxOrMacOS()
+        {
+            return IsMacOS() || IsLinux();
         }
     }
 }

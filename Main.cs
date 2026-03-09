@@ -17,7 +17,6 @@ namespace libertypre
         private static string configsPath = Path.Combine(basePath, "configs");
         public static string dataPath = Path.Combine(basePath, "data");
         private static string toolDPIexe = Path.Combine(bindirPath, "winws.exe");
-        private static bool nftables = true;
 
         // Константы для замены Extended Ports (GameFilter)
         // Extended Ports (GameFilter) replacement constants
@@ -134,12 +133,6 @@ namespace libertypre
                     Console.ResetColor();
                     Thread.Sleep(3000);
                     return;
-                }
-                else if (arg == "-i")
-                {
-                    // Отключение nftables
-                    // Disable nftables
-                    nftables = false;
                 }
                 else if (arg == "-c" && i + 1 < args.Length)
                 {
@@ -265,8 +258,6 @@ namespace libertypre
 
                 if (nftables)
                 {
-                    // Использование nfqws (nftables)
-                    // Use nfqws (nftables)
                     if (!GeneralUtils.UnixCommandExists("nfqws"))
                     {
                         toolDPIexe = Path.Combine(bindirPath, "nfqws");
@@ -275,13 +266,6 @@ namespace libertypre
                 }
                 else
                 {
-                    // Использование tpws
-                    // Use tpws
-                    if (!GeneralUtils.UnixCommandExists("tpws"))
-                    {
-                        toolDPIexe = Path.Combine(bindirPath, "tpws");
-                    }
-                    LocaleUtils.WriteTr("InfoUsedTpwsLinux");
                 }
 
                 // Подготовка к запуску

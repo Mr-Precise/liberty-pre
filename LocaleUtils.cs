@@ -67,9 +67,6 @@ namespace libertypre
             _translations.Add("en_InfoDisablingHiddenMode", "[Info]: Disabling hidden mode... (deleting the hidden_mode file).");
             _translations.Add("ru_InfoDisablingHiddenMode", "[Информация]: Выключние скрытого режима... (удаление файла hidden_mode).");
 
-            _translations.Add("en_InfoUsedTpwsLinux", "[Info]: Linux / Used tpws, limited in functionality.");
-            _translations.Add("ru_InfoUsedTpwsLinux", "[Информация]: Linux / Используется tpws, ограниченная по функционалу.");
-
             _translations.Add("en_InfoUsedTpwsMacOS", "[Info]: macOS / Used tpws, limited in functionality.");
             _translations.Add("ru_InfoUsedTpwsMacOS", "[Информация]: macOS / Используется tpws, ограниченная по функционалу.");
 

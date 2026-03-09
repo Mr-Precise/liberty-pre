@@ -40,8 +40,8 @@ namespace libertypre
             _translations.Add("en_ErrorSudoNotFound", "[Error]: Requires sudo to work properly.");
             _translations.Add("ru_ErrorSudoNotFound", "[Ошибка]: Для правильной работы требуется sudo.");
 
-            _translations.Add("en_ErrorBinNotFound", "[Error]: The bin directory not found.");
-            _translations.Add("ru_ErrorBinNotFound", "[Ошибка]: Каталог bin не найден.");
+            _translations.Add("en_ErrorBinNotFound", "[Error]: The bin{0} directory not found.");
+            _translations.Add("ru_ErrorBinNotFound", "[Ошибка]: Каталог bin{0} не найден.");
 
             _translations.Add("en_ErrorConfDirNotFound", "[Error]: The configs directory not found.");
             _translations.Add("ru_ErrorConfDirNotFound", "[Ошибка]: Каталог configs не найден.");
@@ -49,14 +49,17 @@ namespace libertypre
             _translations.Add("en_DataDirNotFound", "[Error]: The data directory not found.");
             _translations.Add("ru_DataDirNotFound", "[Ошибка]: Каталог data не найден.");
 
-            _translations.Add("en_ErrorWinwsNotFound", "[Error]: File winws.exe not found in bin.");
-            _translations.Add("ru_ErrorWinwsNotFound", "[Ошибка]: Файл winws.exe не найден в bin.");
+            _translations.Add("en_ErrorWinwsNotFound", "[Error]: File winws.exe not found in {0}.");
+            _translations.Add("ru_ErrorWinwsNotFound", "[Ошибка]: Файл winws.exe не найден в {0}.");
+
+            _translations.Add("en_ErrorNfqwsNotFound", "[Error]: File nfqws not found in {0}.");
+            _translations.Add("ru_ErrorNfqwsNotFound", "[Ошибка]: Файл nfqws не найден в {0}.");
 
             _translations.Add("en_WarningConfigFileNotSpecified", "[Warning]: Configuration file not specified, loading default.");
             _translations.Add("ru_WarningConfigFileNotSpecified", "[Предупреждение]: Конфигурационный файл не указан, загружаем по умолчанию.");
 
-            _translations.Add("en_InfoUsedNfqws", "[Info]: Linux / Used nfqws (nftables).");
-            _translations.Add("ru_InfoUsedNfqws", "[Информация]: Linux / Используется nfqws (nftables).");
+            _translations.Add("en_InfoUsedNfqws", "[Info]: Linux / Used nfqws{0} (nftables).");
+            _translations.Add("ru_InfoUsedNfqws", "[Информация]: Linux / Используется nfqws{0} (nftables).");
 
             _translations.Add("en_InfoHiddenMode", "[Info]: The hidden / invisible mode of operation (daemon) is used.");
             _translations.Add("ru_InfoHiddenMode", "[Информация]: Используется скрытый / невидимый режим работы (daemon).");

@@ -14,9 +14,10 @@ namespace libertypre
         // Application base paths
         public static string basePath = AppDomain.CurrentDomain.BaseDirectory;
         private static string bindirPath = Path.Combine(basePath, "bin");
+        private static string bindirArm64Path = Path.Combine(bindirPath, "arm64");
         private static string configsPath = Path.Combine(basePath, "configs");
         public static string dataPath = Path.Combine(basePath, "data");
-        private static string toolDPIexe = Path.Combine(bindirPath, "winws.exe");
+        private static string toolDPIexe;
 
         // Константы для замены Extended Ports (GameFilter)
         // Extended Ports (GameFilter) replacement constants
@@ -155,12 +156,18 @@ namespace libertypre
 
             // Проверка окружения перед запуском
             // Environment check before startup
-            if (!CheckConfigureEnvironment()) return;
+            if (!CheckConfigureEnvironment())
+            {
+                return;
+            }
 
             // Запуск фоновых задач
             // Start background tasks
             Task.Run(() => UpdCheck.CheckForUpdAsync());
-            if (!GeneralUtils.IsLinux())
+
+            // Создание ярлыков в фоновом режиме (Windows)
+            // Create shortcuts in background (Windows)
+            if (!GeneralUtils.IsLinuxOrMacOS())
             {
                 Task.Run(() => ShortcutUtils.CreateShortcutsAsync());
             }
@@ -207,10 +214,11 @@ namespace libertypre
 
             // Ожидание завершения фоновых задач
             // Wait for background tasks completion
-            if (!GeneralUtils.IsLinux())
+            if (!GeneralUtils.IsLinuxOrMacOS())
             {
                 ShortcutUtils.ShortcutCrDone.WaitOne();
             }
+
             UpdCheck.DoneEvent.WaitOne();
             Thread.Sleep(3000); // Финализация / Finalization
         }
@@ -237,68 +245,11 @@ namespace libertypre
         // Check and configure environment
         private static bool CheckConfigureEnvironment()
         {
-            // Обработка Linux-специфичных настроек
-            // Handle Linux-specific settings
-            if (GeneralUtils.IsLinux())
-            {
-                LocaleUtils.WriteTr("WarningLinux");
-
-                if (!GeneralUtils.UnixCommandExists("sudo"))
-                {
-                    LocaleUtils.WriteTr("ErrorSudoNotFound");
-                }
-
-                // Проверка зависимостей Linux
-                // Check Linux dependencies
-                if (!LinuxNetUtils.CheckLinuxDependencies())
-                {
-                    Console.ReadKey();
-                    return false;
-                }
-
-                if (nftables)
-                {
-                    if (!GeneralUtils.UnixCommandExists("nfqws"))
-                    {
-                        toolDPIexe = Path.Combine(bindirPath, "nfqws");
-                    }
-                    LocaleUtils.WriteTr("InfoUsedNfqws");
-                }
-                else
-                {
-                }
-
-                // Подготовка к запуску
-                // Preparing for launch
-                if (!LinuxNetUtils.PrepareForLaunch())
-                {
-                    return false;
-                }
-            }
-            // Обработка macOS-специфичных настроек
-            // Handle macOS-specific settings
-            if (GeneralUtils.IsMacOS())
-            {
-                LocaleUtils.WriteTr("WarningMacOS");
-
-                // Попытка использовать tpws в macOS
-                // Attempt to use tpws on macOS
-                toolDPIexe = Path.Combine(bindirPath, "tpws");
-                LocaleUtils.WriteTr("InfoUsedTpwsMacOS");
-            }
-
-            // Проверка и включение TCP timestamps, если он отключен (Windows)
-            // Check and enable TCP timestamps if it is disabled (Windows)
-            if (!GeneralUtils.IsLinux() && !GeneralUtils.IsMacOS())
-            {
-                GeneralUtils.CheckAndEnableTcpTimestamps();
-            }
-
             // Проверка существования каталога bin
             // Check bin directory existence
             if (!Directory.Exists(bindirPath))
             {
-                LocaleUtils.WriteTr("ErrorBinNotFound");
+                LocaleUtils.WriteTr("ErrorBinNotFound", "");
                 Console.ReadKey();
                 return false;
             }
@@ -321,13 +272,124 @@ namespace libertypre
                 return false;
             }
 
-            // Проверка существования winws.exe (Windows)
-            // Check winws.exe existence (Windows)
-            if (!GeneralUtils.IsLinux())
+            // Обработка Linux-специфичных настроек
+            // Handle Linux-specific settings
+            if (GeneralUtils.IsLinux())
             {
+                LocaleUtils.WriteTr("WarningLinux");
+
+                if (!GeneralUtils.UnixCommandExists("sudo"))
+                {
+                    LocaleUtils.WriteTr("ErrorSudoNotFound");
+                }
+
+                // Проверка зависимостей Linux
+                // Check Linux dependencies
+                if (!LinuxNetUtils.CheckLinuxDependencies())
+                {
+                    Console.ReadKey();
+                    return false;
+                }
+
+                // Если nfqws не найден в системе, используем встроенный в зависимости от архитектуры
+                // If nfqws is not found in the system, use the built-in one depending on the architecture
+                if (!GeneralUtils.UnixCommandExists("nfqws"))
+                {
+                    if (GeneralUtils.IsArmArchitecture(false))
+                    {
+                        // Для arm64 проверяем наличие каталога bin/arm64
+                        // For arm64, check for the presence of the bin/arm64 directory
+                        if (!Directory.Exists(bindirArm64Path))
+                        {
+                            LocaleUtils.WriteTr("ErrorBinNotFound", " (arm64)");
+                            Console.ReadKey();
+                            return false;
+                        }
+
+                        // Для arm64 используем nfqws из bin/arm64
+                        // For arm64, use nfqws from bin/arm64
+                        toolDPIexe = Path.Combine(bindirArm64Path, "nfqws");
+                        LocaleUtils.WriteTr("InfoUsedNfqws", " (arm64)");
+                    }
+                    else
+                    {
+                        toolDPIexe = Path.Combine(bindirPath, "nfqws");
+                        LocaleUtils.WriteTr("InfoUsedNfqws", " (x86_64)");
+                    }
+                }
+                else
+                {
+                    // Используем nfqws из path системы
+                    // Use nfqws from system path
+                    toolDPIexe = "nfqws";
+                    LocaleUtils.WriteTr("InfoUsedNfqws", " (system)");
+                }
+
+                // Проверяем на всякий случай существование nfqws
+                // Just in case, check the existence of nfqws
                 if (!File.Exists(toolDPIexe))
                 {
-                    LocaleUtils.WriteTr("ErrorWinwsNotFound");
+                    LocaleUtils.WriteTr("ErrorNfqwsNotFound", toolDPIexe);
+                    Console.ReadKey();
+                    return false;
+                }
+
+                // Подготовка для запуска (Linux)
+                // Preparation for launch (Linux)
+                if (!LinuxNetUtils.PrepareForLaunch())
+                {
+                    return false;
+                }
+            }
+
+            // Обработка macOS-специфичных настроек
+            // Handle macOS-specific settings
+            if (GeneralUtils.IsMacOS())
+            {
+                LocaleUtils.WriteTr("WarningMacOS");
+
+                // Попытка использовать tpws в macOS
+                // Attempt to use tpws on macOS
+                toolDPIexe = Path.Combine(bindirPath, "tpws");
+                LocaleUtils.WriteTr("InfoUsedTpwsMacOS");
+            }
+
+            // Проверка и включение TCP timestamps, если он отключен (Windows)
+            // Check and enable TCP timestamps if it is disabled (Windows)
+            if (!GeneralUtils.IsLinuxOrMacOS())
+            {
+                GeneralUtils.CheckAndEnableTcpTimestamps();
+            }
+
+            // Настройка и проверка существования winws.exe в зависимоссти от архитектуры (Windows)
+            // Set and check winws.exe existence depending on architecture (Windows)
+            if (!GeneralUtils.IsLinuxOrMacOS())
+            {
+                if (GeneralUtils.IsArmArchitecture(true))
+                {
+                    // Проверяем наличие каталога bin/arm64
+                    // Check for the presence of the bin/arm64 directory
+                    if (!Directory.Exists(bindirArm64Path))
+                    {
+                        LocaleUtils.WriteTr("ErrorBinNotFound", " (arm64)");
+                        Console.ReadKey();
+                        return false;
+                    }
+
+                    // Для arm64 используем winws.exe из bin/arm64
+                    // For arm64, use winws.exe from bin/arm64
+                    toolDPIexe = Path.Combine(bindirArm64Path, "winws.exe");
+                }
+                else
+                {
+                    // По умолчанию x86 64-бит, используем winws.exe из bin
+                    // By default x86 64-bit, use winws.exe from bin
+                    toolDPIexe = Path.Combine(bindirPath, "winws.exe");
+                }
+
+                if (!File.Exists(toolDPIexe))
+                {
+                    LocaleUtils.WriteTr("ErrorWinwsNotFound", toolDPIexe);
                     Console.ReadKey();
                     return false;
                 }
@@ -382,6 +444,7 @@ namespace libertypre
                     return Path.Combine(configsPath, "default.cfg");
                 }
             }
+
             string fullPath = Path.Combine(configsPath, cfgName);
             if (File.Exists(fullPath))
             {
@@ -442,6 +505,9 @@ namespace libertypre
             string lastToolProgram = toolprogram;
             string lastToolArguments = toolarguments;
             bool shellexToggle = true;
+
+            // Название процесса для проверки запущенных утилит
+            // Process name for checking running utilities
             string processName = "winws";
 
             // Настройка для Linux
@@ -484,7 +550,7 @@ namespace libertypre
 
             // Настройки для Windows (права администратора)
             // Settings for Windows (administrator rights)
-            if (!GeneralUtils.IsLinux())
+            if (!GeneralUtils.IsLinuxOrMacOS())
             {
                 UniStartInfo.Verb = "runas";
                 UniStartInfo.WindowStyle = ProcessWindowStyle.Minimized;
@@ -511,7 +577,7 @@ namespace libertypre
 
                     // Проверяем, запустился ли nfqws
                     // Check if nfqws has started
-                    if (nftables && !LinuxNetUtils.VerifyNfqwsRunning())
+                    if (!LinuxNetUtils.VerifyNfqwsRunning())
                     {
                         LocaleUtils.WriteTr("ErrorFirstVerifyNfqwsRun");
                         LinuxNetUtils.StopAll();
@@ -520,7 +586,7 @@ namespace libertypre
 
                     // Настраиваем nftables правила
                     // Set up nftables rules
-                    if (nftables && LinuxNetUtils.ConfigureNftablesRules())
+                    if (LinuxNetUtils.ConfigureNftablesRules())
                     {
                         LocaleUtils.WriteTr("InfoSuccessRunWithRules");
 

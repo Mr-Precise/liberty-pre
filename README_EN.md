@@ -23,12 +23,13 @@ The program automatically detects OS language:
 
 ### OS compatibility
 #### Full Windows support:
-- 8.1 - 11 64bit
+- Windows 8.1 - 11 64bit
+- Windows 11 24H2 ARM64 with testsigning enabled `bcdedit /set {current} testsigning on`
 - separate build for outdated Windows 7 SP1 64bit (build 7601) and [WMF 5.1 (PowerShell 5.1)](https://download.microsoft.com/download/6/F/5/6F5FF66C-6775-42B0-86C4-47D41F2DA187/Win7AndW2K8R2-KB3191566-x64.zip)
 
-#### Experimental Linux / Mono support (in development):
-- *ubuntu 20.04+ amd64
-- Debian 11+ amd64
+#### Linux / Mono support (in development):
+- *ubuntu 20.04+ amd64 and aarch64
+- Debian 11+ amd64 and aarch64
 - actual Arch/Manjaro
 
 ### What for?

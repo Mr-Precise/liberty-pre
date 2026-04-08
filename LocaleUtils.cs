@@ -347,6 +347,19 @@ namespace libertypre
 
             _translations.Add("en_InfoTcpTimestampsEnableSkipped", "[Info]: TCP timestamps enabling skipped (for advanced users).");
             _translations.Add("ru_InfoTcpTimestampsEnableSkipped", "[Информация]: Включение TCP timestamps пропущено (для продвинутых пользователей).");
+
+            _translations.Add("en_ErrorDefenderBlock", "\n[Error]: winws.exe launch was blocked by SmartScreen / Microsoft Defender, or the UAC prompt was canceled.\n" +
+                "Possible solution: Add the application folder to Microsoft Defender exclusions and/or check launch permissions.\n" +
+                "1. Open \"Windows Security\" (Windows Defender Security Center on older systems) -> \"Virus & threat protection\" -> \"Manage settings\".\n" +
+                "2. Scroll down to \"Exclusions\" and click \"Add or remove exclusions\".\n" +
+                "3. Click \"Add an exclusion\" -> \"Folder\", then select: \n{0}\n" +
+                "4. Restart the program.");
+            _translations.Add("ru_ErrorDefenderBlock", "\n[Ошибка]: Запуск winws.exe был заблокирован SmartScreen / Microsoft Defender или Вы отменили UAC запрос.\n" +
+                "Возможное решение: Добавьте папку с приложением в исключения Microsoft Defender и/или проверьте права на запуск.\n" +
+                "1. Откройте \"Безопасность Windows\" (или \"Центр безопасности Защитника Windows\" в старых версиях) -> \"Защита от вирусов и угроз\" -> \"Управление настройками\".\n" +
+                "2. Прокрутите вниз до раздела \"Исключения\" и нажмите \"Добавление или удаление исключений\".\n" +
+                "3. Нажмите \"Добавить исключение\" -> \"Папка\" и выберите: \n{0}\n" +
+                "4. Перезапустите программу.");
         }
 
         // Метод для вывода переведенного текста с форматированием

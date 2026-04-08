@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -623,13 +624,25 @@ namespace libertypre
             catch (Exception ex)
             {
                 // Странная проблема при запуске winws или nfqws
-                // Strange problems when starting winws или nfqws
-                LocaleUtils.WriteTr("ErrorProblemStartToolDPI", ex.Message);
-                if (GeneralUtils.IsLinux())
+                // Strange problems when starting winws or nfqws
+                if (!GeneralUtils.IsLinuxOrMacOS() && ex is Win32Exception win32Ex && win32Ex.NativeErrorCode == 1223)
                 {
-                    LinuxNetUtils.StopAll();
+                    // Код 1223 = ERROR_CANCELLED (пользователь отменил UAC или блокировка Defender)
+                    // Code 1223 = ERROR_CANCELLED (user canceled UAC or Defender block)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    LocaleUtils.WriteTr("ErrorDefenderBlock", basePath);
+                    Console.ResetColor();
+                    Console.ReadKey();
                 }
-                Console.ReadKey();
+                else
+                {
+                    LocaleUtils.WriteTr("ErrorProblemStartToolDPI", ex.Message);
+                    if (GeneralUtils.IsLinux())
+                    {
+                        LinuxNetUtils.StopAll();
+                    }
+                    Console.ReadKey();
+                }
             }
         }
     }

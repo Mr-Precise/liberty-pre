@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>libertypre</RootNamespace>
     <AssemblyName>liberty-pre</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Win32Resource>components\resources.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">

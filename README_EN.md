@@ -78,6 +78,12 @@ nuget restore
 xbuild /p:Configuration=Release liberty-pre.sln
 ```
 
+### Contributing
+This is a hobby project focused on simplicity and cross-platform compatibility.
+Contributions are welcome!  
+If possible, please keep compatibility with .NET Framework 4.5 / Mono (C# 7.3–8) and try to avoid unnecessary complexity.  
+If you're unsure about a change, feel free to discuss it first.
+
 ### Used components from repositories and thanks:
 * [github.com/bol-van/zapret](https://github.com/bol-van/zapret) - components
 * [github.com/Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube) - idea and lists of domains / IP networks

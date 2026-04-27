@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
+using System.Net;
 
 namespace libertypre
 {
@@ -27,6 +28,11 @@ namespace libertypre
         {
             try
             {
+                // Устанавливаем TLS 1.2 для безопасного соединения
+                // Требуется этоn фикс для правильной работы на .net Framework 4.5
+                // Set TLS 1.2 for secure connection
+                // This is a necessary fix for proper operation on .NET Framework 4.5
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
                 // Получаем текущую версию приложения
                 // Get current application version
                 var currentVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "unknown";

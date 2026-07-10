@@ -38,6 +38,7 @@ Just an alternative implementation.
 
 ### How to use?
 Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases/latest), unpack and run, shortcuts to other profiles will be created automatically.  
+Go through/switch profiles with a delay until the required sites start working.  
 If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).  
 A shortcut named `liberty-pre - STOP` stops the process and terminates the WinDivert driver.  
 The shortcut named `liberty-pre - SWITCH ipset mode` is used to switch the ipset file. Command-line argument `--ipset`  
@@ -45,7 +46,11 @@ This ipset switch has two states: full (with a valid network list) and stub (IPs
 The shortcut named `liberty-pre SWITCH - Extended Ports` (separately `TCP` and `UDP`) is used to switch the extended port filtering mode (1024-65535).  
 The shortcut named `liberty-pre SWITCH - hidden modes` used to switch to the invisible/hidden mode of operation.  
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  
-Linux: run `liberty-pre-linux.sh` with the `--install` command line option to install a .desktop file for integration into the application menu..
+Linux: run `liberty-pre-linux.sh` with the `--install` command line option to install a .desktop file for integration into the application menu:
+```sh
+cd path/to/liberty-pre/
+./liberty-pre-linux.sh --install
+```
 
 ### Caution:
 💯 The executable files that is in the bin directory, for example winws.exe, is taken from the original repository [github.com/bol-van/zapret](https://github.com/bol-van/zapret). It is not safe to use from other places / authors.  
@@ -81,7 +86,7 @@ xbuild /p:Configuration=Release liberty-pre.sln
 ### Contributing
 This is a hobby project focused on simplicity and cross-platform compatibility.
 Contributions are welcome!  
-If possible, please keep compatibility with .NET Framework 4.5 / Mono (C# 7.3–8) and try to avoid unnecessary complexity.  
+If possible, please keep compatibility with .NET Framework 4.5 / Mono (C# 7.3-8) and try to avoid unnecessary complexity.  
 If you're unsure about a change, feel free to discuss it first.
 
 ### Used components from repositories and thanks:

@@ -22,6 +22,11 @@ namespace libertypre
         private const string RepoName = "liberty-pre";
         private static string UpdateFlagFile = Path.Combine(MainClass.basePath, "update_deferral");
 
+        // Основной и резервный URL для получения информации о последнем релизе
+        // Primary and fallback URLs for getting latest release information
+        private const string PrimaryApiUrl = "https://api.github.com/repos/{0}/{1}/releases/latest";
+        private const string FallbackApiUrl = "https://liberty-pre.rapid-waterfall-3845.workers.dev/repos/{0}/{1}/releases/latest";
+
         // Метод проверки обновлений
         // Update check method
         public static async Task CheckForUpdAsync()
@@ -33,32 +38,26 @@ namespace libertypre
                 // Set TLS 1.2 for secure connection
                 // This is a necessary fix for proper operation on .NET Framework 4.5
                 ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+
                 // Получаем текущую версию приложения
                 // Get current application version
                 var currentVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "unknown";
 
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.UserAgent.ParseAdd($"{RepoName}-upd-checker");
-
-                // Получаем информацию о последнем релизе
-                // Get latest release information
-                var response = await client.GetAsync($"https://api.github.com/repos/{RepoOwner}/{RepoName}/releases/latest");
-                response.EnsureSuccessStatusCode();
-
-                // Парсим JSON ответ
-                // Parse JSON response
-                var json = await response.Content.ReadAsStringAsync();
-                var release = JObject.Parse(json);
-
-                // Пропускаем пре-релизы и черновики
-                // Skip pre-releases and drafts
-                if (release["prerelease"]?.Value<bool>() == true || release["draft"]?.Value<bool>() == true)
+                // Пытаемся получить данные сначала с основного URL, потом с резервного
+                // Try to get data from primary URL, then from fallback
+                JObject release = FetchReleaseDataWithFallback();
+                if (release == null)
+                {
+                    // Если оба источника не сработали, ошибка уже выведена внутри
+                    // If both sources failed, the error has already been logged inside
                     return;
+                }
 
                 // Извлекаем тег версии
                 // Extract version tag
                 var latestTag = release["tag_name"]?.ToString();
                 var latestVersion = latestTag?.TrimStart('v');
+                var htmlUrl = release["html_url"]?.ToString() ?? $"https://github.com/{RepoOwner}/{RepoName}/releases";
 
                 // Пишем версии используя локализацию и цвета
                 // Write versions using localization and colors
@@ -72,13 +71,11 @@ namespace libertypre
                 Console.WriteLine(latestVersion ?? "unknown");
                 Console.ResetColor();
 
-
                 // Сравниваем версии
                 // Compare versions
                 if (IsNewerVersion(latestVersion, currentVersion))
                 {
-                    var url = release["html_url"]?.ToString() ?? $"https://github.com/{RepoOwner}/{RepoName}/releases";
-                    ShowUpdDialog(latestVersion, url!);
+                    ShowUpdDialog(latestVersion, htmlUrl);
                 }
                 else
                 {
@@ -96,6 +93,71 @@ namespace libertypre
                 // Сигнализируем о завершении события
                 // Signal completion of the event
                 DoneEvent.Set();
+            }
+        }
+
+        // Получение данных с основного источника, при ошибке - с резервного
+        // Get data from primary source, on error - from fallback
+        private static JObject FetchReleaseDataWithFallback()
+        {
+            string primaryUrl = string.Format(PrimaryApiUrl, RepoOwner, RepoName);
+            string fallbackUrl = string.Format(FallbackApiUrl, RepoOwner, RepoName);
+
+            try
+            {
+                var result = FetchReleaseData(primaryUrl);
+                if (result != null)
+                {
+                    return result;
+                }
+                // Если primaryResult == null (например, пре-релиз) - просто возвращаем null, не пробуем fallback
+                // If primaryResult == null (e.g., pre-release) - just return null, do not try fallback
+                return null;
+            }
+            catch (Exception ex)
+            {
+                // Основной источник недоступен
+                // Primary source unavailable
+                LocaleUtils.WriteTr("UpdCheckPrimaryFailed");
+                LocaleUtils.WriteTr("UpdCheckPrimaryError", ex.Message);
+
+                try
+                {
+                    var fallbackResult = FetchReleaseData(fallbackUrl);
+                    if (fallbackResult != null)
+                    {
+                        LocaleUtils.WriteTr("UpdCheckFallbackUsed");
+                        return fallbackResult;
+                    }
+                    // если fallbackResult == null (пре-релиз) - тоже возвращаем null
+                    // if fallbackResult == null (pre-release) - also return null
+                    return null;
+                }
+                catch (Exception fallbackEx)
+                {
+                    // Оба источника не работают - возвращаем null
+                    // Both sources failed - return null
+                    LocaleUtils.WriteTr("UpdCheckBothFailed");
+                    LocaleUtils.WriteTr("UpdCheckFallbackError", fallbackEx.Message);
+                    return null;
+                }
+            }
+        }
+
+        // Получение данных с указанного URL.
+        // Get data from specified URL.
+        private static JObject FetchReleaseData(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.UserAgent.ParseAdd($"{RepoName}-upd-checker");
+                var response = client.GetAsync(url).Result;
+                response.EnsureSuccessStatusCode();
+
+                var json = response.Content.ReadAsStringAsync().Result;
+                var release = JObject.Parse(json);
+
+                return release;
             }
         }
 

@@ -172,6 +172,21 @@ namespace libertypre
             _translations.Add("en_UpdCheckNoDisplay", "[UPD]: New version {0} available. Visit {1} to download. (No display server)");
             _translations.Add("ru_UpdCheckNoDisplay", "[UPD]: Доступна новая версия {0}. Посетите {1} для загрузки. (Нет дисплейного сервера)");
 
+            _translations.Add("en_UpdCheckPrimaryFailed", "[UPD]: Primary source failed, trying fallback...");
+            _translations.Add("ru_UpdCheckPrimaryFailed", "[UPD]: Основной источник недоступен, пробуем запасной...");
+
+            _translations.Add("en_UpdCheckPrimaryError", "[UPD]: Primary error: {0}");
+            _translations.Add("ru_UpdCheckPrimaryError", "[UPD]: Ошибка основного источника: {0}");
+
+            _translations.Add("en_UpdCheckFallbackUsed", "[UPD]: Using fallback source (Cloudflare Workers)");
+            _translations.Add("ru_UpdCheckFallbackUsed", "[UPD]: Используется запасной источник (Cloudflare Workers)");
+
+            _translations.Add("en_UpdCheckBothFailed", "[UPD]: Both primary and fallback sources failed.");
+            _translations.Add("ru_UpdCheckBothFailed", "[UPD]: Оба источника (основной и запасной) недоступны.");
+
+            _translations.Add("en_UpdCheckFallbackError", "[UPD]: Fallback error: {0}");
+            _translations.Add("ru_UpdCheckFallbackError", "[UPD]: Ошибка запасного источника: {0}");
+
             _translations.Add("en_InfoUseIpsetFile", "[Info]: Use ipset file: {0}");
             _translations.Add("ru_InfoUseIpsetFile", "[Информация]: Используется ipset файл: {0}");
 

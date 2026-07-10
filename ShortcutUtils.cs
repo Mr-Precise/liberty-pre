@@ -74,6 +74,7 @@ $Shortcut.Save();";
                 CreateWindowsShortcut("liberty-pre SWITCH - Extended Ports.lnk", selfPath, "--extended-ports", ",2");
                 CreateWindowsShortcut("liberty-pre SWITCH - Extended Ports TCP.lnk", selfPath, "--extended-ports-tcp", ",2");
                 CreateWindowsShortcut("liberty-pre SWITCH - Extended Ports UDP.lnk", selfPath, "--extended-ports-udp", ",2");
+                CreateWindowsShortcut("liberty-pre SWITCH - hostlist-auto.lnk", selfPath, "--hostlist-auto", ",2");
                 // custom
                 CreateWindowsShortcut("liberty-pre extra cloudflare warp.lnk", selfPath, "-c extra-cloudflare.cfg");
                 CreateWindowsShortcut("liberty-pre cringe.lnk", selfPath, "-c cringe.cfg");

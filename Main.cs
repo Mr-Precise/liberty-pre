@@ -136,6 +136,18 @@ namespace libertypre
                     Thread.Sleep(3000);
                     return;
                 }
+                else if (arg == "--hostlist-auto")
+                {
+                    // Обработка аргумента --hostlist-auto (переключатель)
+                    // Handle --hostlist-auto argument (toggle switch)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    AutoHostlistSwitchUtils.Toggle();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    ShowHostlistAutoStatus();
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
+                    return;
+                }
                 else if (arg == "-c" && i + 1 < args.Length)
                 {
                     // Следующий аргумент это имя файла конфигурации
@@ -208,6 +220,10 @@ namespace libertypre
             // Выводим статус использования ipset листа
             // Displaying the status of using the ipset list
             ShowIpsetStatus();
+
+            // Выводим статус hostlist-auto
+            // Displaying the status of hostlist-auto
+            ShowHostlistAutoStatus();
 
             // Запуск основной утилиты (winws / nfqws)
             // Start main utility (winws / nfqws)
@@ -419,6 +435,15 @@ namespace libertypre
             LocaleUtils.WriteTr("InfoExtendedPortsModeFilter", tcpStatus, udpStatus);
         }
 
+        // Метод для вывода статуса (с локализацей) использования hostlist-auto
+        // Method for displaying status (with localization) using hostlist-auto
+        private static void ShowHostlistAutoStatus()
+        {
+            bool enabled = AutoHostlistSwitchUtils.GetStatus();
+            string status = enabled ? LocaleUtils.GetStrTr("HostlistAutoStatusEnabled") : LocaleUtils.GetStrTr("HostlistAutoStatusDisabled");
+            LocaleUtils.WriteTr("InfoHostlistAutoStatus", status);
+        }
+
         // Определение файла конфигурации на основе аргументов
         // Determine configuration file based on arguments
         private static string GetConfigFile(string cfgName = null)
@@ -491,11 +516,16 @@ namespace libertypre
             string tcpReplacement = tcpMode ? ExtendedPortsEnabled : ExtendedPortsDisabled;
             string udpReplacement = udpMode ? ExtendedPortsEnabled : ExtendedPortsDisabled;
 
+            // Получаем строку аргумента для hostlist-auto
+            // Get the argument string for hostlist-auto
+            string hostlistAutoArg = AutoHostlistSwitchUtils.GetArgumentString();
+
             return string.Join(" ", File.ReadAllLines(configFile)
                 .Select(line => line.Trim())
                 .Where(line => !string.IsNullOrEmpty(line) && !line.StartsWith("#"))
                 .Select(line => line.Replace("@ExtendedPortsTCP@", tcpReplacement))
                 .Select(line => line.Replace("@ExtendedPortsUDP@", udpReplacement))
+                .Select(line => line.Replace("@Hostlist_Auto@", hostlistAutoArg))
                 .Select(line => line.Replace("^!", "!")));
         }
 

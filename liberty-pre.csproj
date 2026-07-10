@@ -50,6 +50,7 @@
     <Compile Include="HiddenModeSwchUtils.cs" />
     <Compile Include="LinuxNetUtils.cs" />
     <Compile Include="ShortcutUtils.cs" />
+    <Compile Include="AutoHostlistSwitchUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

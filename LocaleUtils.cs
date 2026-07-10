@@ -110,6 +110,7 @@ namespace libertypre
                 "  --extended-ports-tcp  Separate mode for TCP\n" +
                 "  --extended-ports-udp  Separate mode for UDP\n" +
                 "  --hidden         Switch hidden / invisible  mode of operation (daemon)\n" +
+                "  --hostlist-auto  Switch hostlist-auto mode (dynamic domain list)\n" +
                 "  -v               Show version");
             _translations.Add("ru_ShowHelp",
                 "liberty-pre.exe -c <конфиг>.cfg\n" +
@@ -127,6 +128,7 @@ namespace libertypre
                 "  --extended-ports-tcp  Отдельный режим для TCP\n" +
                 "  --extended-ports-udp  Отдельный режим для UDP\n" +
                 "  --hidden         Переключатель скрытого / невидимого режима работы (daemon)\n" +
+                "  --hostlist-auto  Переключатель режима hostlist-auto (динамический список доменов)\n" +
                 "  -v               Показать версию");
 
             _translations.Add("en_CreateShortcutsFailed", "[Error]: Error while creating shortcuts (.lnk): {0}");
@@ -210,6 +212,34 @@ namespace libertypre
 
             _translations.Add("en_ErrorIpsetUpdate", "[Error]: Error updating ipset list: {0}");
             _translations.Add("ru_ErrorIpsetUpdate", "[Ошибка]: Ошибка обновления ipset листа: {0}");
+
+            _translations.Add("en_InfoEnablingHostlistAuto", "[Info]: Enabling hostlist-auto mode (file hostlist_auto created).");
+            _translations.Add("ru_InfoEnablingHostlistAuto", "[Информация]: Включение режима hostlist-auto (создан файл hostlist_auto).");
+
+            _translations.Add("en_InfoDisablingHostlistAuto", "[Info]: Disabling hostlist-auto mode (file hostlist_auto deleted).");
+            _translations.Add("ru_InfoDisablingHostlistAuto", "[Информация]: Выключение режима hostlist-auto (удален файл hostlist_auto).");
+
+            _translations.Add("en_InfoHostlistAutoFileCreated", "[Info]: hostlist-auto.txt created in data directory.");
+            _translations.Add("ru_InfoHostlistAutoFileCreated", "[Информация]: Файл hostlist-auto.txt создан в каталоге data.");
+
+            _translations.Add("en_InfoHostlistAutoStatus", "[Info]: Hostlist-auto mode: {0}");
+            _translations.Add("ru_InfoHostlistAutoStatus", "[Информация]: Режим hostlist-auto: {0}");
+
+            _translations.Add("en_HostlistAutoStatusEnabled", "Enabled");
+            _translations.Add("ru_HostlistAutoStatusEnabled", "Включён");
+
+            _translations.Add("en_HostlistAutoStatusDisabled", "Disabled");
+            _translations.Add("ru_HostlistAutoStatusDisabled", "Выключен");
+
+            _translations.Add("en_HostlistAutoFileComment",
+                "# This file is used for --hostlist-auto\n" +
+                "# You may safely clear this file.\n");
+            _translations.Add("ru_HostlistAutoFileComment",
+                "# Этот файл используется для --hostlist-auto\n" +
+                "# Вы можете безопасно очистить этот файл.\n");
+
+            _translations.Add("en_ErrorCreatingHostlistAutoFile", "[Error]: Could not create hostlist-auto.txt: {0}");
+            _translations.Add("ru_ErrorCreatingHostlistAutoFile", "[Ошибка]: Не удалось создать hostlist-auto.txt: {0}");
 
             _translations.Add("en_InfoEnablingExtendedPortsTcp", "[Info]: Enabling... extended ports mode TCP (file extended_ports_tcp created).");
             _translations.Add("ru_InfoEnablingExtendedPortsTcp", "[Информация]: Включение... расширенного режима портов TCP (создание файла extended_ports_tcp).");

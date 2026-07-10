@@ -38,7 +38,7 @@ Just an alternative implementation.
 
 ### How to use?
 Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases/latest), unpack and run, shortcuts to other profiles will be created automatically.  
-Go through/switch profiles with a delay until the required sites start working.  
+Go through / switch profiles with a delay until the required sites start working.  
 If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).  
 A shortcut named `liberty-pre - STOP` stops the process and terminates the WinDivert driver.  
 The shortcut named `liberty-pre - SWITCH ipset mode` is used to switch the ipset file. Command-line argument `--ipset`  

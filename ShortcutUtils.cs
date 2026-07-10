@@ -14,7 +14,6 @@ namespace libertypre
         public static ManualResetEvent ShortcutCrDone = new ManualResetEvent(false);
         private static string selfPath = Assembly.GetExecutingAssembly().Location;
 
-
         // Создание ярлыка Windows через PowerShell
         // Create Windows shortcut via PowerShell
         private static void CreateWindowsShortcut(string shortcutName, string targetPath, string arguments, string index = null)
@@ -45,6 +44,7 @@ $Shortcut.IconLocation = '{targetPath + index}';";
 
             powershellScript += @"
 $Shortcut.Save();";
+
             // Запускаем скрытый процесс PowerShell для каждого скрипта
             // Start hidden a PowerShell process for each script
             var psi = new ProcessStartInfo
@@ -80,7 +80,7 @@ $Shortcut.Save();";
                 CreateWindowsShortcut("liberty-pre cringe.lnk", selfPath, "-c cringe.cfg");
                 CreateWindowsShortcut("liberty-pre plus extra.lnk", selfPath, "-c plus_extra.cfg");
                 CreateWindowsShortcut("liberty-pre discord.lnk", selfPath, "-c discord.cfg");
-                // from Flowseal/zapret-discord-youtube
+                // similar / from Flowseal/zapret-discord-youtube
                 CreateWindowsShortcut("liberty-pre ALT.lnk", selfPath, "-c ALT.cfg");
                 CreateWindowsShortcut("liberty-pre ALT2.lnk", selfPath, "-c ALT2.cfg");
                 CreateWindowsShortcut("liberty-pre ALT3.lnk", selfPath, "-c ALT3.cfg");
@@ -92,6 +92,7 @@ $Shortcut.Save();";
                 CreateWindowsShortcut("liberty-pre ALT9.lnk", selfPath, "-c ALT9.cfg");
                 CreateWindowsShortcut("liberty-pre ALT10.lnk", selfPath, "-c ALT10.cfg");
                 CreateWindowsShortcut("liberty-pre ALT11.lnk", selfPath, "-c ALT11.cfg");
+                CreateWindowsShortcut("liberty-pre ALT12.lnk", selfPath, "-c ALT12.cfg");
                 CreateWindowsShortcut("liberty-pre fake tls auto.lnk", selfPath, "-c fake_tls_auto.cfg");
                 CreateWindowsShortcut("liberty-pre fake tls auto alt.lnk", selfPath, "-c fake_tls_auto_alt.cfg");
                 CreateWindowsShortcut("liberty-pre fake tls auto alt2.lnk", selfPath, "-c fake_tls_auto_alt2.cfg");

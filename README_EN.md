@@ -30,7 +30,7 @@ The program automatically detects OS language:
 #### Linux / Mono support (in development):
 - *ubuntu 20.04+ amd64 and aarch64
 - Debian 11+ amd64 and aarch64
-- actual Arch/Manjaro
+- actual Arch /Manjaro
 
 ### What for?
 Convenient and why not.  
@@ -39,13 +39,13 @@ Just an alternative implementation.
 ### How to use?
 Download the latest [release](https://github.com/Mr-Precise/liberty-pre/releases/latest), unpack and run, shortcuts to other profiles will be created automatically.  
 Go through / switch profiles with a delay until the required sites start working.  
-If your provider intercepts or replaces DNS requests, use encrypted DNS (DoT/DoH).  
-A shortcut named `liberty-pre - STOP` stops the process and terminates the WinDivert driver.  
-The shortcut named `liberty-pre - SWITCH ipset mode` is used to switch the ipset file. Command-line argument `--ipset`  
+If your provider intercepts or replaces DNS requests, use encrypted DNS ([DoT](https://en.wikipedia.org/wiki/DNS_over_TLS)/[DoH](https://en.wikipedia.org/wiki/DNS_over_HTTPS)).  
+- The shortcut named `liberty-pre - STOP` stops the process and terminates the WinDivert driver.  
+- The shortcut named `liberty-pre - SWITCH ipset mode` is used to switch the ipset file. Command-line argument `--ipset`  
 This ipset switch has two states: full (with a valid network list) and stub (IPs from the TEST-NET-3 range).  
-The shortcut named `liberty-pre SWITCH - Extended Ports` (separately `TCP` and `UDP`) is used to switch the extended port filtering mode (1024-65535).  
-The shortcut named `liberty-pre SWITCH - hidden modes` used to switch to the invisible/hidden mode of operation.  
-The shortcut named `liberty-pre SWITCH - hostlist-auto` used to switch the autohostlist mode (automatic unblock sites). It works slowly, but in rare cases it can help.  
+- The shortcut named `liberty-pre SWITCH - Extended Ports` (separately `TCP` and `UDP`) is used to switch the extended port filtering mode (1024-65535), mainly for games.  
+- The shortcut named `liberty-pre SWITCH - hidden modes` used to switch to the invisible/hidden mode of operation.  
+- The shortcut named `liberty-pre SWITCH - hostlist-auto` used to switch the autohostlist mode (automatic unblock sites). It works slowly, but in rare cases it can help.  
 
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  
 Linux: run `liberty-pre-linux.sh` with the `--install` command line option to install a .desktop file for integration into the application menu:

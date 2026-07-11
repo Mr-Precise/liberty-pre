@@ -44,7 +44,7 @@ If your provider intercepts or replaces DNS requests, use encrypted DNS ([DoT](h
 - The shortcut named `liberty-pre - SWITCH ipset mode` is used to switch the ipset file. Command-line argument `--ipset`  
 This ipset switch has two states: full (with a valid network list) and stub (IPs from the TEST-NET-3 range).  
 - The shortcut named `liberty-pre SWITCH - Extended Ports` (separately `TCP` and `UDP`) is used to switch the extended port filtering mode (1024-65535), mainly for games.  
-- The shortcut named `liberty-pre SWITCH - hidden modes` used to switch to the invisible/hidden mode of operation.  
+- The shortcut named `liberty-pre SWITCH - hidden mode` used to switch to the invisible/hidden mode of operation.  
 - The shortcut named `liberty-pre SWITCH - hostlist-auto` used to switch the autohostlist mode (automatic unblock sites). It works slowly, but in rare cases it can help.  
 
 Linux (for advanced users): install mono, run liberty-pre-linux.sh  

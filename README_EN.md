@@ -4,8 +4,10 @@
 
 ### What is this?
 Implementation of a launcher for winws.exe or nfqws (DPI bypass tool) in C#, with profile support.  
-Helps you bypass blocking Youtube, Discord, etc.  
+A locally working tool designed to restore free information exchange and open access to YouTube, Discord, etc.  
 Currently in development.
+
+_This project is created solely to restore stable access to common educational, communication, gaming, and media platforms. The tool is not intended to bypass restrictions on dangerous or malicious resources. The author assumes no liability for any misuse of this software._
 
 ### How does it work?
 Checks for everything necessary, the presence of an existing process, the interface language and OS.  

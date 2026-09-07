@@ -93,6 +93,7 @@ $Shortcut.Save();";
                 CreateWindowsShortcut("liberty-pre ALT10.lnk", selfPath, "-c ALT10.cfg");
                 CreateWindowsShortcut("liberty-pre ALT11.lnk", selfPath, "-c ALT11.cfg");
                 CreateWindowsShortcut("liberty-pre ALT12.lnk", selfPath, "-c ALT12.cfg");
+                CreateWindowsShortcut("liberty-pre ALT13.lnk", selfPath, "-c ALT13.cfg");
                 CreateWindowsShortcut("liberty-pre fake tls auto.lnk", selfPath, "-c fake_tls_auto.cfg");
                 CreateWindowsShortcut("liberty-pre fake tls auto alt.lnk", selfPath, "-c fake_tls_auto_alt.cfg");
                 CreateWindowsShortcut("liberty-pre fake tls auto alt2.lnk", selfPath, "-c fake_tls_auto_alt2.cfg");
